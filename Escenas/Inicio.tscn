@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://gfv4wqt2hwe2"]
+
+[ext_resource type="Shader" uid="uid://dsf8wx4wqtsoj" path="res://Shader/static.gdshader" id="1_04u10"]
+[ext_resource type="Script" uid="uid://bn0wo505q8coe" path="res://Scripts/inicio.gd" id="1_c5o0i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c5o0i"]
+shader = ExtResource("1_04u10")
+shader_parameter/intensity = 0.5
+shader_parameter/pixel_size = 0.03099999937694
+shader_parameter/random_strength = 43.75
+shader_parameter/alpha = 0.30000001425
+
+[node name="Control" type="Control" unique_id=1484713236]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c5o0i")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=126031474]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.28778407, 0.28778407, 0.28778407, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=360536755]
+material = SubResource("ShaderMaterial_c5o0i")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1, 1, 1, 0.19607843)
+
+[node name="Buttons" type="Control" parent="." unique_id=1179111062]
+layout_mode = 1
+anchor_right = 0.30600002
+anchor_bottom = 1.0
+offset_right = -0.5120239
+
+[node name="Start" type="Button" parent="Buttons" unique_id=1745432485]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 347.0
+offset_right = 291.0
+offset_bottom = 426.0
+text = "START"
+
+[node name="Config" type="Button" parent="Buttons" unique_id=1482755672]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 440.0
+offset_right = 292.0
+offset_bottom = 521.0
+text = "CONFIGURACIÓN"
+
+[node name="Quit" type="Button" parent="Buttons" unique_id=766318231]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 530.0
+offset_right = 131.0
+offset_bottom = 610.0
+text = "QUIT"
+
+[node name="Button4" type="Button" parent="Buttons" unique_id=1657494024]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 530.0
+offset_right = 292.0
+offset_bottom = 610.0
+text = "WIP"
+
+[node name="Flash" type="ColorRect" parent="." unique_id=1647216791]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]

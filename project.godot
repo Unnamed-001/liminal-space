@@ -1,0 +1,45 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Liminal space"
+config/version="0.1"
+run/main_scene="uid://gfv4wqt2hwe2"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+config/icon="uid://drfda0hbf482p"
+config/windows_native_icon="res://Recursos/Texturas/Logo.ico"
+
+[autoload]
+
+GameMaster="*uid://btxh5qyu0jupt"
+Vault="*uid://l6h7w55x6rst"
+
+[debug]
+
+shader_language/warnings/unused_local_variable=false
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_width"
+window/handheld/orientation=4
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_2d=1

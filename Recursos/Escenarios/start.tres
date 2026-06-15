@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://bqkm2mmt886w8"]
+
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/Recurso_escenario.gd" id="1_663ho"]
+
+[resource]
+script = ExtResource("1_663ho")
+context = "El jugador acaba de caer a la Falla Dimensional desde su realidad. Está desorientado en un entorno liminal apenas iluminado. Objetos a la vista: 1 lata de comida, 1 botella de agua. Siente una urgencia extrema y visceral por huir. Describe el entorno de forma opresiva y presenta dos posibles rutas o pasillos oscuros por los que el jugador podría intentar avanzar."
+escenario_es_cl = "Despiertas en un lugar tenebroso, ni siquiera sabes cómo terminaste aquí; solamente recuerdas que estabas en medio de la noche, viendo un canal de fallas en la realidad, cuando el despertador empezó a sonar raro, y justo cuando lo apagaste, tu mano pareció traspasarlo; luego todo tu entorno cambió drásticamente.
+
+[color=orange]“¿Dónde demonios estoy?”[/color]
+
+Miras a tu alrededor, solo encuentras una lata de comida y una botella de agua; aparte de eso, solo puedes ver el entorno apenas iluminado que hay a tu alrededor. Igual, aunque estés aturdido, algo muy en el fondo de ti te dice que [shake rate=20.0 level=5 connected=1] no puedes quedarte allí [/shake], que sería una muy mala idea."
+actions = Dictionary[int, Dictionary]({
+11: {
+"ES_CL": "Avanzar"
+},
+12: {
+"ES_CL": "Obsevar"
+},
+13: {
+"ES_CL": "Recoger"
+},
+16: {
+"ES_CL": "Izquierda"
+},
+17: {
+"ES_CL": "Atrás"
+},
+18: {
+"ES_CL": "Derecha"
+}
+})
+metadata/_custom_type_script = "uid://dgeapbg1b80gm"
