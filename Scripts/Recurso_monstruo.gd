@@ -2,8 +2,13 @@ extends Resource
 class_name MonsterDB
 
 @export_category("Identificación")
-@export var entity_name: Dictionary = {"ES_MX": "Entidad Desconocida"}
+@export var entity_name: Dictionary = {"ES_CL": "Entidad Desconocida"}
 @export_range(1, 100, 1.0, "or_greater") var id_entity: int = 1
+@export_group("Dificultad, aparición y nivel")
+@export_range(0, 10, 1.0) var difficulty: int = 0
+@export var spawn_zones: Array[int] = [0]
+@export_range(0.01, 100) var probability: float = 100.0
+@export var min_level: int = 0
 
 @export_category("Stats")
 @export var life: int = 100

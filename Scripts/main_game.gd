@@ -29,7 +29,7 @@ func _ready() -> void:
 func _prepare_buttons():
 	for btn in grid.get_children():
 		var my_id = btn.get_meta("id")
-		print(str(my_id))
+		# print(str(my_id))
 		if not btn.pressed.is_connected(pressed_button):
 			btn.pressed.connect(pressed_button.bind(my_id))
 
@@ -59,48 +59,45 @@ func pressed_button(id: int) -> void:
 	update_status()
 
 func generar_escenario_ia(texto_ia: String) -> void:
-	# 1. Creamos un escenario fantasma en la memoria RAM
-	var nuevo_escenario = StageDB.new()
+	var json = JSON.parse_string(texto_ia)
+	if typeof(json) != TYPE_DICTIONARY or not json.has("narrativa"):
+		print("Error: La IA no devolvió un formato JSON válido. Usando texto crudo.")
+		json = {
+			"narrativa": texto_ia, # Usamos todo el texto como fallback
+			"combate_sugerido": false,
+			"enemigos_elegidos": []
+		}
 	
-	# Usamos el idioma dinámico que programamos antes (asumiendo que usas "ES_CL")
-	var idioma_actual = GameMaster.config["Lang"] if GameMaster.get("config") else "ES_CL"
-	nuevo_escenario.set("escenario_" + idioma_actual.to_lower(), texto_ia) 
-	# (Nota: O simplemente puedes asignar directo si no usas la función dinámica: nuevo_escenario.escenario_es_cl = texto_ia)
+	var new_stage = StageDB.new()
+	var current_lang = GameMaster.config["Lang"] if GameMaster.get("config") else "ES_CL"
+	new_stage.set("escenario_" + current_lang.to_lower(), json["narrativa"]) 
 	
-	# 2. Aumentamos el contador de locura
 	turn += 1
-	print("Profundidad de la falla: ", turn, "/", max_turns)
+	print("Profundidad de la falla: ", turn)
 	
-	if turn >= max_turns:
-		# --- SALVAVIDAS ACTIVADO (Forzar regreso a Ruta Estable) ---
-		nuevo_escenario.context = "El jugador ha encontrado una anomalía estable."
+	if json["combate_sugerido"] == true:
+		var a = json["enemigos_elegidos"].size()
+		print("LA IA TE QUIERE MUERTO", json["enemigos_elegidos"])
 		
-		# Le damos solo UNA opción que lo arrastrará de vuelta a tus mecánicas reales
-		nuevo_escenario.actions = {
-			1: {idioma_actual: "Entrar por la Puerta Blindada (Combate inminente)"}
+		new_stage.context = "El jugador ha sido emboscado por %s entidades. El combate es inminente." % a
+		
+		new_stage.actions = {
+			18: {"ES_CL": "¡LUCHA!"}
 		}
 		
-		# Aquí conectas físicamente el botón a uno de tus Datapacks reales de combate
-		nuevo_escenario.connected_stages = {
-			1: "res://Recursos/Escenarios/Combate_Monstruo_Base.tres"
+		new_stage.connected_with = {
+			18: load("res://Recursos/Escenarios/start.tres")
 		}
 		
+		turn = 0
 	else:
-		# --- CONTINÚA LA LOCURA ---
-		nuevo_escenario.context = "El jugador sigue vagando por pasillos procedurales. Mantén la tensión."
+		new_stage.context = "El jugador sigue por el sendero" # Falta conexto desarrollado
 		
-		# Generamos botones "falsos" que no tienen conexión, lo que forzará 
-		# a la función pressed_button a volver a llamar a la IA al hacer clic.
-		nuevo_escenario.actions = {
-			1: {idioma_actual: "Correr recto hacia la oscuridad"},
-			2: {idioma_actual: "Revisar la extraña puerta de la izquierda"}
+		new_stage.actions = {
+			1: {"ES_CL": "NADA"} # La IA debería de poder hacer esto
 		}
-		# NO llenamos "connected_stages", así el ciclo inestable continúa.
-
-	# 3. Sobrescribimos el escenario en pantalla y encendemos los botones
-	current_stage = nuevo_escenario
+	current_stage = new_stage
 	update_stage(current_stage)
-# Falta desarrollo profundo
 #endregion
 
 #region --Input Func--

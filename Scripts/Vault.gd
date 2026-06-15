@@ -1,7 +1,10 @@
 extends Node
 class_name Storage
 
+const RES_MONS_PATH = "res://Recursos/Monstruos/"
 const SAVE_PATH = "user://Breach_failure.json"
+
+var monsters: Array[MonsterDB]
 
 var context: Dictionary = {
 	"player": {
@@ -24,6 +27,9 @@ var context: Dictionary = {
 	"current_stage_path": "res://Recursos/Escenarios/start.tres",
 	"precharged_stage": [StageDB]
 }
+
+func _ready() -> void:
+	monsters = loads_monsters(RES_MONS_PATH)
 
 func _save_in_disk() -> void:
 	_sync_with_gm()
@@ -85,3 +91,18 @@ func _apply_to_gm() -> void:
 	GameMaster.stats["endurance"]  = context["player"]["stats"]["endurance"]
 	GameMaster.stats["strength"]   = context["player"]["stats"]["strength"]
 	GameMaster.stats["psique"]     = context["player"]["stats"]["psique"]
+
+func loads_monsters(path: String) -> Array[MonsterDB]:
+	var dir = DirAccess.open(path); var m := []
+	if dir:
+		dir.list_dir_begin()
+		var filename = dir.get_next()
+		while filename != "":
+			if not dir.current_is_dir() and filename.ends_with(".tres"):
+				var monster = load(path + filename) as MonsterDB
+				if monster:
+					m.append(monster)
+			filename = dir.get_next()
+		print("Base de datos cargada: ", monsters.size(), " entidades.")
+
+	return m

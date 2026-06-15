@@ -27,10 +27,9 @@ color = Color(0.10822462, 0.10822461, 0.10822461, 1)
 
 [node name="stage" type="RichTextLabel" parent="." unique_id=1361304489]
 layout_mode = 0
-offset_left = 258.0
-offset_top = 4.0
-offset_right = 864.0
-offset_bottom = 422.0
+offset_top = -1.0
+offset_right = 606.0
+offset_bottom = 417.0
 bbcode_enabled = true
 text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
 scroll_following = true

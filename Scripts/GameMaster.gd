@@ -1,7 +1,8 @@
 extends Node
 class_name GM
 
-enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISION_AREA }
+
+enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISON_AREA }
 
 signal ai_response(generated_text: String)
 
@@ -55,11 +56,39 @@ func prepare_ai_system() -> void:
 		availableAI = false
 		print("¿Que es la IA? (Error de código: ", response_code, ")")
 
-func send_to_ai(action: String, last_location: String) -> void:
+# Actualiza la firma para recibir el turno actual
+func send_to_ai(action: String, last_location: String, current_turn: int = 0) -> void:
 	var headers = ["Content-Type: application/json"]
 	
-	# Combinamos el context dentro del rol 'system' para que la API no colapse
-	var context_prompt = system_prompt + " Ultimo escenario del jugador: " + last_location
+	# Extraemos los nombres de los enemigos disponibles en el idioma del juego
+	var enemy_names = []
+	var lang = config["lang"]
+	for enemy in available_enemies:
+		if enemy.entity_name.has(lang):
+			enemy_names.append(enemy.entity_name[lang])
+		else:
+			enemy_names.append(enemy.entity_name.values()[0]) # Fallback
+			
+	# Evaluamos la tensión para que la IA sepa si debe atacar ya
+	var tension = "Baja. Mantén la calma, solo genera paranoia."
+	if current_turn >= 3: tension = "Alta. Empieza a sugerir peligro inminente."
+	if current_turn >= 5: tension = "Crítica. DEBES sugerir un combate AHORA."
+	
+	# El Modo Director
+	var director_prompt = """
+	INSTRUCCIÓN DE DIRECTOR:
+	Tensión actual del jugador: %s
+	Enemigos permitidos en esta zona (Máximo %d): %s.
+	
+	TU RESPUESTA DEBE SER ESTRICTAMENTE UN JSON VÁLIDO CON ESTA ESTRUCTURA EXACTA:
+	{
+		"narrativa": "Tu descripción visceral del entorno y la respuesta a la acción...",
+		"combate_sugerido": true o false,
+		"enemigos_elegidos": ["Nombre enemigo 1"]
+	}
+	""" % [tension, max_enemies, ", ".join(enemy_names)]
+	
+	var context_prompt = system_prompt + "\n" + director_prompt + "\nUltimo escenario: " + last_location
 	
 	var body = {
 		"messages": [
@@ -71,7 +100,7 @@ func send_to_ai(action: String, last_location: String) -> void:
 	}
 	var json_body = JSON.stringify(body)
 	http.request(url, headers, HTTPClient.METHOD_POST, json_body)
-	print("SENDING REQUEST TO AI...")
+	print("SENDING REQUEST TO AI WITH TENSION LEVEL: ", current_turn)
 
 @warning_ignore("unused_parameter")
 func receive_from_ai(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -101,6 +130,7 @@ var stats: Dictionary = {
 	"strength": 10.0,
 	"psique": 100.0
 }
+var aspect: Dictionary = {}
 
 func _player_action():
 	max_enemies = max(2, max_enemies)
@@ -109,5 +139,46 @@ func _player_action():
 
 #region --Codice de escenarios--
 func update_enemies_from_context(stage: StageDB) -> void:
-	pass
+	var monsters = Vault.monsters
+	available_enemies.clear()
+
+	if monsters.is_empty(): return
+
+	var valid_pool: Array[MonsterDB] = []
+	var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!
+
+	for monster in monsters:
+		if stage.id_zone in monster.spawn_zones:
+			if stats["level"] >= monster.min_level:
+				# Agregamos al diccionario y al array correctamente
+				valid_pool_stable[monster] = monster.probability 
+				valid_pool.append(monster)
+
+	if valid_pool.is_empty():
+		print("No hay monstruos compatibles en esta zona o tu nivel es muy bajo: ", stage.id_zone)
+		return
+
+	valid_pool.shuffle()
+	
+	# --- EL CÁLCULO MATEMÁTICO BLINDADO ---
+	# 1. Evitamos división por cero asegurando que strength sea al menos 1.0
+	var fuerza_real = max(stats["strength"], 1.0) 
+	
+	# 2. Tu fórmula dinámica (Nivel + (Resistencia / Fuerza))
+	var factor_dificultad = int(stats["level"] + (stats["endurance"] / fuerza_real))
+	
+	# 3. Definimos un mínimo de 1 enemigo, y el máximo es el factor de dificultad
+	var max_posible = max(1, factor_dificultad) 
+	
+	# 4. Tiramos los dados entre 1 y el máximo posible
+	var tirada_rng = randi_range(1, max_posible)
+	
+	# 5. EL SALVAVIDAS: Nos aseguramos de nunca pedir más monstruos de los que realmente existen en el pool
+	var limit = min(tirada_rng, valid_pool.size())
+	
+	# Asignamos al presupuesto final de la IA
+	for i in range(limit):
+		available_enemies.append(valid_pool[i])
+		
+	print("Presupuesto de IA cargado con ", limit, " entidades.")
 #endregion
