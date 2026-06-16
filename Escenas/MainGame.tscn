@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://eelthyqwn0yb"]
 
-[ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/main_game.gd" id="1_n7y03"]
+[ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/main_game.gd" id="1_n7y03"]
 [ext_resource type="Texture2D" uid="uid://do4j4afirm6fd" path="res://icon.svg" id="2_apeae"]
+[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="3_e4xla"]
 [ext_resource type="Texture2D" uid="uid://oticku2h1h1k" path="res://Recursos/Texturas/BaseI.tres" id="3_h1l5c"]
 [ext_resource type="Texture2D" uid="uid://dogegslxexx6t" path="res://Recursos/Texturas/Life.tres" id="4_lv5ms"]
 [ext_resource type="Texture2D" uid="uid://johs6vwhbrxn" path="res://Recursos/Texturas/Cord.tres" id="5_e4xla"]
@@ -9,6 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://bab40oc5m8jcu" path="res://Recursos/Texturas/BorderM.tres" id="7_25cwj"]
 [ext_resource type="Texture2D" uid="uid://cwj0vumf8ai7r" path="res://Recursos/Texturas/Hunger.tres" id="8_p1w6e"]
 [ext_resource type="Texture2D" uid="uid://dxfqjoa4lx1x0" path="res://Recursos/Texturas/Thirst.tres" id="9_1obna"]
+[ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="11_v71cx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+corner_detail = 20
 
 [node name="MainGame" type="Control" unique_id=1364806353]
 layout_mode = 3
@@ -22,17 +31,20 @@ script = ExtResource("1_n7y03")
 [node name="Backend" type="ColorRect" parent="." unique_id=9716106]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 648.0
+offset_bottom = 1296.0
 color = Color(0.10822462, 0.10822461, 0.10822461, 1)
 
 [node name="stage" type="RichTextLabel" parent="." unique_id=1361304489]
 layout_mode = 0
+offset_left = 256.0
 offset_top = -1.0
-offset_right = 606.0
+offset_right = 862.0
 offset_bottom = 417.0
 bbcode_enabled = true
 text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
 scroll_following = true
+scroll_following_visible_characters = true
+language = "es_CL"
 
 [node name="Info" type="Control" parent="." unique_id=1644673995]
 anchors_preset = 0
@@ -57,6 +69,40 @@ offset_right = -0.0020141602
 offset_bottom = 0.2579956
 texture = ExtResource("2_apeae")
 expand_mode = 2
+
+[node name="Enemy_selector" type="HBoxContainer" parent="Info" unique_id=560719337]
+visible = false
+layout_mode = 0
+offset_top = 250.0
+offset_right = 250.0
+offset_bottom = 325.0
+theme_override_constants/separation = 70
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Info/Enemy_selector" unique_id=369700525]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Info/Enemy_selector/TextureRect" unique_id=1432599970]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+
+[node name="TextureRect2" type="TextureRect" parent="Info/Enemy_selector" unique_id=814435622]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Info/Enemy_selector/TextureRect2" unique_id=1085870279]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
 
 [node name="Status" type="Control" parent="." unique_id=521839593]
 anchors_preset = 0
@@ -319,5 +365,107 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=251784842]
+position = Vector2(576, 324)
+
+[node name="Control" type="Control" parent="." unique_id=221416709]
+anchors_preset = 0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 1296.0
+script = ExtResource("11_v71cx")
+
+[node name="GridContainer" type="GridContainer" parent="Control" unique_id=1287650675]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.386
+anchor_top = 0.66
+anchor_right = 0.74300003
+anchor_bottom = 1.0
+offset_left = -3.671997
+offset_top = 0.3199768
+offset_right = 0.063964844
+columns = 2
+
+[node name="Button" type="Button" parent="Control/GridContainer" unique_id=795642589]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ATACAR"
+metadata/id = 1
+
+[node name="Button2" type="Button" parent="Control/GridContainer" unique_id=855901627]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "DEFENDER"
+metadata/id = 2
+
+[node name="Button3" type="Button" parent="Control/GridContainer" unique_id=245536327]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "OBJETO"
+metadata/id = 3
+
+[node name="Button4" type="Button" parent="Control/GridContainer" unique_id=1497410700]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ESPECIAL"
+metadata/id = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=512686460]
+clip_children = 2
+clip_contents = true
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e4xla")
+
+[node name="ColorRect" type="ColorRect" parent="Control/PanelContainer" unique_id=1841177955]
+layout_mode = 2
+color = Color(0.23248088, 0.23248091, 0.23248091, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1663554149]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+
+[node name="Selector" type="HBoxContainer" parent="Control" unique_id=1843882189]
+visible = false
+layout_mode = 0
+offset_left = 748.0
+offset_top = 378.0
+offset_right = 858.0
+offset_bottom = 423.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/Selector" unique_id=1657746329]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Control/Selector/TextureRect" unique_id=433520921]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="TextureRect2" type="TextureRect" parent="Control/Selector" unique_id=1364394440]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Control/Selector/TextureRect2" unique_id=876890466]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
 
 [connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="." method="_show_stats"]

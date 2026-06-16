@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://bqkm2mmt886w8"]
 
-[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/Recurso_escenario.gd" id="1_663ho"]
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="1_663ho"]
 
 [resource]
 script = ExtResource("1_663ho")
