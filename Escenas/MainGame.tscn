@@ -28,6 +28,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n7y03")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=251784842]
+position = Vector2(576, 324)
+
 [node name="Backend" type="ColorRect" parent="." unique_id=9716106]
 layout_mode = 0
 offset_right = 1152.0
@@ -36,9 +39,9 @@ color = Color(0.10822462, 0.10822461, 0.10822461, 1)
 
 [node name="stage" type="RichTextLabel" parent="." unique_id=1361304489]
 layout_mode = 0
-offset_left = 256.0
+offset_left = 250.0
 offset_top = -1.0
-offset_right = 862.0
+offset_right = 856.0
 offset_bottom = 417.0
 bbcode_enabled = true
 text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
@@ -48,24 +51,16 @@ language = "es_CL"
 
 [node name="Info" type="Control" parent="." unique_id=1644673995]
 anchors_preset = 0
-offset_right = 258.0
+offset_right = 250.0
 offset_bottom = 647.0
-
-[node name="MAP" type="TextureRect" parent="Info" unique_id=1377157827]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 415.0
-offset_right = 236.0
-offset_bottom = 645.0
-texture = ExtResource("2_apeae")
-expand_mode = 3
 
 [node name="ENEMY" type="TextureRect" parent="Info" unique_id=234072671]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.96900004
+anchor_right = 0.99200004
 anchor_bottom = 0.386
-offset_right = -0.0020141602
+offset_top = 4.0
+offset_right = -2.0000153
 offset_bottom = 0.2579956
 texture = ExtResource("2_apeae")
 expand_mode = 2
@@ -210,12 +205,12 @@ offset_bottom = 379.0
 
 [node name="buttons" type="Control" parent="." unique_id=2106862717]
 layout_mode = 1
-anchor_left = 0.20700002
-anchor_top = 0.63600004
+anchor_left = 0.21700001
+anchor_top = 0.64400005
 anchor_right = 0.74300003
 anchor_bottom = 1.0
-offset_left = -0.46401978
-offset_top = -0.12802124
+offset_left = 0.015991211
+offset_top = -5.312042
 offset_right = 0.063964844
 
 [node name="GridContainer" type="GridContainer" parent="buttons" unique_id=1381809856]
@@ -225,12 +220,14 @@ anchors_preset = -1
 anchor_top = 0.119
 anchor_right = 1.0020001
 anchor_bottom = 0.915
-offset_left = -1.0
+offset_left = -2.012024
 offset_top = -0.08400154
-offset_right = -0.23608398
+offset_right = 0.77593994
 offset_bottom = 0.05999756
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
 columns = 6
 
 [node name="Button1" type="Button" parent="buttons/GridContainer" unique_id=21923776]
@@ -365,9 +362,6 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 2
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=251784842]
-position = Vector2(576, 324)
 
 [node name="Control" type="Control" parent="." unique_id=221416709]
 anchors_preset = 0
