@@ -7,6 +7,10 @@ const SAVE_PATH = "user://Breach_failure.json"
 var monsters: Array[MonsterDB]
 
 var context: Dictionary = {
+	"config": {
+		"lang": "ES_CL",
+		"wait_time": 3.0
+	},
 	"player": {
 		"life": 100,
 		"cord": 100,
@@ -63,6 +67,8 @@ func load_from_disk() -> bool:
 	return false
 
 func _sync_with_gm() -> void:
+	context["config"]["lang"]                = GameMaster.config["lang"]
+	context["config"]["wait_time"]           = GameMaster.config["wait_time"]
 	context["player"]["life"]                = GameMaster.life
 	context["player"]["cord"]                = GameMaster.cord
 	context["player"]["hunger"]              = GameMaster.hunger
@@ -78,6 +84,8 @@ func _sync_with_gm() -> void:
 	context["player"]["stats"]["psique"]     = GameMaster.stats["psique"]
 
 func _apply_to_gm() -> void:
+	GameMaster.config["lang"]      = context["config"]["lang"]
+	GameMaster.config["wait_time"] = context["config"]["wait_time"]
 	GameMaster.life                = context["player"]["life"]
 	GameMaster.cord                = context["player"]["cord"]
 	GameMaster.hunger              = context["player"]["hunger"]

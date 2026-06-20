@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AttackDB" format=3 uid="uid://d0fqgt4yhip40"]
+
+[ext_resource type="Script" uid="uid://rlkecmk73hsm" path="res://Scripts/resources/Recurso_ataque.gd" id="1_5brrt"]
+
+[resource]
+script = ExtResource("1_5brrt")
+unique_id = 1
+damage = 10
+variance = 8.0
+metadata/_custom_type_script = "uid://rlkecmk73hsm"

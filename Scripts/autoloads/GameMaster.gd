@@ -5,16 +5,19 @@ enum actions { SCRATCH, CORRODE, ENCHANT, DRIVE_MAD, FLEE, STALK, PURSUE, PIERCE
 enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISON_AREA }
 
 signal ai_response(generated_text: String)
+signal player_action
 
 var available_enemies: Array[MonsterDB] = []
 var max_enemies: int = 2
 var availableAI: bool = false
 var config: Dictionary = {
-	"lang": "ES_CL"
+	"lang": "ES_CL",
+	"wait_time": 3.0
 }
 
 func _ready() -> void:
 	# Como la comprobación tarda unos milisegundos, le decimos a Godot que espere
+	player_action.connect(Callable(self, "_player_action"))
 	await prepare_ai_system()
 	
 	if availableAI:
@@ -132,21 +135,20 @@ var stats: Dictionary = {
 }
 var aspect: Dictionary = {}
 
-func _player_action():
+func _player_action() -> void:
 	max_enemies = max(2, max_enemies)
 	
 #endregion
 
 #region --Codice de escenarios--
+var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!
+
 func update_enemies_from_context(stage: StageDB) -> void:
 	var monsters = Vault.monsters
 	available_enemies.clear()
 
 	if monsters.is_empty(): return
-
 	var valid_pool: Array[MonsterDB] = []
-	var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!
-
 	for monster in monsters:
 		if stage.id_zone in monster.spawn_zones:
 			if stats["level"] >= monster.min_level:
@@ -160,26 +162,16 @@ func update_enemies_from_context(stage: StageDB) -> void:
 
 	valid_pool.shuffle()
 	
-	# --- EL CÁLCULO MATEMÁTICO BLINDADO ---
-	# 1. Evitamos división por cero asegurando que strength sea al menos 1.0
 	var fuerza_real = max(stats["strength"], 1.0) 
-	
-	# 2. Tu fórmula dinámica (Nivel + (Resistencia / Fuerza))
 	var factor_dificultad = int(stats["level"] + (stats["endurance"] / fuerza_real))
-	
-	# 3. Definimos un mínimo de 1 enemigo, y el máximo es el factor de dificultad
 	var max_posible = max(1, min(factor_dificultad, stats["level"], 6)) 
-	
-	# 4. Tiramos los dados entre 1 y el máximo posible
 	var tirada_rng = randi_range(1, max_posible)
-	
-	# 5. EL SALVAVIDAS: Nos aseguramos de nunca pedir más monstruos de los que realmente existen en el pool
 	var limit = min(tirada_rng, valid_pool.size())
-	
-	# Asignamos al presupuesto final de la IA
+
+
 	for i in range(limit):
 		available_enemies.append(valid_pool[i])
-		
+
 	print("Presupuesto de IA cargado con ", limit, " entidades.")
 #endregion
 

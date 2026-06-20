@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DefenseDB" format=3 uid="uid://bddcuahvkmhcb"]
+
+[ext_resource type="Script" uid="uid://7h2aewoad5l6" path="res://Scripts/resources/Recurso_defensa.gd" id="1_outnp"]
+
+[resource]
+script = ExtResource("1_outnp")
+unique_id = 1
+defense = 5
+variance = 60.0

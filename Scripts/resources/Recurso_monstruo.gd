@@ -13,9 +13,9 @@ class_name MonsterDB
 @export_category("Stats")
 @export var life: int = 100
 @export_group("attack")
-@export var physical_attack: int = 10
+@export var strength: int = 10 # creo que será un multiplicador?
 @export var cord_damage: float = 0.1 # Daño se hace solo con estar en combate, al completar un entero se aplica daño
-@export var possible_attacks: Dictionary[GameMaster.actions, int] = {}
+@export var possible_attacks: Dictionary[AttackDB, int] = {}
 @export_group("")
 @export var defense: float = 10.0
 @export var speed: float = 10.0
@@ -28,6 +28,3 @@ class_name MonsterDB
 
 @export_category("Contexto para IA")
 @export_multiline() var context: String = ""
-
-func attack() -> void:
-	pass

@@ -13,7 +13,7 @@ config_version=5
 config/name="Liminal space"
 config/version="0.1"
 run/main_scene="uid://gfv4wqt2hwe2"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://drfda0hbf482p"
 config/windows_native_icon="res://Recursos/Texturas/Logo.ico"
 
@@ -21,7 +21,6 @@ config/windows_native_icon="res://Recursos/Texturas/Logo.ico"
 
 GameMaster="*uid://btxh5qyu0jupt"
 Vault="*uid://l6h7w55x6rst"
-DsInspector="*uid://ctqmkjgr5ftjh"
 
 [debug]
 
@@ -36,12 +35,7 @@ shader_language/warnings/unused_local_variable=false
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_width"
 window/handheld/orientation=4
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dictionary_inspector/plugin.cfg", "res://addons/ds_inspector/plugin.cfg")
 
 [internationalization]
 

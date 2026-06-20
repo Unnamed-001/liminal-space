@@ -363,14 +363,14 @@ offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="." unique_id=221416709]
+[node name="Battle" type="Control" parent="." unique_id=221416709]
 anchors_preset = 0
 offset_top = 648.0
 offset_right = 1152.0
 offset_bottom = 1296.0
 script = ExtResource("11_v71cx")
 
-[node name="GridContainer" type="GridContainer" parent="Control" unique_id=1287650675]
+[node name="GridContainer" type="GridContainer" parent="Battle" unique_id=1287650675]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.386
@@ -382,31 +382,31 @@ offset_top = 0.3199768
 offset_right = 0.063964844
 columns = 2
 
-[node name="Button" type="Button" parent="Control/GridContainer" unique_id=795642589]
+[node name="Button1" type="Button" parent="Battle/GridContainer" unique_id=795642589]
 custom_minimum_size = Vector2(207, 100)
 layout_mode = 2
 text = "ATACAR"
 metadata/id = 1
 
-[node name="Button2" type="Button" parent="Control/GridContainer" unique_id=855901627]
+[node name="Button2" type="Button" parent="Battle/GridContainer" unique_id=855901627]
 custom_minimum_size = Vector2(207, 100)
 layout_mode = 2
 text = "DEFENDER"
 metadata/id = 2
 
-[node name="Button3" type="Button" parent="Control/GridContainer" unique_id=245536327]
+[node name="Button3" type="Button" parent="Battle/GridContainer" unique_id=245536327]
 custom_minimum_size = Vector2(207, 100)
 layout_mode = 2
 text = "OBJETO"
 metadata/id = 3
 
-[node name="Button4" type="Button" parent="Control/GridContainer" unique_id=1497410700]
+[node name="Button4" type="Button" parent="Battle/GridContainer" unique_id=1497410700]
 custom_minimum_size = Vector2(207, 100)
 layout_mode = 2
 text = "ESPECIAL"
 metadata/id = 4
 
-[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=512686460]
+[node name="PanelContainer" type="PanelContainer" parent="Battle" unique_id=512686460]
 clip_children = 2
 clip_contents = true
 layout_mode = 0
@@ -416,46 +416,59 @@ offset_right = 441.0
 offset_bottom = 632.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_e4xla")
 
-[node name="ColorRect" type="ColorRect" parent="Control/PanelContainer" unique_id=1841177955]
+[node name="ColorRect" type="ColorRect" parent="Battle/PanelContainer" unique_id=1841177955]
 layout_mode = 2
 color = Color(0.23248088, 0.23248091, 0.23248091, 1)
 
-[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1663554149]
+[node name="TextureRect" type="TextureRect" parent="Battle" unique_id=1663554149]
 layout_mode = 0
 offset_left = 236.0
 offset_top = 428.0
 offset_right = 441.0
 offset_bottom = 632.0
 
-[node name="Selector" type="HBoxContainer" parent="Control" unique_id=1843882189]
+[node name="Selector" type="HBoxContainer" parent="Battle" unique_id=1843882189]
 visible = false
 layout_mode = 0
-offset_left = 748.0
+offset_left = 684.0
 offset_top = 378.0
-offset_right = 858.0
+offset_right = 859.0
 offset_bottom = 423.0
-theme_override_constants/separation = 20
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Control/Selector" unique_id=1657746329]
+[node name="TextureRect" type="TextureRect" parent="Battle/Selector" unique_id=1657746329]
 layout_mode = 2
 texture = ExtResource("3_e4xla")
 expand_mode = 3
 
-[node name="Button" type="Button" parent="Control/Selector/TextureRect" unique_id=433520921]
+[node name="Button" type="Button" parent="Battle/Selector/TextureRect" unique_id=433520921]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 0
 offset_right = 45.0
 offset_bottom = 45.0
 
-[node name="TextureRect2" type="TextureRect" parent="Control/Selector" unique_id=1364394440]
+[node name="TextureRect3" type="TextureRect" parent="Battle/Selector" unique_id=1226553854]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = 1.5707964
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button2" type="Button" parent="Battle/Selector/TextureRect3" unique_id=798141718]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="TextureRect2" type="TextureRect" parent="Battle/Selector" unique_id=1364394440]
 layout_mode = 2
 texture = ExtResource("3_e4xla")
 expand_mode = 3
 flip_h = true
 
-[node name="Button2" type="Button" parent="Control/Selector/TextureRect2" unique_id=876890466]
+[node name="Button2" type="Button" parent="Battle/Selector/TextureRect2" unique_id=876890466]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 0
