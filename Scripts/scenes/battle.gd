@@ -7,11 +7,11 @@ signal end_turn
 @onready var selector := $Selector
 @onready var gridbtn: Array[Button]
 @onready var chosen_lang: String = GameMaster.config["lang"]
+@onready var info_enemy: Control
+@onready var main: Control = $".."
 var current_state: STATES = STATES.MAIN
 var page: int = 0
-var current_enemy: MonsterDB
 
-var enemies: Array[MonsterDB] = []
 var attack_options:= [load("res://Recursos/Ataque/punch.tres")]
 var defense_options:= [load("res://Recursos/Defensa/cover_arms.tres")]
 var special_options:= []
@@ -65,11 +65,11 @@ func _damage_enemy(id: int) -> void:
 	
 	if index < attack_options.size():
 		var chosen_attack = attack_options[index]
-		_apply_damage(current_enemy, chosen_attack)
+		_apply_damage(main.current_enemy, chosen_attack)
 		_restore_menu_state()
 
 func _monsters_turn() -> void:
-	for monster in enemies:
+	for monster in main.enemies:
 		var total_weight: float = 0.0
 		for attack in monster.possible_attacks:
 			total_weight += monster.possible_attacks[attack]
@@ -98,25 +98,29 @@ func _monsters_turn() -> void:
 func _apply_damage(target: Variant, attack: AttackDB, attacker: Variant = "") -> void:
 	var raw_damage = attack.get_damage()
 	var attacker_strength: int
-	
+
 	if attacker is MonsterDB:
 		attacker_strength = attacker.strength
 	else:
 		attacker_strength = GameMaster.stats.get("strength", 0)
-	
+
 	var float_damage = raw_damage * (1.0 + (attacker_strength/100.0))
 	var total_damage = roundi(float_damage)
-	
+
 	var damage_received: int = 0
-	
+
 	if target is MonsterDB:
 		damage_received = maxi(total_damage - target.defense, 0)
 		target.life -= damage_received
 		emit_signal("end_turn")
+		print("Daño emitido: ", damage_received, " Vida Restante: ", target.life, " Objetivo: ", target.entity_name)
 	else:
 		var player_def = GameMaster.stats.get("endurance", 0)
 		damage_received = maxi(total_damage - player_def, 0)
 		GameMaster.life -= damage_received
+		print("Daño recibido: ", damage_received, " Vida Restante: ", GameMaster.life, " Player")
+
+	GameMaster.emit_signal("player_action")
 
 #region --Funciones auxiliares--
 func _ready() -> void:
@@ -124,6 +128,7 @@ func _ready() -> void:
 		if child.is_class("Button"):
 			gridbtn.append(child)
 	end_turn.connect(Callable(self, "_monsters_turn"))
+	info_enemy = $"../info"
 	_prepare_buttons()
 
 func _restore_menu_state() -> void:

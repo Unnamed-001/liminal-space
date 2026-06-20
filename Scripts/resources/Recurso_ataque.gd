@@ -4,7 +4,7 @@ class_name AttackDB
 enum TYPE { PHYSICAL, PSICOLOGYCAL, DRAINING }
 
 @export_category("info")
-@export_multiline() var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""}
+@export() var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""}
 @export var unique_id: int
 @export var wait_time: float = 3.0
 @export_category("damage")

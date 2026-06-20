@@ -4,6 +4,10 @@
 
 [resource]
 script = ExtResource("1_5brrt")
+name = Dictionary[String, String]({
+"EN_US": "Punch",
+"ES_CL": "Golpe"
+})
 unique_id = 1
 damage = 10
 variance = 8.0

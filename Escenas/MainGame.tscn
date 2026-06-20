@@ -12,6 +12,68 @@
 [ext_resource type="Texture2D" uid="uid://dxfqjoa4lx1x0" path="res://Recursos/Texturas/Thirst.tres" id="9_1obna"]
 [ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="11_v71cx"]
 
+[sub_resource type="GDScript" id="GDScript_bhunq"]
+script/source = "extends Control
+
+@onready var main: main_game = $\"..\"
+@onready var enemy_selector: HBoxContainer = $Enemy_selector
+@onready var bars: VBoxContainer = $Bars
+
+# Guardamos la posición local, no la global, para evitar bugs si se mueve la ventana
+var home_pos: Vector2 
+var index: int = 0
+
+func _ready() -> void:
+	# Guardamos la posición original al cargar la escena
+	home_pos = bars.position 
+	
+	# Sintaxis limpia y moderna de Godot 4 para conectar señales
+	GameMaster.player_action.connect(update_status)
+
+func show_enemy_status() -> void:
+	bars.visible = true
+	
+	if main.enemies.size() > 1:
+		enemy_selector.visible = true
+		# Asignación absoluta, no acumulativa (evita el \"efecto ascensor\")
+		bars.position.y = home_pos.y + enemy_selector.size.y
+	else:
+		enemy_selector.visible = false
+		bars.position = home_pos
+
+func hide_enemy_status() -> void:
+	enemy_selector.visible = false
+	bars.position = home_pos
+	bars.visible = false
+
+func update_status() -> void:
+	pass
+
+#region -- Navegación de Enemigos --
+func _to_front() -> void:
+	if main.enemies.is_empty(): return # Defensa extra por si no hay enemigos
+	
+	index += 1
+	# Si nos pasamos del último enemigo, volvemos al primero (Bucle)
+	if index >= main.enemies.size():
+		index = 0
+		
+	main.current_enemy = main.enemies[index]
+	update_status() # Llama a actualizar la vista al cambiar de objetivo
+
+func _to_end() -> void:
+	if main.enemies.is_empty(): return 
+	
+	index -= 1
+	# Si bajamos de cero, vamos al último enemigo de la lista
+	if index < 0:
+		index = main.enemies.size() - 1
+		
+	main.current_enemy = main.enemies[index]
+	update_status() # Llama a actualizar la vista al cambiar de objetivo
+#endregion
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
 corner_radius_top_left = 200
 corner_radius_top_right = 200
@@ -53,6 +115,7 @@ language = "es_CL"
 anchors_preset = 0
 offset_right = 250.0
 offset_bottom = 647.0
+script = SubResource("GDScript_bhunq")
 
 [node name="ENEMY" type="TextureRect" parent="Info" unique_id=234072671]
 layout_mode = 1
@@ -68,9 +131,9 @@ expand_mode = 2
 [node name="Enemy_selector" type="HBoxContainer" parent="Info" unique_id=560719337]
 visible = false
 layout_mode = 0
-offset_top = 250.0
+offset_top = 255.0
 offset_right = 250.0
-offset_bottom = 325.0
+offset_bottom = 330.0
 theme_override_constants/separation = 70
 alignment = 1
 
@@ -98,6 +161,29 @@ custom_minimum_size = Vector2(75, 0)
 layout_mode = 0
 offset_right = 75.0
 offset_bottom = 75.0
+
+[node name="Bars" type="VBoxContainer" parent="Info" unique_id=429983626]
+visible = false
+layout_mode = 0
+offset_top = 255.0
+offset_right = 246.0
+offset_bottom = 479.0
+
+[node name="LIFE" type="TextureProgressBar" parent="Info/Bars" unique_id=384779692]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("4_lv5ms")
+
+[node name="CORD" type="TextureProgressBar" parent="Info/Bars" unique_id=919390001]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("5_e4xla")
 
 [node name="Status" type="Control" parent="." unique_id=521839593]
 anchors_preset = 0
@@ -475,4 +561,6 @@ layout_mode = 0
 offset_right = 45.0
 offset_bottom = 45.0
 
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect/Button" to="Info" method="_to_front"]
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect2/Button2" to="Info" method="_to_end"]
 [connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="." method="_show_stats"]

@@ -1,4 +1,5 @@
 extends Control
+class_name main_game
 const max_turns: int = 5
 
 @onready var cRect = $ColorRect
@@ -7,6 +8,8 @@ const max_turns: int = 5
 @onready var status = $Status
 @onready var richLabel = $stage
 
+var enemies: Array[MonsterDB] = []
+var current_enemy: MonsterDB
 var active_ids: Array[int] = []
 var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres")
 var in_the_zone: int = 0
@@ -14,7 +17,6 @@ var turn: int = 0
 
 var flag_combat: bool = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#region --Animacion de inicio--
 	cRect.visible = true
@@ -22,10 +24,13 @@ func _ready() -> void:
 	var tween = create_tween()
 	tween.tween_property(cRect, "color", Color(0.294, 0.294, 0.294, 0.0), 1.0).set_ease(Tween.EASE_IN)
 	#endregion
+	#region --Signal connection--
 	GameMaster.connect("ai_response", Callable(self, "Generated_stage_AI"))
+	GameMaster.player_action.connect(Callable(self, "update_status"))
 	update_stage(current_stage)
 	_prepare_buttons()
 	update_status()
+	#endregion
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
@@ -190,14 +195,16 @@ func combat() -> void:
 		status.position.y += size_viewport
 		$Camera2D.position.y += size_viewport
 		flag_combat = true
+		$Info.hide_enemy_status()
 	else:
 		info.position.y -= size_viewport
 		richLabel.position.y -= size_viewport
 		status.position.y -= size_viewport
 		$Camera2D.position.y -= size_viewport
 		flag_combat = false
+		$Info.show_enemy_status()
 
-	var total_weight := 0.0; var enemies: Array; var max_enemies = GameMaster.max_enemies
+	var total_weight := 0.0; var max_enemies = GameMaster.max_enemies
 	for enemy in GameMaster.valid_pool_stable:
 		total_weight += GameMaster.valid_pool_stable[enemy]
 
@@ -211,5 +218,4 @@ func combat() -> void:
 			enemies.append(enemy)
 			if enemies.size() >= rng_count:
 				break
-	$Battle.enemies = enemies
 #endregion
