@@ -107,10 +107,13 @@ func loads_monsters(path: String) -> Array[MonsterDB]:
 		var filename = dir.get_next()
 		while filename != "":
 			if not dir.current_is_dir() and filename.ends_with(".tres"):
-				var monster = load(path + filename) as MonsterDB
+				# Se utiliza path_join para asegurar una ruta válida
+				var monster = load(path.path_join(filename)) as MonsterDB
 				if monster:
 					m.append(monster)
 			filename = dir.get_next()
-		print("Base de datos cargada: ", monsters.size(), " entidades.")
+		
+		# Se imprime la variable local 'm' en lugar de 'monsters'
+		print("Base de datos cargada: ", m.size(), " entidades.")
 
 	return m

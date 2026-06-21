@@ -146,11 +146,12 @@ var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!
 func update_enemies_from_context(stage: StageDB) -> void:
 	var monsters = Vault.monsters
 	available_enemies.clear()
+	valid_pool_stable.clear()
 
 	if monsters.is_empty(): return
 	var valid_pool: Array[MonsterDB] = []
 	for monster in monsters:
-		if stage.id_zone in monster.spawn_zones:
+		if stage.id_zone in monster.spawn_zones or monster.spawn_zones.has(-1):
 			if stats["level"] >= monster.min_level:
 				# Agregamos al diccionario y al array correctamente
 				valid_pool_stable[monster] = monster.probability 
@@ -173,13 +174,4 @@ func update_enemies_from_context(stage: StageDB) -> void:
 		available_enemies.append(valid_pool[i])
 
 	print("Presupuesto de IA cargado con ", limit, " entidades.")
-#endregion
-
-#region --attacks--
-func get_damage(attack: actions = actions.OBSERVE) -> Dictionary: 
-	# Devuelve un diccionrio con la siguiente info:
-	# Daño[cantidad, tipo], Efecto[duración, tipo]
-	# Ej
-	# { "damageCount": int, "damageType": enum, "effectDuration": float, "effectType": GameMaster.type  }
-	return {}
 #endregion

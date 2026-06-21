@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_sq0x4")
+spawn_zones = Array[int]([-1])
 strength = 1
 possible_attacks = Dictionary[ExtResource("1_iutq2"), int]({
 ExtResource("2_wthy6"): 3

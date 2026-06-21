@@ -12,6 +12,7 @@ class_name MonsterDB
 
 @export_category("Stats")
 @export var life: int = 100
+@export var cord: int = -1
 @export_group("attack")
 @export var strength: int = 10 # creo que será un multiplicador?
 @export var cord_damage: float = 0.1 # Daño se hace solo con estar en combate, al completar un entero se aplica daño

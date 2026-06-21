@@ -15,7 +15,7 @@ enum TYPE { PHYSICAL, PSICOLOGYCAL, DRAINING }
 @export var effect: EffectDB
 
 func get_damage() -> int:
-	var variant_multiplier = randf_range(1.0 - variance, 1.0 + variance)
+	var variant_multiplier = randf_range(1.0 - (variance / 100.0), 1.0 + (variance / 100.0))
 	var final_damage: float = damage * variant_multiplier
 	
 	var rng = randf_range(0.0, 100.0)
@@ -24,4 +24,4 @@ func get_damage() -> int:
 		print("¡Golpe Crítico!")
 		
 	# 3. Devolvemos el daño redondeado a número entero
-	return roundi(final_damage)
+	return absi(roundi(final_damage))

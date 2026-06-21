@@ -187,35 +187,35 @@ func _show_stats() -> void:
 
 func combat() -> void:
 	GameMaster.update_enemies_from_context(current_stage)
-	
-	var size_viewport = get_viewport_rect().size.y
-	if not flag_combat:
-		info.position.y += size_viewport
-		richLabel.position.y += size_viewport
-		status.position.y += size_viewport
-		$Camera2D.position.y += size_viewport
-		flag_combat = true
-		$Info.hide_enemy_status()
-	else:
-		info.position.y -= size_viewport
-		richLabel.position.y -= size_viewport
-		status.position.y -= size_viewport
-		$Camera2D.position.y -= size_viewport
-		flag_combat = false
-		$Info.show_enemy_status()
 
 	var total_weight := 0.0; var max_enemies = GameMaster.max_enemies
 	for enemy in GameMaster.valid_pool_stable:
 		total_weight += GameMaster.valid_pool_stable[enemy]
-
 	var rng_monster = randf_range(0.0, total_weight)
 	var rng_count = randi_range(1, max_enemies)
 	var current_weight := 0.0
-	
+
 	for enemy in GameMaster.valid_pool_stable:
 		current_weight += GameMaster.valid_pool_stable[enemy]
 		if rng_monster <= current_weight:
 			enemies.append(enemy)
 			if enemies.size() >= rng_count:
 				break
+
+	var size_viewport = get_viewport_rect().size.y
+	if not flag_combat:
+		current_enemy = enemies[0]
+		info.position.y += size_viewport
+		richLabel.position.y += size_viewport
+		status.position.y += size_viewport
+		$Camera2D.position.y += size_viewport
+		flag_combat = true
+		$Info.show_enemy_status()
+	else:
+		info.position.y -= size_viewport
+		richLabel.position.y -= size_viewport
+		status.position.y -= size_viewport
+		$Camera2D.position.y -= size_viewport
+		flag_combat = false
+		$Info.hide_enemy_status()
 #endregion
