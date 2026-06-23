@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AttackDB" format=3 uid="uid://c3llnggv23cux"]
+
+[ext_resource type="Script" uid="uid://rlkecmk73hsm" path="res://Scripts/resources/Recurso_ataque.gd" id="1_tiefs"]
+
+[resource]
+script = ExtResource("1_tiefs")
+unique_id = 2
+damage = 10
+type = 1
+variance = 20.0
+critical_chance = 0.0
+name = Dictionary[String, String]({
+"EN_US": "Stare",
+"ES_CL": "Mirar fijamente"
+})
+metadata/_custom_type_script = "uid://rlkecmk73hsm"

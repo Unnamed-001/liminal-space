@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ActionDB" format=3 uid="uid://bnvrirhyluxwp"]
+
+[ext_resource type="Script" uid="uid://buwdhce32k2vx" path="res://Scripts/resources/Recurso_accion.gd" id="1_frwhx"]
+
+[resource]
+script = ExtResource("1_frwhx")
+name = Dictionary[String, String]({
+"EN_US": "",
+"ES_CL": "Estar"
+})
+wait_time = 2.5
+metadata/_custom_type_script = "uid://buwdhce32k2vx"

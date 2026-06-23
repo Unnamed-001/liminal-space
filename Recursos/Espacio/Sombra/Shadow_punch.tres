@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SlotDB" format=3 uid="uid://d13ibwyeb1bos"]
+
+[ext_resource type="Resource" uid="uid://d0fqgt4yhip40" path="res://Recursos/Ataque/punch.tres" id="1_o2pas"]
+[ext_resource type="Script" uid="uid://cc4xydpduq4or" path="res://Scripts/resources/Recurso_slot.gd" id="1_prgcr"]
+
+[resource]
+script = ExtResource("1_prgcr")
+action = ExtResource("1_o2pas")
+probability = 30.0
+dialogue = null

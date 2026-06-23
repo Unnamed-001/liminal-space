@@ -1,2 +1,2 @@
-extends Resource
+extends AttackDB
 class_name EffectDB

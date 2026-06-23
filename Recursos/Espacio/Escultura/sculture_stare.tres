@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SlotDB" format=3 uid="uid://bdw7rcfwlybry"]
+
+[ext_resource type="Script" uid="uid://cc4xydpduq4or" path="res://Scripts/resources/Recurso_slot.gd" id="1_iu0m6"]
+[ext_resource type="Resource" uid="uid://c3llnggv23cux" path="res://Recursos/Ataque/stare.tres" id="1_rssnx"]
+
+[resource]
+script = ExtResource("1_iu0m6")
+action = ExtResource("1_rssnx")
+probability = 100.0
+dialogue = Dictionary[String, Array]({
+"EN_US": ["", "", ""],
+"ES_CL": ["La escultura te inquieta profundamente. Al apartar la mirada, jurarías que ha cambiado de posición. Pierdes {damage} puntos de {type}.", "Sientes el peso absoluto de su mirada sobre ti, a pesar de que no tiene rostro. Tu mente se resquebraja, sufriendo {damage} de {type}.", "La escultura te parece [wave amp=50.0 freq=5.0]cálida y amistosa[/wave]. [i]Tus pensamientos ya no te pertenecen.[/i] El horror te inflige {damage} de {type}.", "La superficie de piedra comienza a [shake rate=20.0 level=5 connected=1]respirar y latir[/shake] como si fuera carne. Te produce {damage} de {type}.", "Un recuerdo falso inunda tu cabeza: la escultura siempre estuvo en tu habitación cuando eras niño. Observándote dormir. Pierdes {damage} puntos de cordura."]
+})
+metadata/_custom_type_script = "uid://cc4xydpduq4or"

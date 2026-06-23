@@ -1,5 +1,5 @@
 extends Control
-class_name main_game
+class_name MainGame
 const max_turns: int = 5
 
 @onready var cRect = $ColorRect
@@ -188,32 +188,39 @@ func _show_stats() -> void:
 func combat() -> void:
 	GameMaster.update_enemies_from_context(current_stage)
 
-	var total_weight := 0.0; var max_enemies = GameMaster.max_enemies
+	var total_weight := 0.0
+	var max_enemies = GameMaster.max_enemies
+	
+	# 1. Calculamos el peso total una sola vez
 	for enemy in GameMaster.valid_pool_stable:
 		total_weight += GameMaster.valid_pool_stable[enemy]
-	var rng_monster = randf_range(0.0, total_weight)
+	
+	# 2. Decidimos cuántos enemigos habrá en total
 	var rng_count = randi_range(1, max_enemies)
-	var current_weight := 0.0
 
-	for enemy in GameMaster.valid_pool_stable:
-		current_weight += GameMaster.valid_pool_stable[enemy]
-		if rng_monster <= current_weight:
-			enemies.append(enemy)
-			if enemies.size() >= rng_count:
-				break
+	# 3. Hacemos un "tiro de dados" INDEPENDIENTE por cada enemigo que necesitamos
+	for i in range(rng_count):
+		var rng_monster = randf_range(0.0, total_weight)
+		var current_weight := 0.0
+		
+		for enemy in GameMaster.valid_pool_stable:
+			current_weight += GameMaster.valid_pool_stable[enemy]
+			if rng_monster <= current_weight:
+				# ¡VITAL! Duplicamos el recurso para que tenga su propia vida y su propia ID
+				enemies.append(enemy.duplicate())
+				break # Rompemos el bucle interno para buscar al siguiente monstruo del grupo
 
 	var size_viewport = get_viewport_rect().size.y
 	if not flag_combat:
 		current_enemy = enemies[0]
 		info.position.y += size_viewport
-		richLabel.position.y += size_viewport
 		status.position.y += size_viewport
 		$Camera2D.position.y += size_viewport
 		flag_combat = true
 		$Info.show_enemy_status()
+		$Battle/RichTextLabel.start_combat()
 	else:
 		info.position.y -= size_viewport
-		richLabel.position.y -= size_viewport
 		status.position.y -= size_viewport
 		$Camera2D.position.y -= size_viewport
 		flag_combat = false

@@ -1,14 +1,18 @@
 [gd_resource type="Resource" script_class="MonsterDB" format=3 uid="uid://dsl3v825nfom2"]
 
-[ext_resource type="Script" uid="uid://rlkecmk73hsm" path="res://Scripts/resources/Recurso_ataque.gd" id="1_iutq2"]
 [ext_resource type="Script" uid="uid://b4s60bfjgoijp" path="res://Scripts/resources/Recurso_monstruo.gd" id="1_sq0x4"]
-[ext_resource type="Resource" uid="uid://d0fqgt4yhip40" path="res://Recursos/Ataque/punch.tres" id="2_wthy6"]
+[ext_resource type="Script" uid="uid://cc4xydpduq4or" path="res://Scripts/resources/Recurso_slot.gd" id="1_wthy6"]
+[ext_resource type="Resource" uid="uid://d13ibwyeb1bos" path="res://Recursos/Espacio/Sombra/Shadow_punch.tres" id="2_fej3d"]
 
 [resource]
 script = ExtResource("1_sq0x4")
-spawn_zones = Array[int]([-1])
-strength = 1
-possible_attacks = Dictionary[ExtResource("1_iutq2"), int]({
-ExtResource("2_wthy6"): 3
+entity_name = Dictionary[String, String]({
+"ES_CL": "Sombra"
 })
+spawn_zones = Array[int]([-1])
+probability = 50.0
+life = 10
+strength = 1
+possible_actions = Array[ExtResource("1_wthy6")]([ExtResource("2_fej3d")])
+defense = 3.0
 metadata/_custom_type_script = "uid://b4s60bfjgoijp"

@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="MonsterDB" format=3 uid="uid://bvkdjxfxhadgr"]
+
+[ext_resource type="Script" uid="uid://cc4xydpduq4or" path="res://Scripts/resources/Recurso_slot.gd" id="1_cuadj"]
+[ext_resource type="Resource" uid="uid://bdw7rcfwlybry" path="res://Recursos/Espacio/Escultura/sculture_stare.tres" id="2_eq885"]
+[ext_resource type="Script" uid="uid://b4s60bfjgoijp" path="res://Scripts/resources/Recurso_monstruo.gd" id="2_xq0xo"]
+
+[resource]
+script = ExtResource("2_xq0xo")
+entity_name = Dictionary[String, String]({
+"EN_US": "Sculpture",
+"ES_CL": "Escultura"
+})
+id_entity = 2
+spawn_zones = Array[int]([-1])
+probability = 50.01
+life = 200
+strength = 0
+cord_damage = 1.0
+possible_actions = Array[ExtResource("1_cuadj")]([ExtResource("2_eq885")])
+ai_context = "Una escultura sin un rostro definido, tiene la capacidad de interferir en la mente humana, pero es incapaz de moverse"
+start_variants = Dictionary[String, Array]({
+"EN_US": ["A strange sculpture catches your eye. [wave amp=50.0 freq=5.0]YOU CANNOT LEAVE YET.[/wave] [color=ORANGE]What was that?[/color]", "A sculpture forces you to look at it, for some reason you can't leave this place. [i]YOU NEED TO STARE.[/i]", "You feel a heavy weight on the back of your neck. Turning around, a faceless stone figure is watching you. [color=gray]Your mind clouds over...[/color]"],
+"ES_CL": ["Una extraña escultura te llama la atención. [wave amp=50.0 freq=5.0]NO PUEDES IRTE AÚN.[/wave] [color=ORANGE]¿Qué fue eso?[/color]", "Una escultura te hace mirarle, por alguna razón no puedes irte de este lugar. [i]NECESITAS MIRARLO.[/i]", "Sientes un peso en la nuca. Al voltear, una figura de piedra te observa sin rostro. [color=gray]Tu mente se nubla...[/color]"]
+})
+damage_variants = Dictionary[String, Dictionary]({
+"EN_US": {
+"HIGH": ["shattering a large part of its figure! A dark liquid oozes from the stone.", "fracturing its structure! You hear echoes of weeping voices from inside it.", "breaking the material! The stone crumbles, and your mind feels a momentary relief. You made {damage} of {type} damage."],
+"LOW": ["but the impact barely echoes against its hard stone.", "leaving only a superficial scratch on the marble.", "and your knuckles hurt more than the damage you dealt. You made {damage} of {type} damage."],
+"MASTER": ["pulverizing the rock completely! The air distorts as its form collapses.", "destroying the anomaly in a single strike! Silence slams back into the room.", "shattering the statue to pieces! The face it never had disintegrates into cosmic dust. You made {damage} of {type} damage."],
+"MEDIUM": ["chipping away chunks of stone and gray dust.", "creating a deep crack across its surface.", "causing a dull, unnatural thud to vibrate through the room. You made {damage} of {type} damage."]
+},
+"ES_CL": {
+"HIGH": ["¡destrozando gran parte de su figura! Un líquido oscuro supura de la herida.", "¡fracturando su estructura! Escuchas ecos de voces llorando desde su interior.", "¡quebrando el material! La piedra se desmorona y tu mente siente un alivio momentáneo. Le haz hecho {damage} de daño {type}"],
+"LOW": ["pero el impacto apenas resuena contra su dura piedra.", "dejando solo un rasguño superficial en el mármol.", "y tus nudillos duelen más que el daño que le haces. Le haz hecho {damage} de daño {type}"],
+"MASTER": ["¡pulverizando la roca por completo! El aire se distorsiona mientras su forma colapsa.", "¡destruyendo la anomalía de un solo impacto! El silencio regresa a la habitación de golpe.", "¡haciendo añicos la estatua! El rostro que nunca tuvo se desintegra en polvo cósmico. Le haz hecho {damage} de daño {type}"],
+"MEDIUM": ["arrancando trozos de piedra y polvo grisáceo.", "creando una profunda grieta en su superficie.", "haciendo que un ruido sordo y antinatural vibre en la habitación."]
+}
+})
+metadata/_custom_type_script = "uid://b4s60bfjgoijp"

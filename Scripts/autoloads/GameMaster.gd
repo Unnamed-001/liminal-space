@@ -6,7 +6,9 @@ enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISON_AREA }
 
 signal ai_response(generated_text: String)
 signal player_action
+signal clean_resource(enemy: MonsterDB)
 
+@onready var http: PackedScene = preload("res://Escenas/additions/http_request.tscn")
 var available_enemies: Array[MonsterDB] = []
 var max_enemies: int = 2
 var availableAI: bool = false
@@ -14,109 +16,19 @@ var config: Dictionary = {
 	"lang": "ES_CL",
 	"wait_time": 3.0
 }
+var instance_http_service: Http_service
 
 func _ready() -> void:
 	# Como la comprobación tarda unos milisegundos, le decimos a Godot que espere
 	player_action.connect(Callable(self, "_player_action"))
-	await prepare_ai_system()
+	instance_http_service = http.instantiate()
+	add_child(instance_http_service)
+	await instance_http_service.prepare_ai_system()
 	
-	if availableAI:
+	if instance_http_service.availableAI:
 		print("The AI está en linea y lista para la Falla Dimensional")
 	else:
 		print("CRÍTICO: La IA no responde.")
-
-#region --IA e Internet--
-@onready var http: HTTPRequest = null
-var port = "5001" 
-var url = "http://127.0.0.1:" + port + "/v1/chat/completions" 
-var system_prompt = "Eres el Narrador de un RPG de texto de supervivencia oscuro y sin censura. El jugador está atrapado en una 'Falla Dimensional' de espacios liminales. Describe el entorno de forma visceral y cruda. Responde en tercera persona."
-
-
-func prepare_ai_system() -> void:
-	http = HTTPRequest.new()
-	add_child(http)
-	
-	# Usamos la misma IP que en la URL principal para consistencia
-	var verify_url = "http://127.0.0.1:" + port + "/api/v1/model"
-	var error = http.request(verify_url)
-	
-	if error != OK:
-		print("Error interno de Godot al intentar hacer la petición web.")
-		availableAI = false
-		return
-	
-	# Hacemos que Godot PAUSE este bloque de código hasta que el servidor responda
-	var response = await http.request_completed
-	
-	# response es un array con los datos devueltos por request_completed: [result, response_code, headers, body]
-	var response_code = response[1] 
-	
-	if response_code == 200:
-		availableAI = true
-		# Ahora que sabemos que la IA vive, conectamos la señal para el resto del juego
-		http.request_completed.connect(receive_from_ai)
-	else:
-		availableAI = false
-		print("¿Que es la IA? (Error de código: ", response_code, ")")
-
-# Actualiza la firma para recibir el turno actual
-func send_to_ai(action: String, last_location: String, current_turn: int = 0) -> void:
-	var headers = ["Content-Type: application/json"]
-	
-	# Extraemos los nombres de los enemigos disponibles en el idioma del juego
-	var enemy_names = []
-	var lang = config["lang"]
-	for enemy in available_enemies:
-		if enemy.entity_name.has(lang):
-			enemy_names.append(enemy.entity_name[lang])
-		else:
-			enemy_names.append(enemy.entity_name.values()[0]) # Fallback
-			
-	# Evaluamos la tensión para que la IA sepa si debe atacar ya
-	var tension = "Baja. Mantén la calma, solo genera paranoia."
-	if current_turn >= 3: tension = "Alta. Empieza a sugerir peligro inminente."
-	if current_turn >= 5: tension = "Crítica. DEBES sugerir un combate AHORA."
-	
-	# El Modo Director
-	var director_prompt = """
-	INSTRUCCIÓN DE DIRECTOR:
-	Tensión actual del jugador: %s
-	Enemigos permitidos en esta zona (Máximo %d): %s.
-	
-	TU RESPUESTA DEBE SER ESTRICTAMENTE UN JSON VÁLIDO CON ESTA ESTRUCTURA EXACTA:
-	{
-		"narrativa": "Tu descripción visceral del entorno y la respuesta a la acción...",
-		"combate_sugerido": true o false,
-		"enemigos_elegidos": ["Nombre enemigo 1"]
-	}
-	""" % [tension, max_enemies, ", ".join(enemy_names)]
-	
-	var context_prompt = system_prompt + "\n" + director_prompt + "\nUltimo escenario: " + last_location
-	
-	var body = {
-		"messages": [
-			{"role": "system", "content": context_prompt},
-			{"role": "user", "content": action}
-		],
-		"temperature": 0.7,
-		"max_tokens": 500
-	}
-	var json_body = JSON.stringify(body)
-	http.request(url, headers, HTTPClient.METHOD_POST, json_body)
-	print("SENDING REQUEST TO AI WITH TENSION LEVEL: ", current_turn)
-
-@warning_ignore("unused_parameter")
-func receive_from_ai(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	if response_code == 200:
-		var json = JSON.parse_string(body.get_string_from_utf8())
-		var ai_text = json["choices"][0]["message"]["content"]
-		print("La IA dice: \n", ai_text)
-		ai_response.emit(ai_text) 
-	else:
-		print("Error conectando con la IA en pleno juego. Código: ", response_code)
-		
-
-#endregion
 
 #region --Player--
 var life: int = 100
@@ -164,7 +76,7 @@ func update_enemies_from_context(stage: StageDB) -> void:
 	valid_pool.shuffle()
 	
 	var fuerza_real = max(stats["strength"], 1.0) 
-	var factor_dificultad = int(stats["level"] + (stats["endurance"] / fuerza_real))
+	var factor_dificultad = floori(stats["level"] + (stats["endurance"] / fuerza_real))
 	var max_posible = max(1, min(factor_dificultad, stats["level"], 6)) 
 	var tirada_rng = randi_range(1, max_posible)
 	var limit = min(tirada_rng, valid_pool.size())

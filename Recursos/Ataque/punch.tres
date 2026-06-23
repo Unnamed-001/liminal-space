@@ -4,11 +4,25 @@
 
 [resource]
 script = ExtResource("1_5brrt")
+unique_id = 1
+damage = 10
+variance = 8.0
+player_dialogue = Dictionary[String, Dictionary]({
+"EN_US": {
+&"HIGH": ["A brutal strike! ...", "I hit it with all my strength ...", "A devastating blow! ..."],
+&"LOW": ["A weak strike ...", "My attack just grazed it. I need to focus ...", "A glancing blow. It wasn't enough. ..."],
+&"MASTER": ["A perfect strike! ...", "Absolute destruction ...", "A master blow! ..."],
+&"MEDIUM": ["A solid hit ...", "I strike it head-on. ...", "A direct impact ..."]
+},
+"ES_CL": {
+&"HIGH": ["¡Un golpe brutal! ...", "Lo golpeo con todas mis fuerzas ...", "¡Un impacto devastador! ..."],
+&"LOW": ["Un golpe débil ...", "Mi ataque solo lo rozó. Debo concentrarme ...", "Un impacto superficial ..."],
+&"MASTER": ["¡Un golpe perfecto! ...", "Destrucción absoluta. ...", "¡Un golpe maestro! ..."],
+&"MEDIUM": ["Un golpe sólido ...", "Lo impacto de lleno ...", "Un ataque directo ..."]
+}
+})
 name = Dictionary[String, String]({
 "EN_US": "Punch",
 "ES_CL": "Golpe"
 })
-unique_id = 1
-damage = 10
-variance = 8.0
 metadata/_custom_type_script = "uid://rlkecmk73hsm"

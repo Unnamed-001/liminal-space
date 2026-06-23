@@ -1,6 +1,6 @@
 extends Control
 
-@onready var main: main_game = $".."
+@onready var main: MainGame = $".."
 @onready var enemy_selector: HBoxContainer = $Enemy_selector
 @onready var bars: VBoxContainer = $Bars
 
@@ -16,9 +16,11 @@ func _ready() -> void:
 	
 	# Sintaxis limpia y moderna de Godot 4 para conectar señales
 	GameMaster.player_action.connect(update_status)
+	GameMaster.connect("clean_resource", _on_clean_resource)
 
 func show_enemy_status() -> void:
-	print("Mostrando estado del enemigo: ", main.current_enemy.entity_name)
+	print("Mostrando estado del enemigo: ", main.current_enemy.entity_name, ". Enemigos en la batalla: ", main.enemies.size())
+	print("Enemigos: ", main.enemies)
 	bars.visible = true
 
 	for enemy: MonsterDB in main.enemies:
@@ -34,6 +36,7 @@ func show_enemy_status() -> void:
 	update_status()
 
 func hide_enemy_status() -> void:
+	lifes.clear()
 	enemy_selector.visible = false
 	bars.position = home_pos
 	bars.visible = false
@@ -49,6 +52,10 @@ func update_status() -> void:
 			bars.get_node("CORD").max_value = lifes[main.current_enemy][1]
 			bars.get_node("CORD").value = main.current_enemy.cord
 
+func _on_clean_resource(enemy: MonsterDB) -> void:
+	if lifes.has(enemy):
+		lifes.erase(enemy)
+
 
 #region -- Navegación de Enemigos --
 func _to_front() -> void:
@@ -60,6 +67,7 @@ func _to_front() -> void:
 		index = 0
 		
 	main.current_enemy = main.enemies[index]
+	print("Cambiado a: ", main.enemies[index].entity_name[GameMaster.config["lang"]])
 	update_status() # Llama a actualizar la vista al cambiar de objetivo
 
 func _to_end() -> void:
@@ -71,5 +79,6 @@ func _to_end() -> void:
 		index = main.enemies.size() - 1
 		
 	main.current_enemy = main.enemies[index]
+	print("Cambiado a: ", main.enemies[index].entity_name[GameMaster.config["lang"]])
 	update_status() # Llama a actualizar la vista al cambiar de objetivo
 #endregion
