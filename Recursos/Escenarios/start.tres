@@ -4,12 +4,22 @@
 
 [resource]
 script = ExtResource("1_663ho")
+title = "START"
 context = "El jugador acaba de caer a la Falla Dimensional desde su realidad. Está desorientado en un entorno liminal apenas iluminado. Objetos a la vista: 1 lata de comida, 1 botella de agua. Siente una urgencia extrema y visceral por huir. Describe el entorno de forma opresiva y presenta dos posibles rutas o pasillos oscuros por los que el jugador podría intentar avanzar."
-escenario_es_cl = "Despiertas en un lugar tenebroso, ni siquiera sabes cómo terminaste aquí; solamente recuerdas que estabas en medio de la noche, viendo un canal de fallas en la realidad, cuando el despertador empezó a sonar raro, y justo cuando lo apagaste, tu mano pareció traspasarlo; luego todo tu entorno cambió drásticamente.
+escenario_es_cl = Array[String](["El reloj marcaba las 3:33 AM. Solo ibas a apagar el televisor, pero al tocar el botón, la pantalla estalló en una estática cegadora. El sonido fue ensordecedor, como mil voces susurrando a la vez. Cuando por fin abres los ojos, el suelo de madera de tu sala ha sido reemplazado por una alfombra húmeda y asquerosa. Ya no estás en tu casa. 
 
-[color=orange]“¿Dónde demonios estoy?”[/color]
+[color=orange]¿Donde demonios estoy?[/color]
 
-Miras a tu alrededor, solo encuentras una lata de comida y una botella de agua; aparte de eso, solo puedes ver el entorno apenas iluminado que hay a tu alrededor. Igual, aunque estés aturdido, algo muy en el fondo de ti te dice que [shake rate=20.0 level=5 connected=1] no puedes quedarte allí [/shake], que sería una muy mala idea."
+Un mal presentimiento te viene al cuerpo, algo sabe que estás aquí, y no parece sser bueno.", "El zumbido del televisor te estaba arrullando en el sofá hasta que un crujido eléctrico te despertó de golpe. Parpadeas, confundido. Tu sala de estar se ha desvanecido por completo. Ahora estás tirado en el centro de un vestíbulo iluminado por luces fluorescentes que parpadean de forma enfermiza. El aire huele a encierro y ozono.
+
+[color=orange]¿Qué demonios?[/color]
+
+Casi todo lo que tenías acababa de desaparecer, un pensamiento te cruza la cabeza. [i][color=grey]A lo mejor te secuestraron.[/color][/i] Pero el pensamiento no dura mucho al escuchar susurros indescriptibles.", "Fue un simple parpadeo. Mirabas la pantalla estática del televisor y, en una fracción de segundo, la geometría de tu habitación colapsó sobre sí misma. Una náusea terrible te revuelve el estómago mientras te pones de pie. Las paredes a tu alrededor ahora están cubiertas de un papel tapiz amarillo y despellejado. Has caído por una grieta en la realidad.
+
+[color=orange]¿Q-Qué? ¿Donde estoy?[/color]
+
+Estos lugares te parecen familiares, como los videos que viste en las plataformas de video o streaming, pero se siente diferente."])
+escenario_en_us = Array[String](["The clock read 3:33 AM. You were just going to turn off the TV, but as you touched the button, the screen erupted into blinding static. The noise was deafening, like a thousand voices whispering at once. When you finally open your eyes, the wooden floor of your living room has been replaced by a damp, disgusting carpet. You are no longer home.", "The hum of the TV was lulling you to sleep on the couch until a sharp electrical crack jolted you awake. You blink, confused. Your living room has completely vanished. You are now lying in the middle of a lobby lit by sickly flickering fluorescent lights. The air smells of confinement and ozone.", "It was a simple blink. You were staring at the static on the TV screen, and in a fraction of a second, the geometry of your room collapsed onto itself. A terrible nausea churns your stomach as you stand up. The walls around you are now covered in peeling yellow wallpaper. You have fallen through a crack in reality."])
 actions = Dictionary[int, Dictionary]({
 11: {
 "ES_CL": "Avanzar"

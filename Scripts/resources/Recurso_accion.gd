@@ -2,8 +2,7 @@ extends Resource
 class_name ActionDB
 
 @export_category("info")
-@export() var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""}
-@export var wait_time: float = 3.0
+@export var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""}
 
 func get_action_name(lang: String = GameMaster.config["lang"]) -> String:
 	if name.has(lang):

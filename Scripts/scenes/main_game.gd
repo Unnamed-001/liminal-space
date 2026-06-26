@@ -11,6 +11,8 @@ const max_turns: int = 5
 var enemies: Array[MonsterDB] = []
 var current_enemy: MonsterDB
 var active_ids: Array[int] = []
+var last_zone: int = 0
+var current_zone: int = 0
 var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres")
 var in_the_zone: int = 0
 var turn: int = 0
@@ -49,6 +51,7 @@ func pressed_button(id: int) -> void:
 	if not active_ids.has(id):
 		print("llamada bloqueada.")
 		return
+	GameMaster.player_action.emit()
 
 	if current_stage.connected_with.has(id):
 		var next_route = current_stage.connected_with[id] as StageDB
@@ -64,7 +67,7 @@ func pressed_button(id: int) -> void:
 
 	else:
 		if not GameMaster.availableAI: return
-		richLabel.text = "[wave amp=50.0 freq=5.0 connected=1]Sumergiéndose en la Falla Dimensional...[/wave]"
+		richLabel.text = "[wave amp=50.0 freq=5.0 connected=1]Sumergiéndose en la Falla Dimensional[/wave]"
 		update_active_buttons([])
 		var accion = "El jugador avanzó hacia lo desconocido usando la opción " + str(id) + ". Describe el nuevo entorno liminal."
 		GameMaster.send_to_ai(accion, current_stage.context)
@@ -120,6 +123,9 @@ func update_status() -> void:
 	$Status/BARS/HUNGER.value = GameMaster.hunger
 	$Status/BARS/THIRST.value = GameMaster.thirst
 
+	_update_current_zone()
+
+
 func update_active_buttons(IDs: Array[int]) -> void:
 	active_ids = IDs
 	for btn in grid.get_children():
@@ -132,16 +138,16 @@ func update_active_buttons(IDs: Array[int]) -> void:
 			btn.modulate.a = 0.0
 
 func update_stage(stage: StageDB, force_lang: String = "") -> void:
-	var current_lang = force_lang
+	var current_lang: String = force_lang
 	if force_lang.is_empty():
 		current_lang = GameMaster.config["lang"] as String
 
-	var langs = stage.get_languages()
+	var langs := stage.get_languages()
 	if langs.has(current_lang):
 		if langs[current_lang].is_empty():
 			print("ESCRIBE ALGO IDIOTA")
 			return
-		richLabel.text = langs[current_lang]
+		richLabel.text = langs[current_lang].pick_random()
 	else:
 		print("idioma no soportado")
 		update_stage(stage, "ES_CL")
@@ -158,6 +164,26 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 			var actions_text_dict = stage.actions[my_id]
 			if actions_text_dict.has(current_lang):
 				btn.text = actions_text_dict[current_lang]
+
+func _update_current_zone() -> void:
+	current_zone = current_stage.id_zone
+	if last_zone != current_zone:
+		last_zone = current_zone
+		turn = 0
+	else:
+		turn += 1
+
+	match current_stage.special_event:
+		GM.special_case.DANGER_ZONE:
+			pass
+		GM.special_case.DRAINING_AREA:
+			GameMaster.thirst -= 3
+			GameMaster.hunger -= 3
+		GM.special_case.RESTRICTED_AREA:
+			pass
+		GM.special_case.POISON_AREA:
+			GameMaster.life -= 3
+
 
 func _show_stats() -> void:
 	var statsLabel = $Status/stats as RichTextLabel
@@ -188,12 +214,23 @@ func _show_stats() -> void:
 func combat() -> void:
 	GameMaster.update_enemies_from_context(current_stage)
 
+	# Limpiar lista previa de enemigos
+	enemies.clear()
+
 	var total_weight := 0.0
 	var max_enemies = GameMaster.max_enemies
+
+	if GameMaster.valid_pool_stable.is_empty():
+		print("No hay enemigos configurados para este escenario.")
+		return
 	
 	# 1. Calculamos el peso total una sola vez
 	for enemy in GameMaster.valid_pool_stable:
 		total_weight += GameMaster.valid_pool_stable[enemy]
+
+	if total_weight <= 0.0:
+		print("Peso total de enemigos es cero.")
+		return
 	
 	# 2. Decidimos cuántos enemigos habrá en total
 	var rng_count = randi_range(1, max_enemies)
@@ -206,9 +243,13 @@ func combat() -> void:
 		for enemy in GameMaster.valid_pool_stable:
 			current_weight += GameMaster.valid_pool_stable[enemy]
 			if rng_monster <= current_weight:
-				# ¡VITAL! Duplicamos el recurso para que tenga su propia vida y su propia ID
+				# Duplicamos el recurso para que tenga su propia vida
 				enemies.append(enemy.duplicate())
-				break # Rompemos el bucle interno para buscar al siguiente monstruo del grupo
+				break
+
+	if enemies.size() == 0:
+		print("No se pudieron generar enemigos.")
+		return
 
 	var size_viewport = get_viewport_rect().size.y
 	if not flag_combat:

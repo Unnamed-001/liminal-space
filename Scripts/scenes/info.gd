@@ -20,7 +20,10 @@ func _ready() -> void:
 
 func show_enemy_status() -> void:
 	print("Mostrando estado del enemigo: ", main.current_enemy.entity_name, ". Enemigos en la batalla: ", main.enemies.size())
-	print("Enemigos: ", main.enemies)
+	var enemy_names: Array[String] = []
+	for enemy: MonsterDB in main.enemies:
+		enemy_names.append(enemy.entity_name[GameMaster.config["lang"]])
+	print("Enemigos: ", enemy_names)
 	bars.visible = true
 
 	for enemy: MonsterDB in main.enemies:

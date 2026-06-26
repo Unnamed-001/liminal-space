@@ -30,6 +30,10 @@ class_name MonsterDB
 
 @export_category("Contexto")
 @export_multiline() var ai_context: String = ""
+@export var stay_variants: Dictionary[String, Array] = {
+	"ES_CL": ["", "", ""],
+	"EN_US": ["", "", ""]
+}
 @export var start_variants: Dictionary[String, Array] = {
 	"ES_CL": ["", "", ""],
 	"EN_US": ["", "", ""]

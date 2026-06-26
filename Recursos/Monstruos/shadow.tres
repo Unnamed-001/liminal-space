@@ -15,4 +15,8 @@ life = 10
 strength = 1
 possible_actions = Array[ExtResource("1_wthy6")]([ExtResource("2_fej3d")])
 defense = 3.0
+start_variants = Dictionary[String, Array]({
+"EN_US": ["", "", ""],
+"ES_CL": ["Desde el lugar más oscuro vez como una masa negra amorfa se avalanza hacia ti, apenas logras esquivarle.", "Empiezar a ver un ente amorfo al fondo [shake rate=20.0 level=5 connected=1][color=orange]¡¿Qué demonios es eso?![/color][/shake], no tienes tiempo para pensarlo, ya que se avalanza contra ti.", "Tu sombra empieza a moverse de manera rara, y de la nada tu propia sombra empieza a ganar volumen, al parecer tendrás que matarla si quieres vivir"]
+})
 metadata/_custom_type_script = "uid://b4s60bfjgoijp"

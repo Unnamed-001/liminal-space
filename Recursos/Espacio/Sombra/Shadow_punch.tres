@@ -7,4 +7,7 @@
 script = ExtResource("1_prgcr")
 action = ExtResource("1_o2pas")
 probability = 30.0
-dialogue = null
+dialogue = Dictionary[String, Array]({
+"EN_US": ["", "", ""],
+"ES_CL": ["La sombra se avalanza sobre ti, causandote {damage} de {type}.", "La sombra se revuelve en si misma y saca espinas de su interior, te hace {damage} de {type}", "El ente extiende su mano a gran velocidad y te hace {damage} de {type}."]
+})

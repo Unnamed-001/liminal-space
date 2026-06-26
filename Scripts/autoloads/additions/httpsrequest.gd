@@ -61,7 +61,7 @@ func send_to_ai(action: String, last_location: String, current_turn: int = 0) ->
 	
 	TU RESPUESTA DEBE SER ESTRICTAMENTE UN JSON VÁLIDO CON ESTA ESTRUCTURA EXACTA:
 	{
-		"narrativa": "Tu descripción visceral del entorno y la respuesta a la acción...",
+		"narrativa": "Tu descripción visceral del entorno y la respuesta a la acción",
 		"combate_sugerido": true o false,
 		"enemigos_elegidos": ["Nombre enemigo 1"]
 	}

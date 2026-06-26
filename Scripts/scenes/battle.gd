@@ -8,10 +8,10 @@ signal start_turn
 
 #region --Nodos--
 @onready var selector:= $Selector
-@onready var gridbtn: Array[Button]
+@onready var gridbtn: Array[Button] = []
 @onready var chosen_lang: String = GameMaster.config["lang"]
 @onready var main: MainGame = $".."
-@onready var child_btn
+@onready var child_btn = []
 @onready var logic: BattleLogic = $Logic
 @onready var translator: BattleTranslator = $RichTextLabel
 #endregion
@@ -43,6 +43,9 @@ func _pressed_button(id: int) -> void:
 			logic._defend_yourself(id)
 
 func press_handler(id: int) -> void:
+	if main.enemies.is_empty():
+		main.combat()
+		return
 	match id:
 		1:
 			print("Attack_mode")
@@ -59,14 +62,11 @@ func press_handler(id: int) -> void:
 	selector.visible = true
 
 func _monsters_turn() -> void:
-	for btn in gridbtn:
-		btn.text = "Waiting..."
-		btn.disabled = true
+	for i in range(main.enemies.size() - 1, -1, -1):
+		if main.enemies[i].life <= 0:
+			main.enemies.remove_at(i)
 
 	for monster: MonsterDB in main.enemies:
-		if monster.life <= 0: 
-			main.enemies.erase(monster)
-			continue
 		var total_weight: float = 0.0
 		for slot in monster.possible_actions:
 			total_weight += slot.probability
@@ -84,23 +84,25 @@ func _monsters_turn() -> void:
 					chosen_slot = slot
 				break
 
-		if chosen_slot != null:
-			var lang = GameMaster.config["lang"]
-
 		if chosen_atk != null:
-			var lang = GameMaster.config["lang"]
-			print(monster.entity_name[lang], " usó ", chosen_atk.name[lang])
+			var lang = GameMaster.config.get("lang", "ES_CL")
+			print(monster.entity_name.get(lang, "Entidad"), " usó ", chosen_atk.name.get(lang, "Ataque"))
 
-			logic._apply_damage("player", chosen_atk, monster)
+			# Esto solo inyecta el texto en chosen_text de tu Translator
+			logic._apply_damage("player", chosen_atk, monster, chosen_slot)
 
-			await get_tree().create_timer(chosen_atk.wait_time).timeout
+	if not translator.chosen_text.is_empty():
+		print("Traduciendo ataques...", Time.get_ticks_msec())
+		if translator.is_typing:
+			await translator.finish_typing
+		else:
+			await translator._update()
 
-	if main.enemies.size() == 0:
+	# 5. Finalizar el turno
+	if main.enemies.is_empty():
 		print("¡Has ganado la batalla!")
-		_restore_menu_state()
-		main.combat()
-		return
-	print("Es el turno del jugador.")
+	
+	print("Es el turno del jugador.", Time.get_ticks_msec())
 	_restore_menu_state()
 
 #region --Funciones auxiliares--
@@ -119,6 +121,12 @@ func _ready() -> void:
 	_prepare_buttons()
 
 func _restore_menu_state(emit: bool = true) -> void:
+	if main.enemies.is_empty():
+		for btn in gridbtn:
+			btn.text = "Continue" if GameMaster.config["lang"] == "ES_CL" else "Continuar"
+			btn.disabled = false
+		return
+
 	current_state = STATES.MAIN
 
 	btn1.text = "ATACAR"

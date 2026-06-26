@@ -1,0 +1,531 @@
+[gd_scene format=3 uid="uid://eelthyqwn0yb"]
+
+[ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/main_game.gd" id="1_n7y03"]
+[ext_resource type="Script" uid="uid://dck14q0pvlo0e" path="res://Scripts/scenes/info.gd" id="2_25cwj"]
+[ext_resource type="Texture2D" uid="uid://do4j4afirm6fd" path="res://icon.svg" id="2_apeae"]
+[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="3_e4xla"]
+[ext_resource type="Texture2D" uid="uid://oticku2h1h1k" path="res://Recursos/Texturas/BaseI.tres" id="3_h1l5c"]
+[ext_resource type="Texture2D" uid="uid://dogegslxexx6t" path="res://Recursos/Texturas/Life.tres" id="4_lv5ms"]
+[ext_resource type="Texture2D" uid="uid://johs6vwhbrxn" path="res://Recursos/Texturas/Cord.tres" id="5_e4xla"]
+[ext_resource type="Texture2D" uid="uid://bjtmtugqfpswr" path="res://Recursos/Texturas/BaseM.tres" id="6_v71cx"]
+[ext_resource type="Texture2D" uid="uid://bab40oc5m8jcu" path="res://Recursos/Texturas/BorderM.tres" id="7_25cwj"]
+[ext_resource type="Texture2D" uid="uid://cwj0vumf8ai7r" path="res://Recursos/Texturas/Hunger.tres" id="8_p1w6e"]
+[ext_resource type="Texture2D" uid="uid://dxfqjoa4lx1x0" path="res://Recursos/Texturas/Thirst.tres" id="9_1obna"]
+[ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="11_v71cx"]
+[ext_resource type="Script" uid="uid://s2s6wj1wmlq1" path="res://Scripts/scenes/battle_logic.gd" id="13_p1w6e"]
+[ext_resource type="Script" uid="uid://cukdkshvn84mj" path="res://Scripts/scenes/battle_translator.gd" id="14_1obna"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+corner_detail = 20
+
+[node name="MainGame" type="Control" unique_id=1364806353]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_n7y03")
+
+[node name="Backend" type="ColorRect" parent="." unique_id=9716106]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 1296.0
+color = Color(0.10822462, 0.10822461, 0.10822461, 1)
+
+[node name="stage" type="RichTextLabel" parent="." unique_id=1361304489]
+layout_mode = 0
+offset_left = 250.0
+offset_top = -1.0
+offset_right = 856.0
+offset_bottom = 417.0
+bbcode_enabled = true
+text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+scroll_following = true
+scroll_following_visible_characters = true
+language = "es_CL"
+
+[node name="Battle" type="Control" parent="." unique_id=221416709]
+anchors_preset = 0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 1296.0
+mouse_filter = 1
+script = ExtResource("11_v71cx")
+
+[node name="Logic" type="Node" parent="Battle" unique_id=1671043199]
+script = ExtResource("13_p1w6e")
+
+[node name="GridContainer" type="GridContainer" parent="Battle" unique_id=1287650675]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.386
+anchor_top = 0.66
+anchor_right = 0.74300003
+anchor_bottom = 1.0
+offset_left = -3.671997
+offset_top = 0.3199768
+offset_right = 0.063964844
+columns = 2
+
+[node name="Button1" type="Button" parent="Battle/GridContainer" unique_id=795642589]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ATACAR"
+metadata/id = 1
+
+[node name="Button2" type="Button" parent="Battle/GridContainer" unique_id=855901627]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "DEFENDER"
+metadata/id = 2
+
+[node name="Button3" type="Button" parent="Battle/GridContainer" unique_id=245536327]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "OBJETO"
+metadata/id = 3
+
+[node name="Button4" type="Button" parent="Battle/GridContainer" unique_id=1497410700]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ESPECIAL"
+metadata/id = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="Battle" unique_id=512686460]
+clip_children = 2
+clip_contents = true
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e4xla")
+
+[node name="ColorRect" type="ColorRect" parent="Battle/PanelContainer" unique_id=1841177955]
+layout_mode = 2
+color = Color(0.23248088, 0.23248091, 0.23248091, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Battle" unique_id=1663554149]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Battle" unique_id=1897825171]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21700001
+anchor_right = 0.74300003
+anchor_bottom = 0.65300006
+offset_left = 0.015991211
+offset_right = 0.063964844
+offset_bottom = -37.144043
+text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+script = ExtResource("14_1obna")
+
+[node name="Selector" type="HBoxContainer" parent="Battle" unique_id=1843882189]
+layout_mode = 0
+offset_left = 688.0
+offset_top = 386.0
+offset_right = 863.0
+offset_bottom = 431.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Battle/Selector" unique_id=1657746329]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Battle/Selector/TextureRect" unique_id=433520921]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+metadata/page = true
+
+[node name="TextureRect3" type="TextureRect" parent="Battle/Selector" unique_id=1226553854]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = 1.5707964
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button2" type="Button" parent="Battle/Selector/TextureRect3" unique_id=798141718]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="TextureRect2" type="TextureRect" parent="Battle/Selector" unique_id=1364394440]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Battle/Selector/TextureRect2" unique_id=876890466]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+metadata/page = true
+
+[node name="Info" type="Control" parent="." unique_id=1644673995]
+anchors_preset = 0
+offset_right = 250.0
+offset_bottom = 647.0
+mouse_filter = 1
+script = ExtResource("2_25cwj")
+
+[node name="ENEMY" type="TextureRect" parent="Info" unique_id=234072671]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.99200004
+anchor_bottom = 0.386
+offset_top = 4.0
+offset_right = -2.0000153
+offset_bottom = 0.2579956
+texture = ExtResource("2_apeae")
+expand_mode = 2
+
+[node name="Enemy_selector" type="HBoxContainer" parent="Info" unique_id=560719337]
+visible = false
+layout_mode = 0
+offset_top = 255.0
+offset_right = 250.0
+offset_bottom = 330.0
+theme_override_constants/separation = 70
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Info/Enemy_selector" unique_id=369700525]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Info/Enemy_selector/TextureRect" unique_id=1432599970]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+
+[node name="TextureRect2" type="TextureRect" parent="Info/Enemy_selector" unique_id=814435622]
+layout_mode = 2
+texture = ExtResource("3_e4xla")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Info/Enemy_selector/TextureRect2" unique_id=1085870279]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+
+[node name="Bars" type="VBoxContainer" parent="Info" unique_id=429983626]
+visible = false
+layout_mode = 0
+offset_top = 255.0
+offset_right = 246.0
+offset_bottom = 479.0
+
+[node name="LIFE" type="TextureProgressBar" parent="Info/Bars" unique_id=384779692]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("4_lv5ms")
+
+[node name="CORD" type="TextureProgressBar" parent="Info/Bars" unique_id=919390001]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("5_e4xla")
+
+[node name="Status" type="Control" parent="." unique_id=521839593]
+anchors_preset = 0
+offset_left = 863.0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 1
+
+[node name="CHARACTER" type="Sprite2D" parent="Status" unique_id=2028507658]
+position = Vector2(140, 144.99998)
+scale = Vector2(2.2, 2.2)
+texture = ExtResource("2_apeae")
+
+[node name="BARS" type="VBoxContainer" parent="Status" unique_id=306027717]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.44900003
+anchor_right = 0.97200006
+anchor_bottom = 0.80700004
+offset_left = -0.867
+offset_top = 0.047973633
+offset_right = 0.09197998
+offset_bottom = 0.063964844
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="LIFE" type="TextureProgressBar" parent="Status/BARS" unique_id=1325029409]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("4_lv5ms")
+
+[node name="CORD" type="TextureProgressBar" parent="Status/BARS" unique_id=309105351]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("3_h1l5c")
+texture_progress = ExtResource("5_e4xla")
+
+[node name="HUNGER" type="TextureProgressBar" parent="Status/BARS" unique_id=1738492392]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("6_v71cx")
+texture_over = ExtResource("7_25cwj")
+texture_progress = ExtResource("8_p1w6e")
+texture_progress_offset = Vector2(40, 16)
+
+[node name="THIRST" type="TextureProgressBar" parent="Status/BARS" unique_id=1910223487]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("6_v71cx")
+texture_over = ExtResource("7_25cwj")
+texture_progress = ExtResource("9_1obna")
+texture_progress_offset = Vector2(40, 16)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Status" unique_id=1304360480]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.79
+anchor_right = 0.9620001
+anchor_bottom = 0.929
+offset_top = 35.079987
+offset_right = 1.9819641
+offset_bottom = 35.007996
+alignment = 1
+
+[node name="STATS" type="TextureRect" parent="Status/HBoxContainer" unique_id=1542055036]
+layout_mode = 2
+texture = ExtResource("2_apeae")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/STATS" unique_id=938151036]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="INVENTORY" type="TextureRect" parent="Status/HBoxContainer" unique_id=2052999369]
+layout_mode = 2
+texture = ExtResource("2_apeae")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/INVENTORY" unique_id=1048066115]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="MENU" type="TextureRect" parent="Status/HBoxContainer" unique_id=1390970570]
+layout_mode = 2
+texture = ExtResource("2_apeae")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/MENU" unique_id=2112924655]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="stats" type="RichTextLabel" parent="Status" unique_id=1849878442]
+visible = false
+layout_mode = 0
+offset_right = 279.0
+offset_bottom = 379.0
+
+[node name="buttons" type="Control" parent="." unique_id=2106862717]
+layout_mode = 1
+anchor_left = 0.21700001
+anchor_top = 0.64400005
+anchor_right = 0.74300003
+anchor_bottom = 1.0
+offset_left = 0.015991211
+offset_top = -5.312042
+offset_right = 0.063964844
+mouse_filter = 1
+
+[node name="GridContainer" type="GridContainer" parent="buttons" unique_id=1381809856]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.119
+anchor_right = 1.0020001
+anchor_bottom = 0.915
+offset_left = -2.012024
+offset_top = -0.08400154
+offset_right = 0.77593994
+offset_bottom = 0.05999756
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 6
+
+[node name="Button1" type="Button" parent="buttons/GridContainer" unique_id=21923776]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 1
+
+[node name="Button2" type="Button" parent="buttons/GridContainer" unique_id=2129805292]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 2
+
+[node name="Button3" type="Button" parent="buttons/GridContainer" unique_id=1016588520]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 3
+
+[node name="Button4" type="Button" parent="buttons/GridContainer" unique_id=1684151529]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 4
+
+[node name="Button5" type="Button" parent="buttons/GridContainer" unique_id=600404979]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 5
+
+[node name="Button6" type="Button" parent="buttons/GridContainer" unique_id=1302528866]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 6
+
+[node name="Button7" type="Button" parent="buttons/GridContainer" unique_id=960367790]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 7
+
+[node name="Button8" type="Button" parent="buttons/GridContainer" unique_id=536343384]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 8
+
+[node name="Button9" type="Button" parent="buttons/GridContainer" unique_id=2007957823]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 9
+
+[node name="Button10" type="Button" parent="buttons/GridContainer" unique_id=812360667]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 10
+
+[node name="Button11" type="Button" parent="buttons/GridContainer" unique_id=615880046]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 11
+
+[node name="Button12" type="Button" parent="buttons/GridContainer" unique_id=1777710185]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 12
+
+[node name="Button13" type="Button" parent="buttons/GridContainer" unique_id=1191463786]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 13
+
+[node name="Button14" type="Button" parent="buttons/GridContainer" unique_id=1730361695]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 14
+
+[node name="Button15" type="Button" parent="buttons/GridContainer" unique_id=237833781]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 15
+
+[node name="Button16" type="Button" parent="buttons/GridContainer" unique_id=13736614]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 16
+
+[node name="Button17" type="Button" parent="buttons/GridContainer" unique_id=2132287324]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 17
+
+[node name="Button18" type="Button" parent="buttons/GridContainer" unique_id=1920225644]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Text"
+autowrap_mode = 3
+metadata/id = 18
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=94090942]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=251784842]
+position = Vector2(576, 324)
+
+[connection signal="pressed" from="Battle/Selector/TextureRect/Button" to="Battle" method="_previous_page"]
+[connection signal="pressed" from="Battle/Selector/TextureRect3/Button2" to="Battle" method="_restore_menu_state" binds= [false]]
+[connection signal="pressed" from="Battle/Selector/TextureRect2/Button2" to="Battle" method="_next_page"]
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect/Button" to="Info" method="_to_front"]
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect2/Button2" to="Info" method="_to_end"]
+[connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="." method="_show_stats"]

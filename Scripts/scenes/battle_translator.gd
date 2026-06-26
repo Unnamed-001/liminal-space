@@ -3,7 +3,10 @@ class_name BattleTranslator
 
 @onready var main: MainGame = $"../.."
 
-var chosen_text: Array[String] = []
+signal finish_typing
+
+var chosen_text: Array = []
+var is_typing: bool = false
 
 func _ready() -> void:
 	clear()
@@ -22,22 +25,20 @@ func start_combat() -> void:
 
 	_update()
 
-func add_text_to_array_for_enemy(slot: SlotDB, damage_dealt: int, type: AttackDB.TYPE) -> void:
-	var lang: String = GameMaster.config["lang"]
-	var available_phrases: Array[String] = slot.dialogue.get(lang, slot.dialogue.get("ES_CL", []))
-	
-	var selected_phrase: String = "El ataque te impacta." # Texto genérico de rescate
+func add_text_to_array_for_enemy(slot: SlotDB, damage_dealt: int, type: AttackDB.TYPE, attacker: MonsterDB) -> void:
+	var lang: String = GameMaster.config.get("lang", "ES_CL")
+	var available_phrases: Array = slot.dialogue.get(lang, slot.dialogue.get("ES_CL", []))
+
+	var selected_phrase: String = "El ataque te impacta." 
 	if not available_phrases.is_empty():
 		selected_phrase = available_phrases.pick_random()
-	
-	# El match define el idioma y aplica terror visual dinámico
 
 	var format_phrase: String = selected_phrase.format({
 		"damage": str(damage_dealt), 
 		"type": get_text_for_type(type)
 	})
 
-	chosen_text.append(format_phrase)
+	chosen_text.append_array([format_phrase, 0, attacker.stay_variants[lang].pick_random()])
 
 func add_text_to_array_for_player(attack: AttackDB, damage_dealt: int, target: MonsterDB) -> void:
 	var lang: String = GameMaster.config["lang"]
@@ -56,7 +57,7 @@ func add_text_to_array_for_player(attack: AttackDB, damage_dealt: int, target: M
 		reaction_text = varian_chosen[level].pick_random()
 	
 	# 1. FUSIONAMOS la frase en un solo String
-	var combined_phrase: String = action_text + " " + reaction_text
+	var combined_phrase: String = action_text + " " + reaction_text + " Le haz hecho {damage} de {type}"
 	
 	# 2. Aplicamos el BBCode (temblor, color)
 	
@@ -68,16 +69,6 @@ func add_text_to_array_for_player(attack: AttackDB, damage_dealt: int, target: M
 	
 	# 4. Lo guardamos correctamente
 	chosen_text.append(format_phrase)
-
-func _update() -> void:
-	clear()
-	print("actualizando texto")
-
-	for t in chosen_text:
-		append_text(t + "\n\n")
-
-	chosen_text.clear()
-
 
 func get_text_for_type(type: AttackDB.TYPE) -> String:
 	var lang: String = GameMaster.config["lang"]
@@ -116,3 +107,35 @@ func _get_level_for_player(attack: AttackDB, damage_dealt: int) -> StringName:
 	if percentile > 0.66:
 		return &"HIGH"
 	return &"MEDIUM"
+
+func _update(stop: float = 0.0) -> void:
+	if is_typing or chosen_text.is_empty():
+		return
+
+	is_typing = true
+	clear()
+	visible_characters = 0 # Ocultamos todo al principio
+	var duration
+
+	# Extraemos la velocidad, o usamos 0.03 como respaldo seguro
+	var speed: float = GameMaster.config.get("text_speed", 0.03)
+
+	while not chosen_text.is_empty():
+		var t = chosen_text.pop_front()
+		if not t is String:
+			break
+		var start_chars = get_total_character_count()
+		append_text(t + "\n\n")
+		var target_chars = get_total_character_count()
+
+		duration = (target_chars - start_chars) * speed
+
+		if duration > 0:
+			var tween = create_tween()
+			tween.tween_property(self, "visible_characters", target_chars, duration)
+			await tween.finished
+
+	
+			await get_tree().create_timer(0.4).timeout
+	is_typing = false
+	finish_typing.emit()

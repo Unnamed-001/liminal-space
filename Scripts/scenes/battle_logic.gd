@@ -9,9 +9,6 @@ var chosen_lang = GameMaster.config["lang"]
 var additional_defense: Array[int] = []
 var acumulation_cord_damage: float = 0.0
 
-func _player_turn() -> void:
-	pass
-
 #region --Funciones de defensa--
 func _to_defense() -> void:
 	parent.current_state = parent.STATES.DEFENSE
@@ -78,17 +75,23 @@ func _damage_enemy(id: int) -> void:
 		var chosen_attack: AttackDB = parent.attack_options[index]
 		_apply_damage(main.current_enemy, chosen_attack, "player")
 
+	for btn in parent.gridbtn:
+		btn.text = "Waiting..."
+		btn.disabled = true
+	translator._update()
+	await translator.finish_typing
 	parent.end_turn.emit()
 
 func _apply_damage(target: Variant, attack: AttackDB, attacker: Variant = "", slot: SlotDB = null) -> void:
 	var raw_damage = attack.get_damage()
 	var attacker_strength: int
+	var type_of_damage: AttackDB.TYPE = attack.type
 
 	if attacker is MonsterDB:
 		attacker_strength = attacker.strength
 	else:
 		attacker_strength = GameMaster.stats.get("strength", 0) 
-	print("Daño bruto: ", raw_damage, " Atacante: ", attacker.entity_name[GameMaster.config["lang"]] if is_instance_of(attacker, MonsterDB) else "Player" , " Objetivo: ", target.entity_name[GameMaster.config["lang"]] if is_instance_of(target, MonsterDB) else "Player", " Fuerza del atacante: ", attacker_strength)
+	print("Daño bruto: ", raw_damage, " Atacante: ", attacker.entity_name[GameMaster.config["lang"]] if attacker is MonsterDB else "Player" , " Objetivo: ", target.entity_name[GameMaster.config["lang"]] if target is MonsterDB else "Player", " Fuerza del atacante: ", attacker_strength)
 
 	var float_damage = raw_damage * (1.0 + (attacker_strength/100.0))
 	var total_damage = roundi(float_damage)
@@ -97,10 +100,13 @@ func _apply_damage(target: Variant, attack: AttackDB, attacker: Variant = "", sl
 
 	if target is MonsterDB:
 		damage_received = maxi(total_damage - target.defense, 0)
-		target.life -= damage_received
+		if type_of_damage == AttackDB.TYPE.PHYSICAL:
+			target.life -= damage_received
+		elif type_of_damage == AttackDB.TYPE.PSICOLOGYCAL:
+			target.cord -= damage_received
+
 		print("Daño emitido: ", damage_received, " Vida Restante: ", target.life, " Objetivo: ", target.entity_name[GameMaster.config["lang"]])
-		if slot != null:
-			translator.add_text_to_array_for_enemy(slot, damage_received, attack.type)
+		translator.add_text_to_array_for_player(attack, damage_received, target)
 
 	else:
 		var player_def = GameMaster.stats.get("endurance", 0)
@@ -108,8 +114,15 @@ func _apply_damage(target: Variant, attack: AttackDB, attacker: Variant = "", sl
 		if not additional_defense.is_empty():
 			damage_received = maxi(damage_received - additional_defense[0], 0)
 			additional_defense.pop_front()
-		GameMaster.life -= damage_received
+		if type_of_damage == AttackDB.TYPE.PHYSICAL:
+			GameMaster.life -= damage_received
+		elif type_of_damage == AttackDB.TYPE.PSICOLOGYCAL:
+			GameMaster.cord -= damage_received
 		print("Daño recibido: ", damage_received, " Vida Restante: ", GameMaster.life, " Player")
+		if slot != null:
+			translator.add_text_to_array_for_enemy(slot, damage_received, attack.type, attacker)
+
+
 
 	GameMaster.emit_signal("player_action")
 #endregion

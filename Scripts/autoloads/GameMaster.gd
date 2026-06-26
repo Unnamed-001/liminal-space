@@ -14,7 +14,8 @@ var max_enemies: int = 2
 var availableAI: bool = false
 var config: Dictionary = {
 	"lang": "ES_CL",
-	"wait_time": 3.0
+	"wait_time": 3.0,
+	"text_speed": 0.03
 }
 var instance_http_service: Http_service
 
