@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://bqkm2mmt886w8"]
 
-[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="1_663ho"]
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="1_ts5go"]
 
 [resource]
-script = ExtResource("1_663ho")
+script = ExtResource("1_ts5go")
 title = "START"
+id_zone = -1
 context = "El jugador acaba de caer a la Falla Dimensional desde su realidad. Está desorientado en un entorno liminal apenas iluminado. Objetos a la vista: 1 lata de comida, 1 botella de agua. Siente una urgencia extrema y visceral por huir. Describe el entorno de forma opresiva y presenta dos posibles rutas o pasillos oscuros por los que el jugador podría intentar avanzar."
 escenario_es_cl = Array[String](["El reloj marcaba las 3:33 AM. Solo ibas a apagar el televisor, pero al tocar el botón, la pantalla estalló en una estática cegadora. El sonido fue ensordecedor, como mil voces susurrando a la vez. Cuando por fin abres los ojos, el suelo de madera de tu sala ha sido reemplazado por una alfombra húmeda y asquerosa. Ya no estás en tu casa. 
 

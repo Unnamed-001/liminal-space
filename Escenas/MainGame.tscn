@@ -390,126 +390,126 @@ columns = 6
 [node name="Button1" type="Button" parent="buttons/GridContainer" unique_id=21923776]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "1"
 autowrap_mode = 3
 metadata/id = 1
 
 [node name="Button2" type="Button" parent="buttons/GridContainer" unique_id=2129805292]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "2"
 autowrap_mode = 3
 metadata/id = 2
 
 [node name="Button3" type="Button" parent="buttons/GridContainer" unique_id=1016588520]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "3"
 autowrap_mode = 3
 metadata/id = 3
 
 [node name="Button4" type="Button" parent="buttons/GridContainer" unique_id=1684151529]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "4"
 autowrap_mode = 3
 metadata/id = 4
 
 [node name="Button5" type="Button" parent="buttons/GridContainer" unique_id=600404979]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "5"
 autowrap_mode = 3
 metadata/id = 5
 
 [node name="Button6" type="Button" parent="buttons/GridContainer" unique_id=1302528866]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "6"
 autowrap_mode = 3
 metadata/id = 6
 
 [node name="Button7" type="Button" parent="buttons/GridContainer" unique_id=960367790]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "7"
 autowrap_mode = 3
 metadata/id = 7
 
 [node name="Button8" type="Button" parent="buttons/GridContainer" unique_id=536343384]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "8"
 autowrap_mode = 3
 metadata/id = 8
 
 [node name="Button9" type="Button" parent="buttons/GridContainer" unique_id=2007957823]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "9"
 autowrap_mode = 3
 metadata/id = 9
 
 [node name="Button10" type="Button" parent="buttons/GridContainer" unique_id=812360667]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "10"
 autowrap_mode = 3
 metadata/id = 10
 
 [node name="Button11" type="Button" parent="buttons/GridContainer" unique_id=615880046]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "11"
 autowrap_mode = 3
 metadata/id = 11
 
 [node name="Button12" type="Button" parent="buttons/GridContainer" unique_id=1777710185]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "12"
 autowrap_mode = 3
 metadata/id = 12
 
 [node name="Button13" type="Button" parent="buttons/GridContainer" unique_id=1191463786]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "13"
 autowrap_mode = 3
 metadata/id = 13
 
 [node name="Button14" type="Button" parent="buttons/GridContainer" unique_id=1730361695]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "14"
 autowrap_mode = 3
 metadata/id = 14
 
 [node name="Button15" type="Button" parent="buttons/GridContainer" unique_id=237833781]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "15"
 autowrap_mode = 3
 metadata/id = 15
 
 [node name="Button16" type="Button" parent="buttons/GridContainer" unique_id=13736614]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "16"
 autowrap_mode = 3
 metadata/id = 16
 
 [node name="Button17" type="Button" parent="buttons/GridContainer" unique_id=2132287324]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "17"
 autowrap_mode = 3
 metadata/id = 17
 
 [node name="Button18" type="Button" parent="buttons/GridContainer" unique_id=1920225644]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
-text = "Text"
+text = "18"
 autowrap_mode = 3
 metadata/id = 18
 

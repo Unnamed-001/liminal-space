@@ -168,7 +168,7 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 				btn.text = actions_text_dict[current_lang]
 
 func _update_current_zone() -> void:
-	var csse: Dictionary[GM.special_case, float] = current_stage.special_event
+	var csse: Dictionary[GM.special_case, int] = current_stage.special_event
 	var rng: float = randi_range(0, 100)
 	current_zone = current_stage.id_zone
 	if last_zone != current_zone:
@@ -182,13 +182,16 @@ func _update_current_zone() -> void:
 		return
 	if csse.has(GM.special_case.DANGER_ZONE):
 		combat_probability = min(combat_probability + csse[GM.special_case.DANGER_ZONE], 100)
+
 	if csse.has(GM.special_case.RESTRICTED_AREA):
 		pass # no se que añadir aquí
+
 	if csse.has(GM.special_case.POISON_AREA):
-		GameMaster.life -= roundi(csse[GM.special_case.POISON_AREA])
+		GameMaster.life = maxi(0, GameMaster.life - csse[GM.special_case.POISON_AREA])
+
 	if csse.has(GM.special_case.DRAINING_AREA):
-		GameMaster.thirst -= 2 * csse[GM.special_case.DRAINING_AREA]
-		GameMaster.hunger -= csse[GM.special_case.DRAINING_AREA]
+		GameMaster.thirst = maxi(0, GameMaster.thirst - csse[GM.special_case.DRAINING_AREA] * 2)
+		GameMaster.hunger = maxi(0, GameMaster.hunger - csse[GM.special_case.DRAINING_AREA])
 
 	if rng > combat_probability:
 		combat()

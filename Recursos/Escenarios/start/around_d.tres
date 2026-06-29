@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://c3gaf6quklyxm"]
+
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="1_hbx7j"]
+
+[resource]
+script = ExtResource("1_hbx7j")
+title = "around_d_start"
+special_event = Dictionary[int, int]({
+0: 15
+})
+escenario_es_cl = Array[String](["Miras hacia la derecha y no encuentras nada, una pared de color amarillo sucio, aunque claro, eso no te detiene de poder revisar más a tu alrededor, tambien vez una palanca oxidada"])
+actions = Dictionary[int, Dictionary]({
+1: {
+"ES_CL": "Tomar palanca"
+},
+12: {
+"ES_CL": "Observar"
+},
+16: {
+"ES_CL": "Izquierda"
+},
+18: {
+"ES_CL": "Derecha"
+}
+})
+metadata/_custom_type_script = "uid://dgeapbg1b80gm"
