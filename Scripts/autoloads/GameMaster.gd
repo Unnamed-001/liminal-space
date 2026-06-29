@@ -2,7 +2,7 @@ extends Node
 class_name GM
 
 enum actions { SCRATCH, CORRODE, ENCHANT, DRIVE_MAD, FLEE, STALK, PURSUE, PIERCE, DEVOUR, IMMOBILIZE, HYPNOTIZE, OBSERVE, ADMIRE, STRIKE }
-enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISON_AREA }
+enum special_case { DANGER_ZONE, RESTRICTED_AREA, DRAINING_AREA, POISON_AREA, NONE }
 
 signal ai_response(generated_text: String)
 signal player_action

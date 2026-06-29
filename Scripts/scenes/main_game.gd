@@ -1,6 +1,7 @@
 extends Control
 class_name MainGame
 const max_turns: int = 5
+const min_probability: float = 30
 
 @onready var cRect = $ColorRect
 @onready var grid = $buttons/GridContainer
@@ -17,6 +18,7 @@ var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres")
 var in_the_zone: int = 0
 var turn: int = 0
 
+var combat_probability: float = min_probability
 var flag_combat: bool = false
 
 func _ready() -> void:
@@ -166,6 +168,8 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 				btn.text = actions_text_dict[current_lang]
 
 func _update_current_zone() -> void:
+	var csse: Dictionary[GM.special_case, float] = current_stage.special_event
+	var rng: float = randi_range(0, 100)
 	current_zone = current_stage.id_zone
 	if last_zone != current_zone:
 		last_zone = current_zone
@@ -173,22 +177,26 @@ func _update_current_zone() -> void:
 	else:
 		turn += 1
 
-	match current_stage.special_event:
-		GM.special_case.DANGER_ZONE:
-			pass
-		GM.special_case.DRAINING_AREA:
-			GameMaster.thirst -= 3
-			GameMaster.hunger -= 3
-		GM.special_case.RESTRICTED_AREA:
-			pass
-		GM.special_case.POISON_AREA:
-			GameMaster.life -= 3
+	if csse.has(GM.special_case.NONE):
+		combat_probability = min_probability
+		return
+	if csse.has(GM.special_case.DANGER_ZONE):
+		combat_probability = min(combat_probability + csse[GM.special_case.DANGER_ZONE], 100)
+	if csse.has(GM.special_case.RESTRICTED_AREA):
+		pass # no se que añadir aquí
+	if csse.has(GM.special_case.POISON_AREA):
+		GameMaster.life -= roundi(csse[GM.special_case.POISON_AREA])
+	if csse.has(GM.special_case.DRAINING_AREA):
+		GameMaster.thirst -= 2 * csse[GM.special_case.DRAINING_AREA]
+		GameMaster.hunger -= csse[GM.special_case.DRAINING_AREA]
 
+	if rng > combat_probability:
+		combat()
 
 func _show_stats() -> void:
 	var statsLabel = $Status/stats as RichTextLabel
 	statsLabel.visible = !statsLabel.visible
-	
+
 	if statsLabel.visible:
 		# Atenuar el fondo
 		$Status/CHARACTER.modulate.a = 0.2
