@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDB" format=3 uid="uid://g7il3e8gq1db"]
+
+[ext_resource type="Script" uid="uid://cdaq3323bbm7b" path="res://Scripts/resources/Recurso_objeto.gd" id="1_1xbs0"]
+
+[resource]
+script = ExtResource("1_1xbs0")
+name = Dictionary[String, String]({
+"EN_US": "Small bottle of water",
+"ES_CL": "Botella de agua pequeña"
+})
+value = 20
+Description = Dictionary[String, String]({
+"EN_US": "b",
+"ES_CL": "Una pequeña botella de agua. Te preguntas como habrá llegado hasta aquí, parece bebestible."
+})
+type = Dictionary[int, int]({
+1: 20
+})
+advices = Dictionary[String, String]({
+"EN_US": "You get {name}.",
+"ES_CL": "Conseguiste una {name}."
+})
+consume_message = Dictionary[String, String]({
+"ES_CL": "Has consumido {name}, recuperas {value_thirst} de {type_thirst}"
+})
+metadata/_custom_type_script = "uid://cdaq3323bbm7b"

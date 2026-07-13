@@ -1,0 +1,3 @@
+AÑADÍ UN README, NO PUEDE SER...
+
+La verdad es que no se que escribir aquí :V

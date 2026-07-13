@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OptionDB" format=3 uid="uid://4cbtcqg08uyd"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_y7jl4"]
+[ext_resource type="Resource" uid="uid://bawng6p1onrti" path="res://Recursos/Consumibles/Ramen.tres" id="2_1ym4i"]
+
+[resource]
+script = ExtResource("1_y7jl4")
+name = Dictionary[String, String]({
+"EN_US": "",
+"ES_CL": "Ramen"
+})
+result = 1
+target_item = ExtResource("2_1ym4i")
+metadata/_custom_type_script = "uid://dgh71noa471vo"

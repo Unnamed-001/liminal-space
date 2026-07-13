@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/main_game.gd" id="1_n7y03"]
 [ext_resource type="Script" uid="uid://dck14q0pvlo0e" path="res://Scripts/scenes/info.gd" id="2_25cwj"]
 [ext_resource type="Texture2D" uid="uid://do4j4afirm6fd" path="res://icon.svg" id="2_apeae"]
+[ext_resource type="Script" uid="uid://cs18lw8jtncux" path="res://Scripts/scenes/mainTranslator.gd" id="2_b7mqo"]
 [ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="3_e4xla"]
 [ext_resource type="Texture2D" uid="uid://oticku2h1h1k" path="res://Recursos/Texturas/BaseI.tres" id="3_h1l5c"]
 [ext_resource type="Texture2D" uid="uid://dogegslxexx6t" path="res://Recursos/Texturas/Life.tres" id="4_lv5ms"]
@@ -49,6 +50,18 @@ text = "text text text text text text text text text text text text text text te
 scroll_following = true
 scroll_following_visible_characters = true
 language = "es_CL"
+script = ExtResource("2_b7mqo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="stage" unique_id=547808912]
+layout_mode = 0
+offset_top = 340.0
+offset_right = 606.0
+offset_bottom = 418.0
+theme_override_colors/default_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Battle" type="Control" parent="." unique_id=221416709]
 anchors_preset = 0
@@ -178,6 +191,15 @@ layout_mode = 0
 offset_right = 45.0
 offset_bottom = 45.0
 metadata/page = true
+
+[node name="Inventory" type="Control" parent="." unique_id=425143632]
+visible = false
+anchors_preset = 0
+offset_left = 856.0
+offset_top = 288.0
+offset_right = 1142.0
+offset_bottom = 637.0
+mouse_filter = 2
 
 [node name="Info" type="Control" parent="." unique_id=1644673995]
 anchors_preset = 0

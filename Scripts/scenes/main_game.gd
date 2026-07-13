@@ -1,22 +1,18 @@
 extends Control
 class_name MainGame
 const max_turns: int = 5
-const min_probability: float = 30
+const min_probability: float = 10
 
 @onready var cRect = $ColorRect
 @onready var grid = $buttons/GridContainer
 @onready var info = $Info
 @onready var status = $Status
-@onready var richLabel = $stage
+@onready var translator: MainTranslator = $stage
 
 var enemies: Array[MonsterDB] = []
 var current_enemy: MonsterDB
 var active_ids: Array[int] = []
-var last_zone: int = 0
-var current_zone: int = 0
-var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres")
-var in_the_zone: int = 0
-var turn: int = 0
+var current_stage: StageDB = load("res://Recursos/Escenarios/start/start.tres")
 
 var combat_probability: float = min_probability
 var flag_combat: bool = false
@@ -29,16 +25,11 @@ func _ready() -> void:
 	tween.tween_property(cRect, "color", Color(0.294, 0.294, 0.294, 0.0), 1.0).set_ease(Tween.EASE_IN)
 	#endregion
 	#region --Signal connection--
-	GameMaster.connect("ai_response", Callable(self, "Generated_stage_AI"))
 	GameMaster.player_action.connect(Callable(self, "update_status"))
-	update_stage(current_stage)
+	translator.update_stage(current_stage)
 	_prepare_buttons()
 	update_status()
 	#endregion
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		combat()
 
 #region --Output Func--
 
@@ -55,67 +46,36 @@ func pressed_button(id: int) -> void:
 		return
 	GameMaster.player_action.emit()
 
-	if current_stage.connected_with.has(id):
-		var next_route = current_stage.connected_with[id] as StageDB
-		if current_stage.id_zone == next_route.id_zone:
-			in_the_zone += 1
-		current_stage = next_route
-		update_stage(current_stage)
+	for action in current_stage.actions:
+		if action.id == id:
+			match action.result:
+				OptionDB.OptionResult.STAGE_TRANSITION:
+					if action.target_stage:
+						current_stage = action.target_stage
+						translator.update_stage(current_stage, GameMaster.config["lang"])
+					else:
+						printerr("Error: No se ha definido un escenario de destino para la opción seleccionada.")
 
-		turn = 0
-		var action_player = "El jugador avanzó por la ruta estable"
-		GameMaster.update_enemies_from_context(next_route)
-		GameMaster.send_to_ai(action_player, current_stage.context)
+				OptionDB.OptionResult.GIVE_ITEM:
+					if action.target_item:
+						translator.add_object(action.target_item)
+						GameMaster.inventory.append(action.target_item)
 
-	else:
-		if not GameMaster.availableAI: return
-		richLabel.text = "[wave amp=50.0 freq=5.0 connected=1]Sumergiéndose en la Falla Dimensional[/wave]"
-		update_active_buttons([])
-		var accion = "El jugador avanzó hacia lo desconocido usando la opción " + str(id) + ". Describe el nuevo entorno liminal."
-		GameMaster.send_to_ai(accion, current_stage.context)
+						current_stage.actions.erase(action)
+						active_ids.erase(id)
+						update_active_buttons(active_ids)
+					else:
+						printerr("Error: No se ha definido un item de destino para la opción seleccionada.")
+
+				OptionDB.OptionResult.EVENT_TRIGGER:
+					pass # WIP
+
+				OptionDB.OptionResult.AI_FALLBACK:
+					pass # WIP
+			break
+
 	print("Boton presionado: " + str(id))
 	update_status()
-
-func generar_escenario_ia(texto_ia: String) -> void:
-	var json = JSON.parse_string(texto_ia)
-	if typeof(json) != TYPE_DICTIONARY or not json.has("narrativa"):
-		print("Error: La IA no devolvió un formato JSON válido. Usando texto crudo.")
-		json = {
-			"narrativa": texto_ia, # Usamos todo el texto como fallback
-			"combate_sugerido": false,
-			"enemigos_elegidos": []
-		}
-	
-	var new_stage = StageDB.new()
-	var current_lang = GameMaster.config["Lang"] if GameMaster.get("config") else "ES_CL"
-	new_stage.set("escenario_" + current_lang.to_lower(), json["narrativa"]) 
-	
-	turn += 1
-	print("Profundidad de la falla: ", turn)
-	
-	if json["combate_sugerido"] == true:
-		var a = json["enemigos_elegidos"].size()
-		print("LA IA TE QUIERE MUERTO", json["enemigos_elegidos"])
-		
-		new_stage.context = "El jugador ha sido emboscado por %s entidades. El combate es inminente." % a
-		
-		new_stage.actions = {
-			18: {"ES_CL": "¡LUCHA!"}
-		}
-		
-		new_stage.connected_with = {
-			18: load("res://Recursos/Escenarios/start.tres")
-		}
-		
-		turn = 0
-	else:
-		new_stage.context = "El jugador sigue por el sendero" # Falta conexto desarrollado
-		
-		new_stage.actions = {
-			1: {"ES_CL": "NADA"} # La IA debería de poder hacer esto
-		}
-	current_stage = new_stage
-	update_stage(current_stage)
 #endregion
 
 #region --Input Func--
@@ -126,7 +86,6 @@ func update_status() -> void:
 	$Status/BARS/THIRST.value = GameMaster.thirst
 
 	_update_current_zone()
-
 
 func update_active_buttons(IDs: Array[int]) -> void:
 	active_ids = IDs
@@ -139,63 +98,52 @@ func update_active_buttons(IDs: Array[int]) -> void:
 			btn.disabled = true
 			btn.modulate.a = 0.0
 
-func update_stage(stage: StageDB, force_lang: String = "") -> void:
-	var current_lang: String = force_lang
-	if force_lang.is_empty():
-		current_lang = GameMaster.config["lang"] as String
-
-	var langs := stage.get_languages()
-	if langs.has(current_lang):
-		if langs[current_lang].is_empty():
-			print("ESCRIBE ALGO IDIOTA")
-			return
-		richLabel.text = langs[current_lang].pick_random()
-	else:
-		print("idioma no soportado")
-		update_stage(stage, "ES_CL")
-		return
-
-	var new_options: Array[int] = []
-	new_options.assign(stage.actions.keys())
-	update_active_buttons(new_options)
-
+func button_helper(input: Dictionary) -> void:
 	for btn in grid.get_children():
 		var my_id = btn.get_meta("id")
-		
-		if new_options.has(my_id):
-			var actions_text_dict = stage.actions[my_id]
-			if actions_text_dict.has(current_lang):
-				btn.text = actions_text_dict[current_lang]
+		if input.has(my_id):
+			var actions_text_dict = input[my_id]
+			btn.text = actions_text_dict
 
+#endregion
+#region --Stage Func--
 func _update_current_zone() -> void:
 	var csse: Dictionary[GM.special_case, int] = current_stage.special_event
 	var rng: float = randi_range(0, 100)
-	current_zone = current_stage.id_zone
-	if last_zone != current_zone:
-		last_zone = current_zone
-		turn = 0
+	var enabled: bool = true
+
+	GameMaster.current_zone = current_stage.id_zone
+
+	if GameMaster.last_zone != GameMaster.current_zone:
+		GameMaster.last_zone = GameMaster.current_zone
+		GameMaster.turn = 0
 	else:
-		turn += 1
+		GameMaster.turn += 1
 
 	if csse.has(GM.special_case.NONE):
 		combat_probability = min_probability
-		return
-	if csse.has(GM.special_case.DANGER_ZONE):
+		enabled = false
+
+	if csse.has(GM.special_case.DANGER_ZONE) and enabled:
 		combat_probability = min(combat_probability + csse[GM.special_case.DANGER_ZONE], 100)
 
-	if csse.has(GM.special_case.RESTRICTED_AREA):
+	if csse.has(GM.special_case.RESTRICTED_AREA) and enabled:
 		pass # no se que añadir aquí
 
-	if csse.has(GM.special_case.POISON_AREA):
+	if csse.has(GM.special_case.POISON_AREA) and enabled:
 		GameMaster.life = maxi(0, GameMaster.life - csse[GM.special_case.POISON_AREA])
 
-	if csse.has(GM.special_case.DRAINING_AREA):
+	if csse.has(GM.special_case.DRAINING_AREA) and enabled:
 		GameMaster.thirst = maxi(0, GameMaster.thirst - csse[GM.special_case.DRAINING_AREA] * 2)
 		GameMaster.hunger = maxi(0, GameMaster.hunger - csse[GM.special_case.DRAINING_AREA])
 
-	if rng > combat_probability:
-		combat()
+	if csse.has(GM.special_case.SECURE_ZONE) and enabled:
+		combat_probability = -1
 
+	if rng < combat_probability:
+		combat()
+#endregion
+#region --Combat and Stats--
 func _show_stats() -> void:
 	var statsLabel = $Status/stats as RichTextLabel
 	statsLabel.visible = !statsLabel.visible
@@ -205,17 +153,16 @@ func _show_stats() -> void:
 		$Status/CHARACTER.modulate.a = 0.2
 		$Status/BARS/LIFE.modulate.a = 0.2
 		$Status/BARS/CORD.modulate.a = 0.2
-		
-		# Construir un string limpio sin formato JSON
+		# Rearma el Json para lectura y lo muestra en el RichTextLabel
 		var formatted_text = "Estadísticas Actuales:\n\n"
-		
+
 		for stat_key in GameMaster.stats:
 			var stat_value = GameMaster.stats[stat_key]
 			# .capitalize() convierte "velocity" en "Velocity" automáticamente
 			formatted_text += "- " + stat_key.capitalize() + ": " + str(stat_value) + "\n"
-			
+
 		statsLabel.text = formatted_text
-		
+
 	else:
 		# Restaurar la opacidad al cerrar
 		$Status/CHARACTER.modulate.a = 1.0
@@ -262,6 +209,7 @@ func combat() -> void:
 		print("No se pudieron generar enemigos.")
 		return
 
+	translator.start_combat()
 	var size_viewport = get_viewport_rect().size.y
 	if not flag_combat:
 		current_enemy = enemies[0]

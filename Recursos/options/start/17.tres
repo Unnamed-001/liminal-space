@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="OptionDB" format=3 uid="uid://bvip71ycfpqau"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_6qybi"]
+
+[resource]
+script = ExtResource("1_6qybi")
+id = 17
+name = Dictionary[String, String]({
+"EN_US": "",
+"ES_CL": "Atrás"
+})
+metadata/_custom_type_script = "uid://dgh71noa471vo"

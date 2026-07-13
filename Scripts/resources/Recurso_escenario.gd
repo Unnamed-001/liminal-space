@@ -9,8 +9,7 @@ class_name StageDB
 @export_multiline() var context: String = "CONTEXTO IA"
 @export_multiline() var escenario_es_cl: Array[String] = [""]
 @export_multiline() var escenario_en_us: Array[String] = [""]
-@export var actions: Dictionary[int, Dictionary] = {} # Aquí iria el siguiente formato: {12: {"idioma": "accion"}}, así para todo
-@export var connected_with: Dictionary[int, StageDB] = {}
+@export var actions: Array[OptionDB] = []
 @export_range(0, 100, 0.1) var probability: int = 40 # Despues de divide por 100
 
 

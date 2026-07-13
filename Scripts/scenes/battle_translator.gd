@@ -57,7 +57,7 @@ func add_text_to_array_for_player(attack: AttackDB, damage_dealt: int, target: M
 		reaction_text = varian_chosen[level].pick_random()
 	
 	# 1. FUSIONAMOS la frase en un solo String
-	var combined_phrase: String = action_text + " " + reaction_text + " Le haz hecho {damage} de {type}"
+	var combined_phrase: String = action_text + " " + reaction_text + " Le haz hecho {damage} de {type}" # UPGRADE: Añadir compatibilidad con muchos idiomas :V
 	
 	# 2. Aplicamos el BBCode (temblor, color)
 	
@@ -74,7 +74,7 @@ func get_text_for_type(type: AttackDB.TYPE) -> String:
 	var lang: String = GameMaster.config["lang"]
 	var type_phrase: String = ""
 
-	match type:
+	match type: # UPGRADE: Se tiene que mejorar aquí
 		AttackDB.TYPE.PHYSICAL:
 			type_phrase = "physical damage" if lang == "EN_US" else "daño físico"
 		AttackDB.TYPE.PSICOLOGYCAL:
@@ -108,7 +108,7 @@ func _get_level_for_player(attack: AttackDB, damage_dealt: int) -> StringName:
 		return &"HIGH"
 	return &"MEDIUM"
 
-func _update(stop: float = 0.0) -> void:
+func _update(stop: float = 0.0) -> void: # TODO: Estoy seguro que esto se puede mejorar en cualquier caso
 	if is_typing or chosen_text.is_empty():
 		return
 
