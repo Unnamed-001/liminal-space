@@ -9,13 +9,13 @@ const min_probability: float = 10
 @onready var status = $Status
 @onready var translator: MainTranslator = $stage
 
-var enemies: Array[MonsterDB] = []
-var current_enemy: MonsterDB
-var active_ids: Array[int] = []
-var current_stage: StageDB = load("res://Recursos/Escenarios/start/start.tres")
+var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
+var current_enemy: MonsterDB ## Objetivo
+var active_ids: Array[int] = [] ## Botones disponibles
+var current_stage: StageDB = load("res://Recursos/Escenarios/start/start.tres") ## Escenario actual
 
 var combat_probability: float = min_probability
-var flag_combat: bool = false
+var flag_combat: bool = false ## Esta en combate
 
 func _ready() -> void:
 	#region --Animacion de inicio--
