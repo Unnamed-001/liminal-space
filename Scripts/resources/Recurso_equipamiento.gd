@@ -1,2 +1,2 @@
-extends Resource
+extends ItemDB
 class_name EquipmentDB

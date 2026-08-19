@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://nt762j745esn"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_luaul"]
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="2_4xjfn"]
+
+[resource]
+script = ExtResource("2_4xjfn")
+title = "Inventory"
+id_zone = -1
+context = "No deberías escuchar este mensaje"
+escenario_es_cl = Array[String](["Rebuscas en tu mochila para ver si tienes algo. Pero no tienes nada en ella.", "Rebuscas en tu mochila para ver si tienes algo."])
+escenario_en_us = Array[String](["You rummage through your backpack to see if you have anything. But you have nothing in it.", "You rummage through your backpack to see if you have anything."])
+metadata/_custom_type_script = "uid://dgeapbg1b80gm"

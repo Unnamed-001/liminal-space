@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StageDB" format=3 uid="uid://ffmlsarnjh53"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_wffd1"]
+[ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="2_brsnx"]
+
+[resource]
+script = ExtResource("2_brsnx")
+metadata/_custom_type_script = "uid://dgeapbg1b80gm"

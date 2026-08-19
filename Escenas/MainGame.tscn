@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://eelthyqwn0yb"]
 
-[ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/main_game.gd" id="1_n7y03"]
+[ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/mainGame.gd" id="1_n7y03"]
 [ext_resource type="Script" uid="uid://dck14q0pvlo0e" path="res://Scripts/scenes/info.gd" id="2_25cwj"]
 [ext_resource type="Texture2D" uid="uid://do4j4afirm6fd" path="res://icon.svg" id="2_apeae"]
 [ext_resource type="Script" uid="uid://cs18lw8jtncux" path="res://Scripts/scenes/mainTranslator.gd" id="2_b7mqo"]
@@ -13,8 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://cwj0vumf8ai7r" path="res://Recursos/Texturas/Hunger.tres" id="8_p1w6e"]
 [ext_resource type="Texture2D" uid="uid://dxfqjoa4lx1x0" path="res://Recursos/Texturas/Thirst.tres" id="9_1obna"]
 [ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="11_v71cx"]
-[ext_resource type="Script" uid="uid://s2s6wj1wmlq1" path="res://Scripts/scenes/battle_logic.gd" id="13_p1w6e"]
-[ext_resource type="Script" uid="uid://cukdkshvn84mj" path="res://Scripts/scenes/battle_translator.gd" id="14_1obna"]
+[ext_resource type="Script" uid="uid://be5aad0ix6t77" path="res://Scripts/scenes/statusManager.gd" id="12_l115c"]
+[ext_resource type="Script" uid="uid://s2s6wj1wmlq1" path="res://Scripts/scenes/battleLogic.gd" id="13_p1w6e"]
+[ext_resource type="Script" uid="uid://cukdkshvn84mj" path="res://Scripts/scenes/battleTranslator.gd" id="14_1obna"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
 corner_radius_top_left = 200
@@ -282,6 +283,7 @@ offset_left = 863.0
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 1
+script = ExtResource("12_l115c")
 
 [node name="CHARACTER" type="Sprite2D" parent="Status" unique_id=2028507658]
 position = Vector2(140, 144.99998)
@@ -380,6 +382,18 @@ visible = false
 layout_mode = 0
 offset_right = 279.0
 offset_bottom = 379.0
+
+[node name="Inventory" type="GridContainer" parent="Status" unique_id=106311019]
+custom_minimum_size = Vector2(93, 93)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.39400002
+anchor_right = 0.96500003
+anchor_bottom = 0.80700004
+offset_top = -0.31201172
+offset_right = 1.1149902
+offset_bottom = 0.063964844
+columns = 3
 
 [node name="buttons" type="Control" parent="." unique_id=2106862717]
 layout_mode = 1
@@ -550,4 +564,5 @@ position = Vector2(576, 324)
 [connection signal="pressed" from="Battle/Selector/TextureRect2/Button2" to="Battle" method="_next_page"]
 [connection signal="pressed" from="Info/Enemy_selector/TextureRect/Button" to="Info" method="_to_front"]
 [connection signal="pressed" from="Info/Enemy_selector/TextureRect2/Button2" to="Info" method="_to_end"]
-[connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="." method="_show_stats"]
+[connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="Status" method="_show_stats"]
+[connection signal="pressed" from="Status/HBoxContainer/INVENTORY/Button" to="Status" method="_show_inventory"]

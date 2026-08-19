@@ -1,16 +1,14 @@
 extends ActionDB
 class_name DefenseDB
 
-@export_category("info")
-@export var unique_id: int
 @export_category("defense")
-@export var defense: int = 0
-@export var effect: EffectDB
-@export_range(30.0, 100.0, 0.1) var variance: float = 30.0
-@export_range(0.0, 100.0, 0.1) var perfect_block_chance: float = 10
-@export var duration: int = 1
+@export var defense: int = 0 ## Defensa de la acción
+@export var effect: EffectDB ## Efecto de la acción
+@export_range(30.0, 100.0, 0.1) var variance: float = 30.0 ## Variabilidad de la defensa
+@export_range(0.0, 100.0, 0.1) var perfect_block_chance: float = 10 ## Chance de un bloqueo perfecto
+@export var duration: int = 1 ## Duración del efecto
 
-func get_defense() -> Array[int]:
+func get_defense() -> Array[int]: ## Obtiene el bloque aplicado
 	var variant_multiplier = randf_range(1.0 - (variance / 100.0), 1.0 + (variance / 100.0))
 	var final_defense: float = defense * variant_multiplier; var perfect_defense: float = 0.0
 	var rng = randf_range(0.0, 100.0)

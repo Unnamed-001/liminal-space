@@ -22,7 +22,7 @@ var instance_http_service: Http_service
 
 func _ready() -> void:
 	# Como la comprobación tarda unos milisegundos, le decimos a Godot que espere
-	player_action.connect(Callable(self, "_player_action"))
+	player_action.connect(_player_action)
 	instance_http_service = http.instantiate()
 	add_child(instance_http_service)
 	await instance_http_service.prepare_ai_system()
@@ -38,7 +38,7 @@ var cord: int = 100
 var hunger: float = 100.0
 var thirst: float = 100.0
 var resistance: float = 200.0
-var inventory: Array = []
+var inventory: Array[ItemDB] = []
 var relations: Dictionary = {}
 var stats: Dictionary = {
 	"level": 1,
@@ -51,7 +51,6 @@ var aspect: Dictionary = {}
 
 func _player_action() -> void:
 	max_enemies = max(2, max_enemies)
-	
 #endregion
 
 #region --Codice de escenarios--
@@ -156,3 +155,4 @@ func generar_escenario_ia(texto_ia: String) -> void:
 	
 	turn += 1
 	stage_generated.append(new_stage)
+#endregion

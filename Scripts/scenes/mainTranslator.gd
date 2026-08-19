@@ -32,6 +32,7 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 		var possible_action = action.id
 		new_options[possible_action] = action.name[current_lang]
 
+	parent.current_stage = stage
 	parent.update_active_buttons(new_options.keys())
 
 	parent.button_helper(new_options)

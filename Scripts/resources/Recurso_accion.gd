@@ -2,9 +2,9 @@ extends Resource
 class_name ActionDB
 
 @export_category("info")
-@export var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""}
+@export var name: Dictionary[String, String] = {"ES_CL": "", "EN_US": ""} ## Nombre de la acción
 
-func get_action_name(lang: String = GameMaster.config["lang"]) -> String:
+func get_action_name(lang: String = GameMaster.config["lang"]) -> String: ## Obtiene el nombre de la acción si se tiene el idioma
 	if name.has(lang):
 		return name[lang]
 	else:

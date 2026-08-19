@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_kd17a"]
 [ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="1_ts5go"]
-[ext_resource type="Resource" uid="uid://4cbtcqg08uyd" path="res://Recursos/options/start/1.tres" id="2_ai4qe"]
-[ext_resource type="Resource" uid="uid://kxdm1krl6uat" path="res://Recursos/options/start/2.tres" id="3_mvhsn"]
-[ext_resource type="Resource" uid="uid://c7xgmws574yn2" path="res://Recursos/options/start/11.tres" id="4_kpa1v"]
-[ext_resource type="Resource" uid="uid://2il5fse0ms7f" path="res://Recursos/options/start/12.tres" id="5_3pgs7"]
-[ext_resource type="Resource" uid="uid://xwlme030a8j5" path="res://Recursos/options/start/16.tres" id="6_iegjx"]
-[ext_resource type="Resource" uid="uid://bvip71ycfpqau" path="res://Recursos/options/start/17.tres" id="7_bl062"]
-[ext_resource type="Resource" uid="uid://cqgf8wacdtkb6" path="res://Recursos/options/start/18.tres" id="8_8cuji"]
+[ext_resource type="Resource" uid="uid://4cbtcqg08uyd" path="res://Recursos/Opciones/start/1.tres" id="2_ai4qe"]
+[ext_resource type="Resource" uid="uid://kxdm1krl6uat" path="res://Recursos/Opciones/start/2.tres" id="3_mvhsn"]
+[ext_resource type="Resource" uid="uid://c7xgmws574yn2" path="res://Recursos/Opciones/start/11.tres" id="4_kpa1v"]
+[ext_resource type="Resource" uid="uid://2il5fse0ms7f" path="res://Recursos/Opciones/start/12.tres" id="5_3pgs7"]
+[ext_resource type="Resource" uid="uid://xwlme030a8j5" path="res://Recursos/Opciones/start/16.tres" id="6_iegjx"]
+[ext_resource type="Resource" uid="uid://bvip71ycfpqau" path="res://Recursos/Opciones/start/17.tres" id="7_bl062"]
+[ext_resource type="Resource" uid="uid://cqgf8wacdtkb6" path="res://Recursos/Opciones/start/18.tres" id="8_8cuji"]
 
 [resource]
 script = ExtResource("1_ts5go")

@@ -12,7 +12,7 @@ const min_probability: float = 10
 var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
 var current_enemy: MonsterDB ## Objetivo
 var active_ids: Array[int] = [] ## Botones disponibles
-var current_stage: StageDB = load("res://Recursos/Escenarios/start/start.tres") ## Escenario actual
+var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres") ## Escenario actual
 
 var combat_probability: float = min_probability
 var flag_combat: bool = false ## Esta en combate
@@ -143,32 +143,7 @@ func _update_current_zone() -> void:
 	if rng < combat_probability:
 		combat()
 #endregion
-#region --Combat and Stats--
-func _show_stats() -> void:
-	var statsLabel = $Status/stats as RichTextLabel
-	statsLabel.visible = !statsLabel.visible
-
-	if statsLabel.visible:
-		# Atenuar el fondo
-		$Status/CHARACTER.modulate.a = 0.2
-		$Status/BARS/LIFE.modulate.a = 0.2
-		$Status/BARS/CORD.modulate.a = 0.2
-		# Rearma el Json para lectura y lo muestra en el RichTextLabel
-		var formatted_text = "Estadísticas Actuales:\n\n"
-
-		for stat_key in GameMaster.stats:
-			var stat_value = GameMaster.stats[stat_key]
-			# .capitalize() convierte "velocity" en "Velocity" automáticamente
-			formatted_text += "- " + stat_key.capitalize() + ": " + str(stat_value) + "\n"
-
-		statsLabel.text = formatted_text
-
-	else:
-		# Restaurar la opacidad al cerrar
-		$Status/CHARACTER.modulate.a = 1.0
-		$Status/BARS/LIFE.modulate.a = 1.0
-		$Status/BARS/CORD.modulate.a = 1.0
-
+#region --Combat--
 func combat() -> void:
 	GameMaster.update_enemies_from_context(current_stage)
 
