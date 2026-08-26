@@ -18,6 +18,9 @@ var config: Dictionary = {
 	"wait_time": 3.0,
 	"text_speed": 0.03
 }
+var system_config: Dictionary[String, Variant] = {
+	"slot_size": Vector2(64, 64)
+}
 var instance_http_service: Http_service
 
 func _ready() -> void:
@@ -38,7 +41,10 @@ var cord: int = 100
 var hunger: float = 100.0
 var thirst: float = 100.0
 var resistance: float = 200.0
-var inventory: Array[ItemDB] = []
+var inventory: Dictionary = {
+	"items": [],
+	"positions": []
+}
 var relations: Dictionary = {}
 var stats: Dictionary = {
 	"level": 1,
@@ -52,7 +58,6 @@ var aspect: Dictionary = {}
 func _player_action() -> void:
 	max_enemies = max(2, max_enemies)
 #endregion
-
 #region --Codice de escenarios--
 var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!
 

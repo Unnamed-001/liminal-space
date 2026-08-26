@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c6hiijwma8w7t"]
+
+[node name="Slot" type="ColorRect" unique_id=351713878]
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.2966023, 0.2966023, 0.2966023, 1)
+
+[node name="Deco" type="ColorRect" parent="." unique_id=29983830]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 15.0
+offset_bottom = 15.0
+mouse_filter = 2
+color = Color(0.63866097, 0.638661, 0.63866097, 1)

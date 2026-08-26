@@ -17,7 +17,10 @@ var context: Dictionary = {
 		"hunger": 100.0,
 		"thirst": 100.0,
 		"resistance": 200.0,
-		"inventory": [],
+		"inventory": {
+			"items": [],
+			"positions": []
+		},
 		"relations": {},
 		"aspect": {},
 		"stats": {
@@ -73,6 +76,7 @@ func _sync_with_gm() -> void:
 	context["player"]["cord"]                = GameMaster.cord
 	context["player"]["hunger"]              = GameMaster.hunger
 	context["player"]["thirst"]              = GameMaster.thirst
+	context["player"]["inventory"]           = GameMaster.inventory
 	context["player"]["inventory"]           = GameMaster.inventory
 	context["player"]["relations"]           = GameMaster.relations
 	context["player"]["resistance"]          = GameMaster.resistance

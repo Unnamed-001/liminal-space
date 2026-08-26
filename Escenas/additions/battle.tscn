@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://cda2p8qbr01o5"]
+
+[ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="1_1mqa8"]
+[ext_resource type="Script" uid="uid://s2s6wj1wmlq1" path="res://Scripts/scenes/battleLogic.gd" id="2_uxlwg"]
+[ext_resource type="Script" uid="uid://cukdkshvn84mj" path="res://Scripts/scenes/battleTranslator.gd" id="3_jhgg1"]
+[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="4_3oyxk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+corner_detail = 20
+
+[node name="Battle" type="Control" unique_id=923078753]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 1
+script = ExtResource("1_1mqa8")
+
+[node name="Backend2" type="ColorRect" parent="." unique_id=2032004336]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0.10822462, 0.10822461, 0.10822461, 1)
+
+[node name="Logic" type="Node" parent="." unique_id=1960606319]
+script = ExtResource("2_uxlwg")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1057869043]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.386
+anchor_top = 0.66
+anchor_right = 0.74300003
+anchor_bottom = 1.0
+offset_left = -3.671997
+offset_top = 0.3199768
+offset_right = 0.063964844
+columns = 2
+
+[node name="Button1" type="Button" parent="GridContainer" unique_id=106149607]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ATACAR"
+metadata/id = 1
+
+[node name="Button2" type="Button" parent="GridContainer" unique_id=1944766496]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "DEFENDER"
+metadata/id = 2
+
+[node name="Button3" type="Button" parent="GridContainer" unique_id=182928365]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "OBJETO"
+metadata/id = 3
+
+[node name="Button4" type="Button" parent="GridContainer" unique_id=1015829333]
+custom_minimum_size = Vector2(207, 100)
+layout_mode = 2
+text = "ESPECIAL"
+metadata/id = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1662829575]
+clip_children = 2
+clip_contents = true
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e4xla")
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=1652735513]
+layout_mode = 2
+color = Color(0.23248088, 0.23248091, 0.23248091, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1300801779]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 428.0
+offset_right = 441.0
+offset_bottom = 632.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1975307848]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21700001
+anchor_right = 0.74300003
+anchor_bottom = 0.65300006
+offset_left = 0.015991211
+offset_right = 0.063964844
+offset_bottom = -37.144043
+text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+script = ExtResource("3_jhgg1")
+
+[node name="Selector" type="HBoxContainer" parent="." unique_id=394038996]
+layout_mode = 0
+offset_left = 688.0
+offset_top = 386.0
+offset_right = 863.0
+offset_bottom = 431.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Selector" unique_id=565565221]
+layout_mode = 2
+texture = ExtResource("4_3oyxk")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Selector/TextureRect" unique_id=1511131949]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+metadata/page = true
+
+[node name="TextureRect3" type="TextureRect" parent="Selector" unique_id=630255780]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = 1.5707964
+texture = ExtResource("4_3oyxk")
+expand_mode = 3
+
+[node name="Button2" type="Button" parent="Selector/TextureRect3" unique_id=1344370378]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="TextureRect2" type="TextureRect" parent="Selector" unique_id=2001662793]
+layout_mode = 2
+texture = ExtResource("4_3oyxk")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Selector/TextureRect2" unique_id=1142649890]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 45.0
+metadata/page = true
+
+[connection signal="pressed" from="Selector/TextureRect/Button" to="." method="_previous_page"]
+[connection signal="pressed" from="Selector/TextureRect3/Button2" to="." method="_restore_menu_state" binds= [false]]
+[connection signal="pressed" from="Selector/TextureRect2/Button2" to="." method="_next_page"]

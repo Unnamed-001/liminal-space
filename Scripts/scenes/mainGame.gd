@@ -8,6 +8,7 @@ const min_probability: float = 10
 @onready var info = $Info
 @onready var status = $Status
 @onready var translator: MainTranslator = $stage
+@onready var inventory: mainInventory = $Inventory
 
 var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
 var current_enemy: MonsterDB ## Objetivo
@@ -22,6 +23,8 @@ func _ready() -> void:
 	cRect.visible = true
 	cRect.color = Color.WHITE
 	var tween = create_tween()
+	tween.finished.connect(func(): 
+		$ColorRect.queue_free())
 	tween.tween_property(cRect, "color", Color(0.294, 0.294, 0.294, 0.0), 1.0).set_ease(Tween.EASE_IN)
 	#endregion
 	#region --Signal connection--
@@ -59,7 +62,8 @@ func pressed_button(id: int) -> void:
 				OptionDB.OptionResult.GIVE_ITEM:
 					if action.target_item:
 						translator.add_object(action.target_item)
-						GameMaster.inventory.append(action.target_item)
+						if inventory.attempt_to_add_item(action.target_item):
+							GameMaster.inventory.append(action.target_item)
 
 						current_stage.actions.erase(action)
 						active_ids.erase(id)
@@ -185,7 +189,7 @@ func combat() -> void:
 		return
 
 	translator.start_combat()
-	var size_viewport = get_viewport_rect().size.y
+	var size_viewport = get_viewport_rect().size.y * 2
 	if not flag_combat:
 		current_enemy = enemies[0]
 		info.position.y += size_viewport
