@@ -29,7 +29,8 @@ var context: Dictionary = {
 			"endurance": 10.0,
 			"strength": 10.0,
 			"psique": 100.0
-		}
+		},
+		"events": {}
 	},
 	"current_stage_path": "res://Recursos/Escenarios/start.tres",
 	"precharged_stage": [StageDB]
@@ -38,23 +39,19 @@ var context: Dictionary = {
 func _ready() -> void:
 	monsters = loads_monsters(RES_MONS_PATH)
 
-func _save_in_disk() -> void:
+func _save_in_disk(path: String) -> bool:
+	var full_path = "user://" + path
 	_sync_with_gm()
-	
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file:
-		var json_str = JSON.stringify(context, "\t")
-		file.store_string(json_str)
-		file.close()
-		print("saved")
-	else:
-		print("❌ Error crítico: Las leyes de la física impiden escribir en el disco.")
+	if FileAccess.file_exists(path):
 
-func load_from_disk() -> bool:
-	if not FileAccess.file_exists(SAVE_PATH):
+		return false
+	return true
+
+func load_from_disk(path) -> bool:
+	if not FileAccess.file_exists(path):
 		print("No existen registros de su llegada")
 		return false
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var file = FileAccess.open(path, FileAccess.READ)
 	if file:
 		var json_str = file.get_as_text()
 		file.close()
@@ -65,7 +62,7 @@ func load_from_disk() -> bool:
 			_apply_to_gm()
 			print("Brecha cargada correctamente")
 			return true
-	
+
 	push_error("Corrupted archive")
 	return false
 
@@ -77,10 +74,10 @@ func _sync_with_gm() -> void:
 	context["player"]["hunger"]              = GameMaster.hunger
 	context["player"]["thirst"]              = GameMaster.thirst
 	context["player"]["inventory"]           = GameMaster.inventory
-	context["player"]["inventory"]           = GameMaster.inventory
 	context["player"]["relations"]           = GameMaster.relations
 	context["player"]["resistance"]          = GameMaster.resistance
 	context["player"]["aspect"]              = GameMaster.aspect
+	context["player"]["events"]              = GameMaster.events
 	context["player"]["stats"]["level"]      = GameMaster.stats["level"]
 	context["player"]["stats"]["velocity"]   = GameMaster.stats["velocity"]
 	context["player"]["stats"]["endurance"]  = GameMaster.stats["endurance"]
@@ -98,6 +95,7 @@ func _apply_to_gm() -> void:
 	GameMaster.relations           = context["player"]["relations"]
 	GameMaster.resistance          = context["player"]["resistance"]
 	GameMaster.aspect              = context["player"]["aspect"]
+	GameMaster.events              = context["player"]["events"]
 	GameMaster.stats["level"]      = context["player"]["stats"]["level"]
 	GameMaster.stats["velocity"]   = context["player"]["stats"]["velocity"]
 	GameMaster.stats["endurance"]  = context["player"]["stats"]["endurance"]

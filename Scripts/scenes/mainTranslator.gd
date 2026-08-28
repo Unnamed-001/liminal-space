@@ -3,11 +3,16 @@ class_name MainTranslator
 
 const duration: float = 2.5
 
-@onready var parent: MainGame = $".."
+@onready var main_game: MainGame
 @onready var warning: RichTextLabel = $RichTextLabel
 
 # Sinceramente, no se si le pueda encontrar un uso...
 # var advices: Array[RichTextLabel] = []
+
+func _ready() -> void:
+	var x = get_tree().get_first_node_in_group("MAIN")
+	if x is MainGame:
+		main_game = x
 
 ## Actualiza el texto obteniendo el texto del escenario entregado
 func update_stage(stage: StageDB, force_lang: String = "") -> void:
@@ -32,10 +37,10 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 		var possible_action = action.id
 		new_options[possible_action] = action.name[current_lang]
 
-	parent.current_stage = stage
-	parent.update_active_buttons(new_options.keys())
+	main_game.current_stage = stage
+	main_game.update_active_buttons(new_options.keys())
 
-	parent.button_helper(new_options)
+	main_game.button_helper(new_options)
 
 ## Añade un objeto de manera dinámica, busca entre los datos del objeto entregado para entregar el mejor tipo de texto proveniente del objeto 
 func add_object(object: ItemDB, lang: String = GameMaster.config["lang"]) -> void:

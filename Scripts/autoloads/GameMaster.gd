@@ -54,6 +54,8 @@ var stats: Dictionary = {
 	"psique": 100.0
 }
 var aspect: Dictionary = {}
+var events: Dictionary[EventScene, int] = {}
+
 
 func _player_action() -> void:
 	max_enemies = max(2, max_enemies)

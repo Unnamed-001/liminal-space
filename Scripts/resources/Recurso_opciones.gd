@@ -16,4 +16,4 @@ enum OptionResult { STAGE_TRANSITION, GIVE_ITEM, EVENT_TRIGGER, AI_FALLBACK }
 @export var result: OptionResult = OptionResult.STAGE_TRANSITION ## Tipo de resultado
 @export var target_stage: StageDB ## Si es una transición a otro escenario, carga el escenario aquí
 @export var target_item: ItemDB ## Si es una obtención de un objeto, carga el objeto aquí.
-@export var target_event: String = "WIP" ## WIP
+@export var target_event: EventDB ## Carga un nodo u escena personalizado para la escena actual

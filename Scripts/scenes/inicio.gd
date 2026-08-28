@@ -1,7 +1,9 @@
 extends Control
 
+const default_save_path:= "user://Breach_failure.json"
 
 func _on_start_pressed() -> void:
+	Vault.load_from_disk(default_save_path)
 	var tween = create_tween()
 	tween.tween_property($Flash, "color", Color(1,1,1,1), 1.0).set_ease(Tween.EASE_IN)
 	await tween.finished

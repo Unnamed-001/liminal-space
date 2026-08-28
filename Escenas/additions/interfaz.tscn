@@ -1,0 +1,403 @@
+[gd_scene format=3 uid="uid://dni44wfhi1wby"]
+
+[ext_resource type="Script" uid="uid://be5aad0ix6t77" path="res://Scripts/scenes/statusManager.gd" id="1_otsnm"]
+[ext_resource type="Texture2D" uid="uid://do4j4afirm6fd" path="res://icon.svg" id="2_4mkxo"]
+[ext_resource type="Texture2D" uid="uid://oticku2h1h1k" path="res://Recursos/Texturas/BaseI.tres" id="3_ugvfg"]
+[ext_resource type="Texture2D" uid="uid://dogegslxexx6t" path="res://Recursos/Texturas/Life.tres" id="4_tbx2j"]
+[ext_resource type="Texture2D" uid="uid://johs6vwhbrxn" path="res://Recursos/Texturas/Cord.tres" id="5_su2hr"]
+[ext_resource type="Texture2D" uid="uid://bjtmtugqfpswr" path="res://Recursos/Texturas/BaseM.tres" id="6_66ne6"]
+[ext_resource type="Texture2D" uid="uid://bab40oc5m8jcu" path="res://Recursos/Texturas/BorderM.tres" id="7_0uldf"]
+[ext_resource type="Texture2D" uid="uid://cwj0vumf8ai7r" path="res://Recursos/Texturas/Hunger.tres" id="8_ms0w5"]
+[ext_resource type="Texture2D" uid="uid://dxfqjoa4lx1x0" path="res://Recursos/Texturas/Thirst.tres" id="9_u4ekx"]
+[ext_resource type="Script" uid="uid://dck14q0pvlo0e" path="res://Scripts/scenes/info.gd" id="10_h64vt"]
+[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="11_dtbdk"]
+[ext_resource type="Script" uid="uid://cs18lw8jtncux" path="res://Scripts/scenes/mainTranslator.gd" id="12_70i1r"]
+
+[node name="Interfaz" type="Control" unique_id=2070134997]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Status" type="Control" parent="." unique_id=1908069806]
+anchors_preset = 0
+offset_left = 863.0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 1
+script = ExtResource("1_otsnm")
+
+[node name="CHARACTER" type="Sprite2D" parent="Status" unique_id=1109079285]
+position = Vector2(140, 144.99998)
+scale = Vector2(2.2, 2.2)
+texture = ExtResource("2_4mkxo")
+
+[node name="BARS" type="VBoxContainer" parent="Status" unique_id=1890284358]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.44900003
+anchor_right = 0.97200006
+anchor_bottom = 0.80700004
+offset_left = -0.867
+offset_top = 0.047973633
+offset_right = 0.09197998
+offset_bottom = 0.063964844
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="LIFE" type="TextureProgressBar" parent="Status/BARS" unique_id=1767908764]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("3_ugvfg")
+texture_progress = ExtResource("4_tbx2j")
+
+[node name="CORD" type="TextureProgressBar" parent="Status/BARS" unique_id=716404087]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("3_ugvfg")
+texture_progress = ExtResource("5_su2hr")
+
+[node name="HUNGER" type="TextureProgressBar" parent="Status/BARS" unique_id=1812719830]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("6_66ne6")
+texture_over = ExtResource("7_0uldf")
+texture_progress = ExtResource("8_ms0w5")
+texture_progress_offset = Vector2(40, 16)
+
+[node name="THIRST" type="TextureProgressBar" parent="Status/BARS" unique_id=911014483]
+layout_mode = 2
+value = 30.0
+texture_under = ExtResource("6_66ne6")
+texture_over = ExtResource("7_0uldf")
+texture_progress = ExtResource("9_u4ekx")
+texture_progress_offset = Vector2(40, 16)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Status" unique_id=1181888276]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.79
+anchor_right = 0.9620001
+anchor_bottom = 0.929
+offset_top = 35.079987
+offset_right = 1.9819641
+offset_bottom = 35.007996
+alignment = 1
+
+[node name="STATS" type="TextureRect" parent="Status/HBoxContainer" unique_id=1947580274]
+layout_mode = 2
+texture = ExtResource("2_4mkxo")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/STATS" unique_id=1503537427]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="INVENTORY" type="TextureRect" parent="Status/HBoxContainer" unique_id=1667077549]
+layout_mode = 2
+texture = ExtResource("2_4mkxo")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/INVENTORY" unique_id=1219136171]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="MENU" type="TextureRect" parent="Status/HBoxContainer" unique_id=870026780]
+layout_mode = 2
+texture = ExtResource("2_4mkxo")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Status/HBoxContainer/MENU" unique_id=1859788272]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+
+[node name="stats" type="RichTextLabel" parent="Status" unique_id=1630814633]
+visible = false
+layout_mode = 0
+offset_right = 279.0
+offset_bottom = 379.0
+
+[node name="Inventory" type="GridContainer" parent="Status" unique_id=562397353]
+custom_minimum_size = Vector2(93, 93)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.39400002
+anchor_right = 0.96500003
+anchor_bottom = 0.80700004
+offset_top = -0.31201172
+offset_right = 1.1149902
+offset_bottom = 0.063964844
+columns = 3
+
+[node name="Info" type="Control" parent="." unique_id=956745950]
+anchors_preset = 0
+offset_right = 250.0
+offset_bottom = 648.0
+mouse_filter = 1
+script = ExtResource("10_h64vt")
+
+[node name="ENEMY" type="TextureRect" parent="Info" unique_id=504472147]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.99200004
+anchor_bottom = 0.386
+offset_top = 4.0
+offset_right = -2.0000153
+offset_bottom = 0.2579956
+texture = ExtResource("2_4mkxo")
+expand_mode = 2
+
+[node name="Enemy_selector" type="HBoxContainer" parent="Info" unique_id=1476144311]
+visible = false
+layout_mode = 0
+offset_top = 255.0
+offset_right = 250.0
+offset_bottom = 330.0
+theme_override_constants/separation = 70
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Info/Enemy_selector" unique_id=224999728]
+layout_mode = 2
+texture = ExtResource("11_dtbdk")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="Info/Enemy_selector/TextureRect" unique_id=5465174]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+
+[node name="TextureRect2" type="TextureRect" parent="Info/Enemy_selector" unique_id=1796922065]
+layout_mode = 2
+texture = ExtResource("11_dtbdk")
+expand_mode = 3
+flip_h = true
+
+[node name="Button2" type="Button" parent="Info/Enemy_selector/TextureRect2" unique_id=8357294]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+
+[node name="Bars" type="VBoxContainer" parent="Info" unique_id=1770901854]
+visible = false
+layout_mode = 0
+offset_top = 255.0
+offset_right = 246.0
+offset_bottom = 479.0
+
+[node name="LIFE" type="TextureProgressBar" parent="Info/Bars" unique_id=2128363838]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_ugvfg")
+texture_progress = ExtResource("4_tbx2j")
+
+[node name="CORD" type="TextureProgressBar" parent="Info/Bars" unique_id=161522207]
+layout_mode = 2
+value = 30.0
+nine_patch_stretch = true
+stretch_margin_top = 40
+texture_under = ExtResource("3_ugvfg")
+texture_progress = ExtResource("5_su2hr")
+
+[node name="buttons" type="Control" parent="." unique_id=591524682]
+layout_mode = 1
+anchor_left = 0.2094653
+anchor_top = 0.6351111
+anchor_right = 0.7355069
+anchor_bottom = 0.99930865
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="GridContainer" type="GridContainer" parent="buttons" unique_id=27107785]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.119
+anchor_right = 1.0020001
+anchor_bottom = 0.915
+offset_left = -2.012024
+offset_top = -0.08400154
+offset_right = 0.77593994
+offset_bottom = 0.05999756
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 6
+
+[node name="Button1" type="Button" parent="buttons/GridContainer" unique_id=1274576718]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "1"
+autowrap_mode = 3
+metadata/id = 1
+
+[node name="Button2" type="Button" parent="buttons/GridContainer" unique_id=416351821]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "2"
+autowrap_mode = 3
+metadata/id = 2
+
+[node name="Button3" type="Button" parent="buttons/GridContainer" unique_id=522294385]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "3"
+autowrap_mode = 3
+metadata/id = 3
+
+[node name="Button4" type="Button" parent="buttons/GridContainer" unique_id=858972155]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "4"
+autowrap_mode = 3
+metadata/id = 4
+
+[node name="Button5" type="Button" parent="buttons/GridContainer" unique_id=749323913]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "5"
+autowrap_mode = 3
+metadata/id = 5
+
+[node name="Button6" type="Button" parent="buttons/GridContainer" unique_id=286213285]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "6"
+autowrap_mode = 3
+metadata/id = 6
+
+[node name="Button7" type="Button" parent="buttons/GridContainer" unique_id=1011566507]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "7"
+autowrap_mode = 3
+metadata/id = 7
+
+[node name="Button8" type="Button" parent="buttons/GridContainer" unique_id=1133901726]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "8"
+autowrap_mode = 3
+metadata/id = 8
+
+[node name="Button9" type="Button" parent="buttons/GridContainer" unique_id=1330712641]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "9"
+autowrap_mode = 3
+metadata/id = 9
+
+[node name="Button10" type="Button" parent="buttons/GridContainer" unique_id=436020246]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "10"
+autowrap_mode = 3
+metadata/id = 10
+
+[node name="Button11" type="Button" parent="buttons/GridContainer" unique_id=1822893590]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "11"
+autowrap_mode = 3
+metadata/id = 11
+
+[node name="Button12" type="Button" parent="buttons/GridContainer" unique_id=544310751]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "12"
+autowrap_mode = 3
+metadata/id = 12
+
+[node name="Button13" type="Button" parent="buttons/GridContainer" unique_id=305409864]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "13"
+autowrap_mode = 3
+metadata/id = 13
+
+[node name="Button14" type="Button" parent="buttons/GridContainer" unique_id=1666270089]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "14"
+autowrap_mode = 3
+metadata/id = 14
+
+[node name="Button15" type="Button" parent="buttons/GridContainer" unique_id=1524680881]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "15"
+autowrap_mode = 3
+metadata/id = 15
+
+[node name="Button16" type="Button" parent="buttons/GridContainer" unique_id=1256107625]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "16"
+autowrap_mode = 3
+metadata/id = 16
+
+[node name="Button17" type="Button" parent="buttons/GridContainer" unique_id=1039354220]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "17"
+autowrap_mode = 3
+metadata/id = 17
+
+[node name="Button18" type="Button" parent="buttons/GridContainer" unique_id=903746397]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "18"
+autowrap_mode = 3
+metadata/id = 18
+
+[node name="stage" type="RichTextLabel" parent="." unique_id=274754634]
+layout_mode = 0
+offset_left = 250.0
+offset_top = -1.0
+offset_right = 856.0
+offset_bottom = 417.0
+bbcode_enabled = true
+text = "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+scroll_following = true
+scroll_following_visible_characters = true
+language = "es_CL"
+script = ExtResource("12_70i1r")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="stage" unique_id=354048090]
+layout_mode = 0
+offset_top = 340.0
+offset_right = 606.0
+offset_bottom = 418.0
+theme_override_colors/default_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1300319966]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1013224607]
+position = Vector2(576, 324)
+
+[connection signal="pressed" from="Status/HBoxContainer/STATS/Button" to="Status" method="_show_stats"]
+[connection signal="pressed" from="Status/HBoxContainer/INVENTORY/Button" to="Status" method="_show_inventory"]
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect/Button" to="Info" method="_to_front"]
+[connection signal="pressed" from="Info/Enemy_selector/TextureRect2/Button2" to="Info" method="_to_end"]

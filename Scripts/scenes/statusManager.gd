@@ -1,14 +1,19 @@
-extends Control
-class_name StatusManager
+class_name StatusManager extends Control
 
-@onready var main_game: MainGame = $".."
+@onready var main_game: MainGame
 @onready var character = $CHARACTER
 @onready var lifeBar: TextureProgressBar = $BARS/LIFE
 @onready var cordBar: TextureProgressBar = $BARS/CORD
 @onready var hungerBar: TextureProgressBar = $BARS/HUNGER
 @onready var thirstBar: TextureProgressBar = $BARS/THIRST
 @onready var camera: Camera2D = $"..".get_node("Camera2D")
-@onready var marks: Node2D = $"..".get_node("marks")
+@onready var marks: Node2D
+
+func _ready() -> void:
+	var x = get_tree().get_first_node_in_group("MAIN")
+	if x is MainGame:
+		main_game = x
+		marks = main_game.get_node("marks")
 
 func _show_stats() -> void: ## Muestra las estadísticas del jugador
 	var statsLabel = $stats as RichTextLabel

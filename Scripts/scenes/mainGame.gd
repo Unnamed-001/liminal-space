@@ -3,17 +3,19 @@ class_name MainGame
 const max_turns: int = 5
 const min_probability: float = 10
 
-@onready var cRect = $ColorRect
-@onready var grid = $buttons/GridContainer
-@onready var info = $Info
-@onready var status = $Status
-@onready var translator: MainTranslator = $stage
 @onready var inventory: mainInventory = $Inventory
+@onready var events_container: Node2D = $Events
+@onready var info: InfoControl = $Interfaz/Info
+@onready var cRect: ColorRect = $Interfaz/ColorRect
+@onready var status: StatusManager = $Interfaz/Status
+@onready var translator: MainTranslator = $Interfaz/stage
+@onready var grid: GridContainer = $Interfaz/buttons/GridContainer
 
 var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
 var current_enemy: MonsterDB ## Objetivo
 var active_ids: Array[int] = [] ## Botones disponibles
 var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres") ## Escenario actual
+var event_scene: PackedScene = load("res://Escenas/Events/control.tscn")
 
 var combat_probability: float = min_probability
 var flag_combat: bool = false ## Esta en combate
@@ -24,7 +26,7 @@ func _ready() -> void:
 	cRect.color = Color.WHITE
 	var tween = create_tween()
 	tween.finished.connect(func(): 
-		$ColorRect.queue_free())
+		cRect.queue_free())
 	tween.tween_property(cRect, "color", Color(0.294, 0.294, 0.294, 0.0), 1.0).set_ease(Tween.EASE_IN)
 	#endregion
 	#region --Signal connection--
@@ -63,8 +65,7 @@ func pressed_button(id: int) -> void:
 					if action.target_item:
 						translator.add_object(action.target_item)
 						if inventory.attempt_to_add_item(action.target_item):
-							GameMaster.inventory.append(action.target_item)
-
+							GameMaster.inventory["items"].append(action.target_item)
 						current_stage.actions.erase(action)
 						active_ids.erase(id)
 						update_active_buttons(active_ids)
@@ -72,7 +73,11 @@ func pressed_button(id: int) -> void:
 						printerr("Error: No se ha definido un item de destino para la opción seleccionada.")
 
 				OptionDB.OptionResult.EVENT_TRIGGER:
-					pass # WIP
+					var event_node: EventScene = action.target_event.event_scene.instantiate()
+					events_container.add_child(event_node)
+					event_node.duration = action.target_event.duration if action.target_event.duration > 0 else 1
+					event_node.enter_to_event()
+					GameMaster.events[event_node] = event_node.duration
 
 				OptionDB.OptionResult.AI_FALLBACK:
 					pass # WIP
@@ -84,10 +89,10 @@ func pressed_button(id: int) -> void:
 
 #region --Input Func--
 func update_status() -> void:
-	$Status/BARS/LIFE.value = GameMaster.life
-	$Status/BARS/CORD.value = GameMaster.cord
-	$Status/BARS/HUNGER.value = GameMaster.hunger
-	$Status/BARS/THIRST.value = GameMaster.thirst
+	$Interfaz/Status/BARS/LIFE.value = GameMaster.life
+	$Interfaz/Status/BARS/CORD.value = GameMaster.cord
+	$Interfaz/Status/BARS/HUNGER.value = GameMaster.hunger
+	$Interfaz/Status/BARS/THIRST.value = GameMaster.thirst
 
 	_update_current_zone()
 

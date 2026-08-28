@@ -1,6 +1,6 @@
-extends Control
+class_name InfoControl extends Control
 
-@onready var main: MainGame = $".."
+@onready var main: MainGame
 @onready var enemy_selector: HBoxContainer = $Enemy_selector
 @onready var bars: VBoxContainer = $Bars
 
@@ -13,7 +13,11 @@ var lifes: Dictionary[MonsterDB, Array] = {} # Identificador de vida total de ca
 func _ready() -> void:
 	# Guardamos la posición original al cargar la escena
 	home_pos = bars.position 
-	
+
+	var x = get_tree().get_first_node_in_group("MAIN")
+	if x is MainGame:
+		main = x
+
 	# Sintaxis limpia y moderna de Godot 4 para conectar señales
 	GameMaster.player_action.connect(update_status)
 	GameMaster.connect("clean_resource", _on_clean_resource)

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://oqvo11a88qhk"]
+
+[ext_resource type="Script" uid="uid://cvw2m6nx4m71h" path="res://Scripts/scenes/additions/pause_menu.gd" id="1_ixpep"]
+
+[node name="PauseMenu" type="Control" unique_id=1729836385]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ixpep")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=710397013]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.2509804)
+
+[node name="Save" type="Button" parent="." unique_id=1867350835]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 545.0
+offset_right = 227.0
+offset_bottom = 607.0
+text = "Guardar"
+
+[node name="Load" type="Button" parent="." unique_id=464692802]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 460.0
+offset_right = 227.0
+offset_bottom = 522.0
+text = "Cargar"
+
+[node name="ItemList" type="ItemList" parent="." unique_id=1286834112]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 18.0
+offset_right = 1135.0
+offset_bottom = 628.0
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1048854684]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 583.0
+offset_right = 1135.0
+offset_bottom = 628.0
+max_length = 28
