@@ -14,7 +14,6 @@ const min_probability: float = 10
 var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
 var current_enemy: MonsterDB ## Objetivo
 var active_ids: Array[int] = [] ## Botones disponibles
-var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres") ## Escenario actual
 var event_scene: PackedScene = load("res://Escenas/Events/control.tscn")
 
 var combat_probability: float = min_probability
@@ -31,7 +30,7 @@ func _ready() -> void:
 	#endregion
 	#region --Signal connection--
 	GameMaster.player_action.connect(Callable(self, "update_status"))
-	translator.update_stage(current_stage)
+	translator.update_stage(GameMaster.current_stage)
 	_prepare_buttons()
 	update_status()
 	#endregion
@@ -51,13 +50,13 @@ func pressed_button(id: int) -> void:
 		return
 	GameMaster.player_action.emit()
 
-	for action in current_stage.actions:
+	for action in GameMaster.current_stage.actions:
 		if action.id == id:
 			match action.result:
 				OptionDB.OptionResult.STAGE_TRANSITION:
 					if action.target_stage:
-						current_stage = action.target_stage
-						translator.update_stage(current_stage, GameMaster.config["lang"])
+						GameMaster.current_stage = action.target_stage
+						translator.update_stage(GameMaster.current_stage, GameMaster.config["lang"])
 					else:
 						printerr("Error: No se ha definido un escenario de destino para la opción seleccionada.")
 
@@ -66,18 +65,18 @@ func pressed_button(id: int) -> void:
 						translator.add_object(action.target_item)
 						if inventory.attempt_to_add_item(action.target_item):
 							GameMaster.inventory["items"].append(action.target_item)
-						current_stage.actions.erase(action)
+						GameMaster.current_stage.actions.erase(action)
 						active_ids.erase(id)
 						update_active_buttons(active_ids)
 					else:
 						printerr("Error: No se ha definido un item de destino para la opción seleccionada.")
 
 				OptionDB.OptionResult.EVENT_TRIGGER:
-					var event_node: EventScene = action.target_event.event_scene.instantiate()
+					var event_node = action.target_event.event_scene.instantiate() 
 					events_container.add_child(event_node)
 					event_node.duration = action.target_event.duration if action.target_event.duration > 0 else 1
 					event_node.enter_to_event()
-					GameMaster.events[event_node] = event_node.duration
+					GameMaster.events[action.target_event.event_scene] = event_node.duration
 
 				OptionDB.OptionResult.AI_FALLBACK:
 					pass # WIP
@@ -117,11 +116,11 @@ func button_helper(input: Dictionary) -> void:
 #endregion
 #region --Stage Func--
 func _update_current_zone() -> void:
-	var csse: Dictionary[GM.special_case, int] = current_stage.special_event
+	var csse: Dictionary[GM.special_case, int] = GameMaster.current_stage.special_event
 	var rng: float = randi_range(0, 100)
 	var enabled: bool = true
 
-	GameMaster.current_zone = current_stage.id_zone
+	GameMaster.current_zone = GameMaster.current_stage.id_zone
 
 	if GameMaster.last_zone != GameMaster.current_zone:
 		GameMaster.last_zone = GameMaster.current_zone
@@ -154,7 +153,7 @@ func _update_current_zone() -> void:
 #endregion
 #region --Combat--
 func combat() -> void:
-	GameMaster.update_enemies_from_context(current_stage)
+	GameMaster.update_enemies_from_context(GameMaster.current_stage)
 
 	# Limpiar lista previa de enemigos
 	enemies.clear()

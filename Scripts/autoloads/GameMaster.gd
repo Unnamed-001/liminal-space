@@ -54,11 +54,11 @@ var stats: Dictionary = {
 	"psique": 100.0
 }
 var aspect: Dictionary = {}
-var events: Dictionary[EventScene, int] = {}
-
+var events: Dictionary[PackedScene, int] = {}
+var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres") ## Escenario actual
 
 func _player_action() -> void:
-	max_enemies = max(2, max_enemies)
+	max_enemies = max(1, max_enemies)
 #endregion
 #region --Codice de escenarios--
 var valid_pool_stable: Dictionary = {} # ¡Gran idea para el futuro!

@@ -50,4 +50,5 @@ offset_bottom = 648.0
 layout_mode = 0
 
 [node name="PauseMenu" parent="." unique_id=1729836385 instance=ExtResource("5_ryxee")]
+visible = false
 layout_mode = 1
