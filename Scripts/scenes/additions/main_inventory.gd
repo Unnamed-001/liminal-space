@@ -1,6 +1,6 @@
 class_name mainInventory extends Control
 
-@onready var itemGrid: ItemGrid = $CenterContainer/Inventory/ItemGrid
+@onready var itemGrid: ItemGrid = $CenterContainer/ItemGrid
 
 func get_slot_idx_from_cords(local_mouse_pos: Vector2) -> void:
 	itemGrid.get_slot_idx_from_cords(local_mouse_pos)

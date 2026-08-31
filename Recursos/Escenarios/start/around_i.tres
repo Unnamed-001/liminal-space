@@ -2,11 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_bs88r"]
 [ext_resource type="Script" uid="uid://dgeapbg1b80gm" path="res://Scripts/resources/Recurso_escenario.gd" id="2_08ldb"]
-
-[sub_resource type="Resource" id="Resource_l115c"]
-script = ExtResource("1_bs88r")
-id = 16
-metadata/_custom_type_script = "uid://dgh71noa471vo"
+[ext_resource type="Resource" uid="uid://beh52023djc31" path="res://Recursos/Opciones/around_i/16.tres" id="2_tyd2g"]
+[ext_resource type="Resource" uid="uid://c3crw12btj8la" path="res://Recursos/Opciones/around_i/18.tres" id="3_8ecej"]
 
 [resource]
 script = ExtResource("2_08ldb")
@@ -15,5 +12,5 @@ special_event = Dictionary[int, int]({
 0: 15
 })
 escenario_es_cl = Array[String](["Miras hacia la derecha y no encuentras nada, una pared de color amarillo sucio, aunque claro, eso no te detiene de poder revisar más a tu alrededor, tambien vez una palanca oxidada"])
-actions = Array[ExtResource("1_bs88r")]([SubResource("Resource_l115c")])
+actions = Array[ExtResource("1_bs88r")]([ExtResource("2_tyd2g"), ExtResource("3_8ecej")])
 metadata/_custom_type_script = "uid://dgeapbg1b80gm"

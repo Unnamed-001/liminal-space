@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDB" format=3 uid="uid://bawng6p1onrti"]
 
+[ext_resource type="Texture2D" uid="uid://ci6wsvhm4hm7h" path="res://Assets/Texturas/ramen.png" id="1_jsfav"]
 [ext_resource type="Script" uid="uid://cdaq3323bbm7b" path="res://Scripts/resources/Recurso_objeto.gd" id="1_o6qev"]
 
 [resource]
@@ -8,6 +9,7 @@ name = Dictionary[String, String]({
 "EN_US": "Ramen",
 "ES_CL": "Ramen"
 })
+image = ExtResource("1_jsfav")
 value = 20
 Description = Dictionary[String, String]({
 "EN_US": "",
@@ -24,4 +26,6 @@ consume_message = Dictionary[String, String]({
 "EN_US": "",
 "ES_CL": "Comes el {name}, recuperas {value_hunger} de hambre"
 })
+dimensiones = Vector2i(2, 1)
+WIP = null
 metadata/_custom_type_script = "uid://cdaq3323bbm7b"

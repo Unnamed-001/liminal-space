@@ -7,16 +7,14 @@ class_name PauseMenu extends Control
 
 var list_game: Array[String] = []
 
-func _ready() -> void:
-	find_games()
-
 func show_menu() -> void:
-	visible = !visible
-	line_edit.text = Time.get_date_string_from_system() + Time.get_time_string_from_system()
+	visible = true
+	line_edit.text = Time.get_date_string_from_system() + "_" + Time.get_time_string_from_system()
 	if visible:
 		find_games()
 
 func load_save(name_save: String) -> void:
+	load_button.text = "Cargar"
 	if Vault.load_from_disk(name_save):
 		print("CARGADO CORRECTAMENTE")
 	else:
@@ -27,6 +25,7 @@ func load_save(name_save: String) -> void:
 
 func save_game(name_game: String) -> void:
 	# Le pasamos "true" al final asumiendo que tu _save_in_disk pide confirmación
+	save_button.text = "Guardar"
 	if Vault._save_in_disk(name_game, true): 
 		print("GUARDADO CORRECTAMENTE")
 		find_games() # Refrescar la lista de guardados tras guardar con éxito
@@ -89,3 +88,6 @@ func _on_load_pressed() -> void:
 		return # Esperamos segundo clic
 
 	load_save(name_game)
+
+func _on_exit_pressed() -> void:
+	visible = false

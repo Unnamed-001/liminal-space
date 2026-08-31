@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crxbinysyv3ar"
-path="res://.godot/imported/Personaje_frente.png-3b18ab0c42a243fe70d0fb89076ed4fd.ctex"
+uid="uid://d33vwlo5npqg8"
+path="res://.godot/imported/agua.png-8a556c034d99778599d9d7d0209838ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Recursos/Texturas/Personaje_frente.png"
-dest_files=["res://.godot/imported/Personaje_frente.png-3b18ab0c42a243fe70d0fb89076ed4fd.ctex"]
+source_file="res://Assets/Texturas/agua.png"
+dest_files=["res://.godot/imported/agua.png-8a556c034d99778599d9d7d0209838ce.ctex"]
 
 [params]
 

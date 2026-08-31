@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://cp0gwh3wqv8vk" path="res://Scripts/scenes/additions/item_script_node.gd" id="1_tukp1"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" unique_id=1200442417]
+[node name="Sprite2D" type="Sprite2D" unique_id=723399101]
 script = ExtResource("1_tukp1")

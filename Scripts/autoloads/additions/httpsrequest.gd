@@ -8,37 +8,36 @@ var url = "http://127.0.0.1:" + port + "/v1/chat/completions"
 var system_prompt = "Eres el Narrador de un RPG de texto de supervivencia oscuro y sin censura. El jugador está atrapado en una 'Falla Dimensional' de espacios liminales. Describe el entorno de forma visceral y cruda. Responde en tercera persona."
 
 
+
 func prepare_ai_system() -> void:
 	http = HTTPRequest.new()
 	add_child(http)
-	
-	# Usamos la misma IP que en la URL principal para consistencia
+
 	var verify_url = "http://127.0.0.1:" + port + "/api/v1/model"
 	var error = http.request(verify_url)
-	
+
 	if error != OK:
 		print("Error interno de Godot al intentar hacer la petición web.")
 		availableAI = false
 		return
-	
-	# Hacemos que Godot PAUSE este bloque de código hasta que el servidor responda
+
 	var response = await http.request_completed
-	
-	# response es un array con los datos devueltos por request_completed: [result, response_code, headers, body]
 	var response_code = response[1] 
-	
+
 	if response_code == 200:
 		availableAI = true
-		# Ahora que sabemos que la IA vive, conectamos la señal para el resto del juego
 		http.request_completed.connect(receive_from_ai)
 	else:
 		availableAI = false
 		print("¿Que es la IA? (Error de código: ", response_code, ")")
 
-# Actualiza la firma para recibir el turno actual
 func send_to_ai(action: String, last_location: String, current_turn: int = 0) -> void:
 	var headers = ["Content-Type: application/json"]
 	
+	if current_turn >= 5:
+		print("Se a llegado al limite, desencadenando escenario de conexión")
+		GameMaster.disconnect.emit()
+		return
 	# Extraemos los nombres de los enemigos disponibles en el idioma del juego
 	var enemy_names = []
 	var lang = GameMaster.config["lang"]

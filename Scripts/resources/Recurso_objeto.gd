@@ -8,7 +8,7 @@ enum Type { HUNGER, THIRST, POTION, HEAL, DEFENSE, ARMOR }
 	"ES_CL": "",
 	"EN_US": ""
 }## Nombre del objeto
-@export var image: SpriteFrames = null ## Imagen del texto
+@export var image: Texture2D = null ## Imagen del texto
 @export_range(-1, 100, 1, "or_greater") var value: int = 0 ## Coste del objeto en el mercado, o lo que llegue a añadir
 @export var Description: Dictionary[String, String] = {
 	"ES_CL": "",
@@ -26,7 +26,7 @@ enum Type { HUNGER, THIRST, POTION, HEAL, DEFENSE, ARMOR }
 	"EN_US": ""
 } ## Mensaje al consumir el objeto
 @export_category("Espacio y forma")
-@export var dimensiones: Vector2i ## Cuantas casillas ocupara dentro del inventario
+@export var dimensiones: Vector2i = Vector2i(1,1)## Cuantas casillas ocupara dentro del inventario
 @export var has_unique_form: bool ## Si tiene una forma especial
 @export_group("Forma única")
 @export var WIP: Variant

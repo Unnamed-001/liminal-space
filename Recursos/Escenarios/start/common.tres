@@ -5,4 +5,5 @@
 
 [resource]
 script = ExtResource("2_71r1h")
+escenario_es_cl = Array[String](["Regresaste al inicio, todavía puedes escuchar el zumbido de las luces fluorecentes en el ambiente."])
 metadata/_custom_type_script = "uid://dgeapbg1b80gm"

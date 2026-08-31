@@ -1,19 +1,23 @@
 class_name StatusManager extends Control
 
-@onready var main_game: MainGame
 @onready var character = $CHARACTER
 @onready var lifeBar: TextureProgressBar = $BARS/LIFE
 @onready var cordBar: TextureProgressBar = $BARS/CORD
 @onready var hungerBar: TextureProgressBar = $BARS/HUNGER
 @onready var thirstBar: TextureProgressBar = $BARS/THIRST
 @onready var camera: Camera2D = $"..".get_node("Camera2D")
-@onready var marks: Node2D
+
+var marks: Node2D
+var main_game: MainGame
+var pause_menu: PauseMenu
 
 func _ready() -> void:
 	var x = get_tree().get_first_node_in_group("MAIN")
 	if x is MainGame:
 		main_game = x
 		marks = main_game.get_node("marks")
+		pause_menu = main_game.get_node("PauseMenu")
+
 
 func _show_stats() -> void: ## Muestra las estadísticas del jugador
 	var statsLabel = $stats as RichTextLabel
@@ -53,8 +57,5 @@ func _show_inventory() -> void: ## Muestra el inventario del jugador
 		global_position.y = inventory_pos.global_position.y - size.y / 2
 		print("Al inventario. Ubicación actual: ", Vector2i(camera.global_position), " Ubicación inventario: ", Vector2i(inventory_pos.global_position))
 
-func _save() -> void:
-	pass
-
-func _quit() -> void:
-	pass
+func _show_pause_menu() -> void:
+	pause_menu.show_menu()

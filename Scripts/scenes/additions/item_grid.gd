@@ -13,38 +13,51 @@ func _ready() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+			# print("Presión sentida")
 			var held_item = get_tree().get_first_node_in_group("held_item") as ItemScene
+
 			if !held_item:
-				var slot_idx = get_slot_idx_from_cords(get_global_mouse_position())
+				var slot_idx = get_slot_idx_from_cords(get_local_mouse_position())
+				print("slot_index: ", slot_idx)
 				var item = cell_data[slot_idx]
 				if !item:
+					# print("No hay objeto")
 					return
 				item.get_picked()
 				clear_slots_from_item(item)
 			else:
 				if !held_item_intersect: return
+
 				var offset = slot_size / 2
-				var idx = get_slot_idx_from_cords(held_item.anchor_point + offset)
+
+				var local_pos = (held_item.anchor_point + offset) - global_position
+				var idx = get_slot_idx_from_cords(local_pos)
+				if idx < 0: return
+
 				var items = item_in_area(idx, held_item.data.dimensiones)
+
 				if items.size():
 					if items.size() == 1:
 						held_item.place(get_cords_from_idx(idx))
+						print("index: ", idx," Index cords: ", get_cords_from_idx(idx))
 						clear_slots_from_item(items[0])
 						add_item_to_cell_data(idx, held_item)
 						items[0].get_picked()
 					return
+
 				held_item.place(get_cords_from_idx(idx))
 				add_item_to_cell_data(idx, held_item)
+
 	if event is InputEventMouseMotion:
 		var held_item = get_tree().get_first_node_in_group("held_item")
 		if held_item:
 			detect_intersect(held_item)
 
 func detect_intersect(held_item: ItemScene) -> void:
-	var h_rect = Rect2(held_item.anchor_point, held_item.size)
+	var h_rect = Rect2(held_item.anchor_point, held_item.texture_size)
 	var g_rect = Rect2(global_position, size)
 	var inter = h_rect.intersection(g_rect).size
-	held_item_intersect = (inter.x * inter.y) / (held_item.size.x * held_item.size.y) > 0.8
+	held_item_intersect = (inter.x * inter.y) / (held_item.texture_size.x * held_item.texture_size.y) > 0.8
 
 func clear_slots_from_item(item: Node) -> void:
 	for i in cell_data.size():
@@ -123,7 +136,7 @@ func item_fits(idx: int, dimension: Vector2i) -> bool:
 				return false
 			if cell_data[curr_idx] != null:
 				return false
-			var split = idx / columns != (idx + x) / columns; @warning_ignore("integer_division") 
+			@warning_ignore("integer_division")  var split = idx / columns != (idx + x) / columns
 			if split:
 				return false
 	return true
@@ -140,4 +153,5 @@ func get_slot_idx_from_cords(local_mouse_pos: Vector2) -> int:
 	return idx
 
 func get_cords_from_idx(idx: int) -> Vector2i:
+	print("child: ", get_child(idx), ". position: ", get_child(idx).global_position)
 	return Vector2i(get_child(idx).global_position)

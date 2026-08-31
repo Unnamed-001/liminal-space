@@ -5,11 +5,15 @@ const min_probability: float = 10
 
 @onready var inventory: mainInventory = $Inventory
 @onready var events_container: Node2D = $Events
+@onready var marks: Node2D = $marks
+@onready var sounds: Node = $Sounds
 @onready var info: InfoControl = $Interfaz/Info
 @onready var cRect: ColorRect = $Interfaz/ColorRect
 @onready var status: StatusManager = $Interfaz/Status
 @onready var translator: MainTranslator = $Interfaz/stage
+@onready var camera: Camera2D = $Interfaz/Camera2D
 @onready var grid: GridContainer = $Interfaz/buttons/GridContainer
+
 
 var enemies: Array[MonsterDB] = [] ## Enemigos activos actualmente
 var current_enemy: MonsterDB ## Objetivo
@@ -26,8 +30,10 @@ func _ready() -> void:
 	var tween = create_tween()
 	tween.finished.connect(func(): 
 		cRect.queue_free())
+	tween.tween_property(sounds.get_node("AmbientSoundBeta"), "volume_db", -10.0, 1.0)
 	tween.tween_property(cRect, "color", Color(0.294, 0.294, 0.294, 0.0), 1.0).set_ease(Tween.EASE_IN)
 	#endregion
+
 	#region --Signal connection--
 	GameMaster.player_action.connect(Callable(self, "update_status"))
 	translator.update_stage(GameMaster.current_stage)
@@ -35,6 +41,7 @@ func _ready() -> void:
 	update_status()
 	#endregion
 
+	$PauseMenu.visible = false
 #region --Output Func--
 
 func _prepare_buttons():
@@ -192,20 +199,12 @@ func combat() -> void:
 		print("No se pudieron generar enemigos.")
 		return
 
-	translator.start_combat()
-	var size_viewport = get_viewport_rect().size.y * 2
-	if not flag_combat:
-		current_enemy = enemies[0]
-		info.position.y += size_viewport
-		status.position.y += size_viewport
-		$Camera2D.position.y += size_viewport
-		flag_combat = true
-		$Info.show_enemy_status()
-		$Battle/RichTextLabel.start_combat()
+	if flag_combat:
+		var combat_pos = marks.get_node("combatPos").position
+		camera.global_position = combat_pos
 	else:
-		info.position.y -= size_viewport
-		status.position.y -= size_viewport
-		$Camera2D.position.y -= size_viewport
-		flag_combat = false
-		$Info.hide_enemy_status()
+		var combat_pos = marks.get_node("homePos").position
+		camera.global_position = combat_pos
+
+	translator.start_combat()
 #endregion

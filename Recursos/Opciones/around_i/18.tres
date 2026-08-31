@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="OptionDB" format=3 uid="uid://c3crw12btj8la"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_muh24"]
+[ext_resource type="Resource" uid="uid://nrfk6uyt1yi7" path="res://Recursos/Escenarios/start/common.tres" id="2_r1eyy"]
+
+[resource]
+script = ExtResource("1_muh24")
+id = 18
+target_stage = ExtResource("2_r1eyy")
+metadata/_custom_type_script = "uid://dgh71noa471vo"

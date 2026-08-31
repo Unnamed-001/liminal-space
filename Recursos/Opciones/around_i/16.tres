@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="OptionDB" format=3 uid="uid://beh52023djc31"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_dwbs2"]
+[ext_resource type="Resource" uid="uid://ffmlsarnjh53" path="res://Recursos/Escenarios/start/back.tres" id="2_g2dh1"]
+
+[resource]
+script = ExtResource("1_dwbs2")
+name = Dictionary[String, String]({
+"EN_US": "",
+"ES_CL": "Izquierda"
+})
+target_stage = ExtResource("2_g2dh1")
+metadata/_custom_type_script = "uid://dgh71noa471vo"

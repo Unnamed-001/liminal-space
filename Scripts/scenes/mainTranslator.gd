@@ -37,7 +37,9 @@ func update_stage(stage: StageDB, force_lang: String = "") -> void:
 		var possible_action = action.id
 		new_options[possible_action] = action.name[current_lang]
 
-	main_game.current_stage = stage
+	if stage.generated_by_IA:
+		GameMaster.last_checkpoint = stage
+	GameMaster.current_stage = stage
 	main_game.update_active_buttons(new_options.keys())
 
 	main_game.button_helper(new_options)

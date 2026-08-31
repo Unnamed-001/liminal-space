@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="OptionDB" format=3 uid="uid://cygu18j6wyud6"]
+
+[ext_resource type="Script" uid="uid://dgh71noa471vo" path="res://Scripts/resources/Recurso_opciones.gd" id="1_iem02"]
+[ext_resource type="Resource" uid="uid://nrfk6uyt1yi7" path="res://Recursos/Escenarios/start/common.tres" id="2_1weep"]
+
+[resource]
+script = ExtResource("1_iem02")
+id = 16
+name = Dictionary[String, String]({
+"EN_US": "Return",
+"ES_CL": "Regresar"
+})
+target_stage = ExtResource("2_1weep")
+metadata/_custom_type_script = "uid://dgh71noa471vo"

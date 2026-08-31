@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDB" format=3 uid="uid://g7il3e8gq1db"]
 
+[ext_resource type="Texture2D" uid="uid://d33vwlo5npqg8" path="res://Assets/Texturas/agua.png" id="1_0hbxm"]
 [ext_resource type="Script" uid="uid://cdaq3323bbm7b" path="res://Scripts/resources/Recurso_objeto.gd" id="1_1xbs0"]
 
 [resource]
@@ -8,6 +9,7 @@ name = Dictionary[String, String]({
 "EN_US": "Small bottle of water",
 "ES_CL": "Botella de agua pequeña"
 })
+image = ExtResource("1_0hbxm")
 value = 20
 Description = Dictionary[String, String]({
 "EN_US": "b",
@@ -23,4 +25,6 @@ advices = Dictionary[String, String]({
 consume_message = Dictionary[String, String]({
 "ES_CL": "Has consumido {name}, recuperas {value_thirst} de {type_thirst}"
 })
+dimensiones = Vector2i(1, 2)
+WIP = null
 metadata/_custom_type_script = "uid://cdaq3323bbm7b"

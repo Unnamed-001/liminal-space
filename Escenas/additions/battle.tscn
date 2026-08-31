@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://deb3rn174wr3r" path="res://Scripts/scenes/battle.gd" id="1_1mqa8"]
 [ext_resource type="Script" uid="uid://s2s6wj1wmlq1" path="res://Scripts/scenes/battleLogic.gd" id="2_uxlwg"]
 [ext_resource type="Script" uid="uid://cukdkshvn84mj" path="res://Scripts/scenes/battleTranslator.gd" id="3_jhgg1"]
-[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Recursos/Texturas/flecha.png" id="4_3oyxk"]
+[ext_resource type="Texture2D" uid="uid://cd3hc3rdjwf0f" path="res://Assets/Texturas/flecha.png" id="4_3oyxk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xla"]
 corner_radius_top_left = 200

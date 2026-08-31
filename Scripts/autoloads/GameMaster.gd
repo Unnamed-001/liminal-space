@@ -7,6 +7,7 @@ enum special_case { DANGER_ZONE, SECURE_ZONE, RESTRICTED_AREA, DRAINING_AREA, PO
 signal ai_response(generated_text: String)
 signal player_action
 signal clean_resource(enemy: MonsterDB)
+signal disconnect
 
 @onready var http: PackedScene = preload("res://Escenas/additions/http_request.tscn")
 var available_enemies: Array[MonsterDB] = []
@@ -56,6 +57,8 @@ var stats: Dictionary = {
 var aspect: Dictionary = {}
 var events: Dictionary[PackedScene, int] = {}
 var current_stage: StageDB = load("res://Recursos/Escenarios/start.tres") ## Escenario actual
+var last_checkpoint: StageDB
+var is_inside_unstable_breach: bool = false
 
 func _player_action() -> void:
 	max_enemies = max(1, max_enemies)
@@ -115,31 +118,28 @@ func generar_escenario_ia(texto_ia: String) -> void:
 	new_stage.id_zone = json.get("id_zone", 0)
 	new_stage.difficulty = json.get("difficulty", 1)
 	new_stage.context = json.get("context", "")
-	
+	new_stage.generated_by_IA = true
+
 	# Asignar descripciones multilingües
 	var desc_dict = json.get("stage_description", {})
 	if desc_dict.has("ES_CL"):
 		new_stage.escenario_es_cl = [desc_dict["ES_CL"]]
 	if desc_dict.has("EN_US"):
 		new_stage.escenario_en_us = [desc_dict["EN_US"]]
-		
-	# Procesar y construir el arreglo de acciones dinámicamente
+
 	var new_actions: Array = []
-	
 	for act_data in json["actions"]:
-		var new_action = ActionDB.new() # O tu clase/recurso de opción
+		var new_action: OptionDB = OptionDB.new() # O tu clase/recurso de opción
 		new_action.id = act_data.get("id", 1)
-		new_action.name_dict = act_data.get("name", {"ES_CL": "Avanzar"})
-		new_action.strength = act_data.get("strength", 0)
-		
-		# Mapeamos el String del JSON al Enum de Godot
+		new_action.name = act_data.get("name", {"ES_CL": "Avanzar"})
+
 		match act_data.get("result", "AI_FALLBACK"):
 			"STAGE_TRANSITION":
 				new_action.result = OptionDB.OptionResult.STAGE_TRANSITION
 				var path = act_data.get("target_ref", "")
 				if ResourceLoader.exists(path):
 					new_action.target_stage = load(path)
-			
+
 			"GIVE_ITEM":
 				new_action.result = OptionDB.OptionResult.GIVE_ITEM
 				var item_key = act_data.get("target_ref", "")
@@ -148,14 +148,14 @@ func generar_escenario_ia(texto_ia: String) -> void:
 					new_action.target_item = Vault.item_catalog[item_key]
 				else:
 					print("La IA intentó dar un ítem no registrado: ", item_key)
-			
+
 			"EVENT_TRIGGER":
 				new_action.result = OptionDB.OptionResult.EVENT_TRIGGER
 				# Lógica para eventos
-				
+
 			_: # Por defecto o "AI_FALLBACK"
 				new_action.result = OptionDB.OptionResult.AI_FALLBACK
-				
+
 		new_actions.append(new_action)
 	
 	new_stage.actions = new_actions

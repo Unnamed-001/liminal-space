@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dewf56848tybm"
-path="res://.godot/imported/Personaje_costado.png-4959aa6f5d8413fc2e0964266e41247f.ctex"
+uid="uid://cd3hc3rdjwf0f"
+path="res://.godot/imported/flecha.png-a0ca23a3e3b1122158540b69e35b95de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Recursos/Texturas/Personaje_costado.png"
-dest_files=["res://.godot/imported/Personaje_costado.png-4959aa6f5d8413fc2e0964266e41247f.ctex"]
+source_file="res://Assets/Texturas/flecha.png"
+dest_files=["res://.godot/imported/flecha.png-a0ca23a3e3b1122158540b69e35b95de.ctex"]
 
 [params]
 

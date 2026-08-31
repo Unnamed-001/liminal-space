@@ -35,7 +35,7 @@ var context: Dictionary = {
 		"events": {}
 	},
 	"current_stage_path": "res://Recursos/Escenarios/start.tres",
-	"precharged_stage": [] # Aquí iría las escenas creadas por la IA
+	"checkpoint": "" # Aquí va el ultimo punto de guardado
 }
 
 func _ready() -> void:
@@ -93,10 +93,12 @@ func _sync_with_gm() -> void:
 	context["player"]["stats"]["endurance"]  = GameMaster.stats["endurance"]
 	context["player"]["stats"]["strength"]   = GameMaster.stats["strength"]
 	context["player"]["stats"]["psique"]     = GameMaster.stats["psique"]
-	
-	# Difícil: Guardar las rutas como strings en el JSON
-	context["current_stage_path"] = GameMaster.current_stage.resource_path
-	
+	context["checkpoint"] = GameMaster.last_checkpoint.resource_path
+
+	# Difícil: Guardar las rutas como strings
+	if !context["current_stage_path"] == "":
+		context["current_stage_path"] = GameMaster.current_stage.resource_path
+
 	context["player"]["events"].clear() # Limpiar antes de guardar
 	for event_scene in GameMaster.events.keys():
 		var scene_path = event_scene.resource_path
@@ -121,12 +123,12 @@ func _apply_to_gm() -> void:
 	GameMaster.stats["psique"]             = context["player"]["stats"]["psique"]
 	GameMaster.stats["strength"]           = context["player"]["stats"]["strength"]
 	
-	# Difícil: Cargar los recursos (load) usando las rutas guardadas en el JSON
+	# Difícil: Cargar los recursos (load) usando las rutas guardadas en el guardado
 	var stage_path = context["current_stage_path"]
 	if ResourceLoader.exists(stage_path):
 		GameMaster.current_stage = load(stage_path)
 	else:
-		push_error("No se pudo cargar el escenario: " + stage_path)
+		GameMaster.current_stage = load(context["checkpoint"])
 
 	GameMaster.events.clear()
 	var player_events = context["player"]["events"]

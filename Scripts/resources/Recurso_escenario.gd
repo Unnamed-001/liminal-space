@@ -11,7 +11,7 @@ class_name StageDB
 @export_multiline() var escenario_en_us: Array[String] = [""] ## Escenario en ingles
 @export var actions: Array[OptionDB] = [] ## Opciones disponibles
 @export_range(0, 100, 0.1) var probability: int = 40 # Despues de divide por 100 ## WIP
-
+var generated_by_IA: bool = false
 
 func get_languages() -> Dictionary[String, Array]: ## Obtiene los idiomas del escenario actual
 	return {

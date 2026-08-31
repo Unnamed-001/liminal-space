@@ -26,12 +26,7 @@ layout_mode = 0
 offset_right = 862.0
 offset_bottom = 648.0
 
-[node name="Inventory" type="PanelContainer" parent="CenterContainer" unique_id=1055735300]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-metadata/_edit_group_ = true
-
-[node name="ItemGrid" type="GridContainer" parent="CenterContainer/Inventory" unique_id=121801892]
+[node name="ItemGrid" type="GridContainer" parent="CenterContainer" unique_id=121801892]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 script = ExtResource("1_fwt6j")

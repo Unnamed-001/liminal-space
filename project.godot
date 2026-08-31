@@ -15,7 +15,7 @@ config/version="0.1"
 run/main_scene="uid://gfv4wqt2hwe2"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://drfda0hbf482p"
-config/windows_native_icon="res://Recursos/Texturas/Logo.ico"
+config/windows_native_icon="res://Assets/Texturas/logo.ico"
 
 [autoload]
 

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://eelthyqwn0yb"]
 
 [ext_resource type="Script" uid="uid://fpn2slt7g4cn" path="res://Scripts/scenes/mainGame.gd" id="1_n7y03"]
-[ext_resource type="AudioStream" uid="uid://bg2odrngv318" path="res://Assets/Sonido/ambient_sound_beta.ogg" id="2_5tend"]
 [ext_resource type="PackedScene" uid="uid://cda2p8qbr01o5" path="res://Escenas/additions/battle.tscn" id="3_b7mqo"]
 [ext_resource type="PackedScene" uid="uid://dni44wfhi1wby" path="res://Escenas/additions/interfaz.tscn" id="4_h1l5c"]
 [ext_resource type="PackedScene" uid="uid://bgfrgex11k3wo" path="res://Escenas/additions/inventory.tscn" id="4_l115c"]
@@ -17,14 +16,6 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_n7y03")
 
-[node name="Sounds" type="Node" parent="." unique_id=778387688]
-
-[node name="AmbientSoundBeta" type="AudioStreamPlayer" parent="Sounds" unique_id=964346181]
-stream = ExtResource("2_5tend")
-volume_db = -80.0
-autoplay = true
-parameters/looping = true
-
 [node name="Backend" type="ColorRect" parent="." unique_id=9716106]
 layout_mode = 0
 offset_right = 1152.0
@@ -39,6 +30,9 @@ position = Vector2(576, 324)
 
 [node name="inventoryPos" type="Marker2D" parent="marks" unique_id=557495422]
 position = Vector2(576, 972)
+
+[node name="combatPos" type="Marker2D" parent="marks" unique_id=1536190724]
+position = Vector2(576, 1620)
 
 [node name="Events" type="Node2D" parent="." unique_id=1796704042]
 

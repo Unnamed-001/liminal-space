@@ -5,4 +5,6 @@
 
 [resource]
 script = ExtResource("2_brsnx")
+escenario_es_cl = Array[String](["Logras ver solamente una pared amarillenta."])
+actions = Array[ExtResource("1_wffd1")]([null])
 metadata/_custom_type_script = "uid://dgeapbg1b80gm"
